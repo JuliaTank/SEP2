@@ -1,6 +1,5 @@
 package server.network;
 
-import client.network.Client;
 import server.model.Manager;
 import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
@@ -15,14 +14,14 @@ import java.util.ArrayList;
 public class RMIServerImpl implements RMIServer {
 
     private Manager manager;
-    private ArrayList<ClientCallBack> chatClients;
+    private ArrayList<ClientCallBack> clients;
     private int numberOfClients=0;
 
 
     public RMIServerImpl(Manager manager)
     {
         this.manager = manager;
-        chatClients=new ArrayList<>();
+        clients=new ArrayList<>();
     }
     public void startServer() throws RemoteException, AlreadyBoundException {
         UnicastRemoteObject.exportObject(this,0);
@@ -31,32 +30,40 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void registerClient(Client client) throws RemoteException {
-
+    public void registerClient(ClientCallBack client) throws RemoteException {
+        this.clients.add(client);
+        System.out.println("Client was added");
     }
 
     @Override
-    public void unregisterClient(Client client) throws RemoteException {
-
+    public void unregisterClient(ClientCallBack client) throws RemoteException {
+        this.clients.remove(client);
+        System.out.println("Client was removed");
     }
 
     @Override
     public void loginClient() throws RemoteException {
-
+        numberOfClients++;
     }
 
     @Override
     public void logoutClient() throws RemoteException {
+        numberOfClients--;
+    }
+
+    @Override
+    public String getNumberOfSubscriptions() throws RemoteException {
+
+        return null;
+    }
+
+    @Override
+    public void addRecipe(String recipe, ClientCallBack client) throws RemoteException {
 
     }
 
     @Override
-    public void getNumberOfSubscriptions() throws RemoteException {
-
-    }
-
-    @Override
-    public void addRecipe(String recipe) throws RemoteException {
+    public void report(String txt, ClientCallBack client) throws RemoteException {
 
     }
 }
