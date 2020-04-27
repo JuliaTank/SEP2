@@ -88,7 +88,7 @@
                                        <effect>
                                           <ImageInput x="10.0" y="10.0">
                                              <source>
-                                                <Image url="file:/C:/Users/tanki/Downloads/heart.png" />
+                                                <Image  "heart.png" />
                                              </source>
                                           </ImageInput>
                                        </effect>
