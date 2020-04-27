@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="client.views.SignIn.SignIn"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.SignIn.SignInController">
+   <children>
+      <GridPane layoutX="7.0" layoutY="5.0" prefHeight="327.0" prefWidth="592.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="87.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="108.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="389.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="189.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="146.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="146.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="146.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="userPic" fitHeight="80.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../../../../Downloads/rabbit.jpg" />
+               </image>
+            </ImageView>
+            <TextArea fx:id="descriptionArea" prefHeight="118.0" prefWidth="391.0" promptText="Write a bit about yourself here" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+            </TextArea>
+            <Button mnemonicParsing="false" onAction="#onChooseFileButton" text="Choose File" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="usernameCreationField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <PasswordField fx:id="passwordCreationField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="Repeat password " GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="passwordRepeatField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label prefHeight="18.0" prefWidth="322.0" text="Join us!" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#onSignUp2Button" text="Sign up" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="382.0" textFill="#e10505" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+   </children>
 </AnchorPane>
