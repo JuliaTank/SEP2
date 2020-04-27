@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="client.views.Inbox.InboxController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.Inbox.InboxController">
+   <children>
+      <HBox layoutX="7.0" layoutY="7.0" prefHeight="385.0" prefWidth="585.0">
+         <children>
+            <VBox prefHeight="385.0" prefWidth="296.0">
+               <children>
+                  <ListView onMouseMoved="#onClickedMessage" prefHeight="384.0" prefWidth="291.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="373.0" prefWidth="290.0">
+               <children>
+                  <TextArea prefHeight="308.0" prefWidth="290.0" />
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.33326212565103" minWidth="10.0" prefWidth="177.33333333333334" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.33331298828125" minWidth="10.0" prefWidth="113.33333333333334" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="23.333343505859375" minHeight="6.000000476837158" prefHeight="6.000000476837158" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="75.99999999999999" minHeight="10.0" prefHeight="71.66669336954752" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="75.99999999999999" minHeight="10.0" prefHeight="11.666639963785812" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.666629791259766" minHeight="0.0" prefHeight="23.99997965494792" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <VBox prefHeight="64.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onReportButton" prefHeight="28.0" prefWidth="103.0" text="Reported recipe" />
+                              <Button mnemonicParsing="false" onAction="#onMainPageButton" prefHeight="25.0" prefWidth="104.0" text="Main Page" />
+                           </children>
+                        </VBox>
+                        <ImageView fitHeight="99.0" fitWidth="177.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.rowSpan="2">
 
+                        </ImageView>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

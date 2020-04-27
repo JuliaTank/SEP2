@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="478.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.MainPage.MainPage">
+<AnchorPane prefHeight="478.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.MainPage.MainPageController">
    <children>
       <GridPane layoutX="4.0" prefHeight="614.0" prefWidth="594.0">
         <columnConstraints>
