@@ -1,4 +1,6 @@
 package shared.networking;
 
-public interface ClientCallBack {
+import java.rmi.Remote;
+
+public interface ClientCallBack extends Remote {
 }

@@ -14,6 +14,12 @@ public class Manager implements ManagerModel{
     }
 
     @Override
+    public String addRecipe(String recipe) {
+        support.firePropertyChange("NewNotification",null,recipe);
+        return recipe;
+    }
+
+    @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName, listener);
     }
