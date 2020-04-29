@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="227.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.Notification.Notification">
+   <children>
+      <GridPane prefHeight="227.0" prefWidth="399.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.33331298828125" minWidth="10.0" prefWidth="51.66667683919271" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.6666564941406" minWidth="10.0" prefWidth="288.6666564941406" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.3333740234375" minWidth="10.0" prefWidth="52.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="71.33331298828125" minHeight="0.0" prefHeight="19.333314895629883" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="132.66668510437012" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextArea prefHeight="155.0" prefWidth="289.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <GridPane GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.33331298828125" minWidth="10.0" prefWidth="66.99997965494792" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.66666158040366" minWidth="10.0" prefWidth="172.33335367838538" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.3333740234375" minWidth="10.0" prefWidth="49.66667175292969" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Notification" wrappingWidth="148.63018035888672" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Verdana" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </GridPane>
+            <GridPane prefHeight="45.0" prefWidth="273.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.33333333333334" minWidth="10.0" prefWidth="94.33331298828125" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.33333333333334" minWidth="10.0" prefWidth="143.0000203450521" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.33331298828125" minWidth="10.0" prefWidth="53.33333333333334" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onSeeButton" prefHeight="25.0" prefWidth="70.0" text="See more" />
+                  <Button mnemonicParsing="false" onAction="#onCancelButton" prefHeight="25.0" prefWidth="57.0" text="Cancel" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
