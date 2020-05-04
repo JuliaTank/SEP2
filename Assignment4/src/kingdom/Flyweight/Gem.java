@@ -1,4 +1,4 @@
-package kingdom;
+package kingdom.Flyweight;
 
 public interface Gem {
 

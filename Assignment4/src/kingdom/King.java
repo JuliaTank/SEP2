@@ -1,9 +1,12 @@
 package kingdom;
 
 
+import kingdom.Flyweight.Gem;
+import kingdom.Singleton.Catalog;
+
 import java.util.List;
 
-public class King implements TreasureRoomDoor //na to nie patrz bo to porazkaaaaaaa, pozniej to zrobie
+public class King implements TreasureRoomDoor //na to nie patrz bo to porazkaaaaaaa, pozniej to zrobie, no co ty
 {
     private boolean kingInTreasureRoom;
 
@@ -13,7 +16,7 @@ public class King implements TreasureRoomDoor //na to nie patrz bo to porazkaaaa
 
     public static void tellAboutGems()
     {
-
+        //tell catalog about throwing/ canceling parties
         Catalog.getInstance().printAction("Amazing, we are going to the party!");
     }
 

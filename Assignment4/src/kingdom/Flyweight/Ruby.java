@@ -1,6 +1,9 @@
-package kingdom;
+package kingdom.Flyweight;
 
-public class Ruby implements Gem {
+import kingdom.Flyweight.Gem;
+
+public class Ruby implements Gem
+{
     @Override
     public String getType() {
         return "ruby";

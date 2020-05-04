@@ -1,7 +1,9 @@
-package kingdom;
+package kingdom.Adapter;
+
+import kingdom.Adapter.ListADT;
 
 /**
- * kingdom.ArrayList is an implementation of interface ListADT (the interface to a list
+ * kingdom.Adapter.ArrayList is an implementation of interface ListADT (the interface to a list
  * collection - the abstract data type List). Elements are referenced by
  * contiguous numeric indices. The list allow duplicate elements and
  * <code>null</code> elements.

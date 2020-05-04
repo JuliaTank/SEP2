@@ -1,6 +1,9 @@
-package kingdom;
+package kingdom.Flyweight;
 
-public class Cow implements Gem {
+import kingdom.Flyweight.Gem;
+
+public class Cow implements Gem
+{
     @Override
     public String getType() {
         return "cow";
