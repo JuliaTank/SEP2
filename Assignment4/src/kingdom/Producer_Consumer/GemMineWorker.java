@@ -32,6 +32,7 @@ public class GemMineWorker implements Runnable {
             else if (i ==3)
                 gem = GemMine.getGem("gem nugget");
             else if (i ==4)
+
                 gem = GemMine.getGem("jewel");
             else if (i ==5)
                 gem = GemMine.getGem("ruby");
