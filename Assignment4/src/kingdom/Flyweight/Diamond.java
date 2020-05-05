@@ -1,6 +1,9 @@
-package kingdom;
+package kingdom.Flyweight;
 
-public class Diamond implements Gem {
+import kingdom.Flyweight.Gem;
+
+public class Diamond implements Gem
+{
     @Override
     public String getType() {
         return "Diamond";

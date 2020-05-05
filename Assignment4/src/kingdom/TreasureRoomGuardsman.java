@@ -1,5 +1,8 @@
 package kingdom;
 
+import kingdom.Flyweight.Gem;
+import kingdom.Singleton.Catalog;
+
 import java.util.List;
 
 public class TreasureRoomGuardsman implements TreasureRoomDoor{

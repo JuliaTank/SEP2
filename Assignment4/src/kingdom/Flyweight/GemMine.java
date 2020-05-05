@@ -1,4 +1,6 @@
-package kingdom;
+package kingdom.Flyweight;
+
+import kingdom.Flyweight.*;
 
 import java.util.HashMap;
 
@@ -11,9 +13,9 @@ public class GemMine {
         {
             switch (type)
             {
-                case "gold nugget":
+                case "gem nugget":
                 {
-                    gem = new GoldNugget();
+                    gem = new GemNugget();
                     break;
                 }
                 case "diamond":
@@ -41,7 +43,6 @@ public class GemMine {
                     gem = new WoodenCoin();
                     break;
                 }
-
             }
             gems.put(type,gem);
         }

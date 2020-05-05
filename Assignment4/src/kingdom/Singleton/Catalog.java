@@ -1,4 +1,4 @@
-package kingdom;
+package kingdom.Singleton;
 
 public class Catalog {
     private static Catalog instance;

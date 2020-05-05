@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.SignIn.SignInController">
    <children>
       <GridPane layoutX="7.0" layoutY="5.0" prefHeight="327.0" prefWidth="592.0">
@@ -55,6 +54,7 @@
             </Label>
             <Button mnemonicParsing="false" onAction="#onSignUp2Button" text="Sign up" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="382.0" textFill="#e10505" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onAction="#onCancelButton" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>
