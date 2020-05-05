@@ -29,6 +29,7 @@ class ArrayListTest {
 
         assertTrue(list.size()==0);
     }
+
     @Test
     void addOne() {
         list.add(2, "Roxana");
