@@ -2,51 +2,40 @@ package kingdom.Adapter;
 
 import kingdom.Singleton.Catalog;
 
-public class GemDeposit<T>
+public class GemDeposit<Gem>
 {
-
-    //private int capacity;
     private ListADT list;
 
 
     public GemDeposit()
     {
-        //this.capacity = capacity;int capacity
-        list = new ArrayList<>();
+        list = new ArrayList<Gem>();
     }
-    public synchronized  void put(T element) throws InterruptedException
+    public synchronized  void put(Gem element) throws InterruptedException
     {
-        while(isFull())
-        {
-            wait();
-            Catalog.getInstance().printAction("Waiting to put" +element+ "to queue");
-        }
-        if(element ==null)
-        {
-            throw new IllegalArgumentException();
-        }
         list.add(element);
-        Catalog.getInstance().printAction(element+ " was put to the queue");
+        Catalog.getInstance().printAction(element+ " was put to the deposit");
         notifyAll();
     }
-    public synchronized  T take() throws InterruptedException
+    public synchronized  Gem take() throws InterruptedException
     {
         while (isEmpty())
         {
+            Catalog.getInstance().printAction("waiting to take from deposit");
             wait();
-            Catalog.getInstance().printAction("waiting to take ");
         }
-        T t = (T)list.remove(0);
-        Catalog.getInstance().printAction(t+" was took from the list");
+        Gem gem = (Gem)list.remove(0);
+
+        Catalog.getInstance().printAction(  gem.toString()+" was took from the deposit");
         notifyAll();
-        return t;
+        return gem;
     }
-    public synchronized  T look()
+    public synchronized  Gem look()
     {
         if(isEmpty())
             return  null;
         else
-            return (T) list.get(0);
+            return (Gem) list.get(0);
     }
 
     public synchronized  boolean isEmpty()

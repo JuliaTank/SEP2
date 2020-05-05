@@ -9,20 +9,19 @@ import java.util.Random;
 
 public class GemMineWorker implements Runnable {
 
-    private GemMine gemMine;
     private GemDeposit deposit;
-    private Gem gem;
+    private int id;
 
-
-    public GemMineWorker(GemMine gemMine, GemDeposit deposit)
+    public GemMineWorker(GemDeposit deposit, int id)
     {
-        this.gemMine = gemMine;
         this.deposit =  deposit;
+        this.id = id;
     }
     @Override
     public void run() {
         while (true)
         {
+            Gem gem;
             Random random = new Random();
             int i = random.nextInt(5)+1;
             if(i == 1)
@@ -39,15 +38,27 @@ public class GemMineWorker implements Runnable {
             {
                 gem = GemMine.getGem("wooden coin");
             }
-            Catalog.getInstance().printAction("miner found: "+gem.getType());
+            else
+            {
+                gem = null;
+                Catalog.getInstance().printAction("random in worker sucks");
+            }
+            if(gem != null)
+            Catalog.getInstance().printAction("miner " +id+" found: "+gem.getType());
             try
             {
-                deposit.put(gem);
+                if(gem != null)
+                {
+                    deposit.put(gem);
+                    Catalog.getInstance().printAction(
+                        "worker put " + gem.getType() + " to deposit");
+                }
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
+          //  notifyAll();
             try
             {
                 Thread.sleep(5000);

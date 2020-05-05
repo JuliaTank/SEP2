@@ -1,11 +1,14 @@
-package kingdom;
+package Readers_Writers.Proxy;
 
+import Readers_Writers.Proxy.TreasureRoomDoor;
 import kingdom.Flyweight.Gem;
+import kingdom.Singleton.Catalog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreasureRoom implements TreasureRoomDoor {
+public class TreasureRoom implements TreasureRoomDoor
+{
     private List<Gem> gems;
 
     public TreasureRoom() {
@@ -15,19 +18,19 @@ public class TreasureRoom implements TreasureRoomDoor {
     // access methods
 
     public synchronized void acquireReadAccess(String actorName) {
-        // note in the catalogue a person entered
+        Catalog.getInstance().printAction(actorName+" entered");
     }
 
     public synchronized void acquireWriteAccess(String actorName) {
-        // note in the catalogue a person entered
+        Catalog.getInstance().printAction(actorName+" entered");
     }
 
     public synchronized void releaseReadAccess(String actorName) {
-        // note in the catalogue a person left
+        Catalog.getInstance().printAction(actorName+" left");
     }
 
     public synchronized void releaseWriteAccess(String actorName) {
-        // note in the catalogue a person left
+        Catalog.getInstance().printAction(actorName+" left");
     }
 
     // interact methods

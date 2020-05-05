@@ -4,4 +4,5 @@ public interface Gem {
 
     String getType();
     int getValue();
+    String toString();
 }

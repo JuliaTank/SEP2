@@ -7,7 +7,7 @@ public class GemNugget implements Gem
 
     @Override
     public String getType() {
-        return "gold nugget";
+        return "gem nugget";
     }
 
     @Override

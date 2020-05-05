@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class GemMine {
     static HashMap<String, Gem> gems=new HashMap<>();
-    public static Gem getGem(String type)
+    public synchronized static Gem getGem(String type)
     {
         Gem gem=gems.get(type);
         if(gem == null)

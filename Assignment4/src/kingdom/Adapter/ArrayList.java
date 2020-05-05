@@ -1,6 +1,5 @@
 package kingdom.Adapter;
 
-import kingdom.Adapter.ListADT;
 
 /**
  * kingdom.Adapter.ArrayList is an implementation of interface ListADT (the interface to a list

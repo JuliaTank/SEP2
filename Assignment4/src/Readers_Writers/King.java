@@ -1,12 +1,14 @@
-package kingdom;
+package Readers_Writers;
 
 
 import kingdom.Flyweight.Gem;
 import kingdom.Singleton.Catalog;
+import Readers_Writers.Proxy.TreasureRoomDoor;
 
 import java.util.List;
 
-public class King implements TreasureRoomDoor //na to nie patrz bo to porazkaaaaaaa, pozniej to zrobie, no co ty
+public class King implements
+    TreasureRoomDoor //na to nie patrz bo to porazkaaaaaaa, pozniej to zrobie, no co ty
 {
     private boolean kingInTreasureRoom;
 
