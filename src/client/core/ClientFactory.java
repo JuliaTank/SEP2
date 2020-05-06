@@ -6,7 +6,11 @@ import client.network.RMIClient;
 import java.rmi.RemoteException;
 
 public class ClientFactory {
+
     private Client client;
+    private  ClientFactory instance;
+
+
     private  ClientFactory()
     {
 

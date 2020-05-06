@@ -5,6 +5,7 @@ public class Catalog {
 
     private Catalog()
     {
+
     }
 
     public static synchronized Catalog getInstance() {
@@ -12,6 +13,7 @@ public class Catalog {
             instance = new Catalog();
         return instance;
     }
+
     public void printAction(String actionText)
     {
         System.out.println("Log: "+actionText);

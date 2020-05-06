@@ -8,18 +8,27 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 
 public class ModelFactory {
-    private final ClientFactory cf;
+
+    private static ModelFactory instance;
+
     private VegSearchModel vegsearchModel;
 
-    public ModelFactory(ClientFactory cf)
+    private ModelFactory()
     {
-        this.cf = cf;
+    }
+    public static synchronized ModelFactory getInstance()
+    {
+        if(instance== null)
+        instance = new ModelFactory();
+        return instance;
     }
 
-    public VegSearchModel getChatModel() throws IOException, NotBoundException
+   /* public VegSearchModel getChatModel() throws IOException, NotBoundException
     {
         if(vegsearchModel==null)
             vegsearchModel = new VegSearchModelManager((RMIClient)cf.getClient());
         return vegsearchModel;
-    }
+    }*/
+
+
 }

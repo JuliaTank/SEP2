@@ -1,4 +1,5 @@
 package client.views;
 
-public class ViewController {
+public interface ViewController {
+  void init();
 }
