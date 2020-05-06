@@ -1,21 +1,17 @@
 package Readers_Writers;
 
 
+import Readers_Writers.Proxy.TreasureRoom;
 import kingdom.Flyweight.Gem;
 import kingdom.Singleton.Catalog;
 import Readers_Writers.Proxy.TreasureRoomDoor;
 
 import java.util.List;
+import java.util.Random;
 
-public class King implements
-    TreasureRoomDoor //na to nie patrz bo to porazkaaaaaaa, pozniej to zrobie, no co ty
+public class King implements TreasureRoomDoor, Runnable
 {
-    private boolean kingInTreasureRoom;
-
-    private int waitingTransporter;
-    private int transporterInTreasureRoom;
-    private int accountantInTreasureRoom;
-
+    private TreasureRoom room;
     public static void tellAboutGems()
     {
         //tell catalog about throwing/ canceling parties
@@ -24,55 +20,39 @@ public class King implements
 
     @Override
     public synchronized void acquireReadAccess(String actorName) {
-        if(actorName.equals("King"))
+        if(room ==null)
         {
-            while (kingInTreasureRoom || waitingTransporter>0)
-            {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            accountantInTreasureRoom++;
+            room = new TreasureRoom();
         }
+        Catalog.getInstance().printAction("Actor "+actorName+" enters the room");
+
+
+
+
 
     }
 
     @Override
     public synchronized void acquireWriteAccess(String actorName) {
-        if(actorName.equals("King"))
+        if(room ==null)
         {
-            waitingTransporter++;
-            while (kingInTreasureRoom || accountantInTreasureRoom>0)
-            {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            waitingTransporter--;
-            kingInTreasureRoom=true;
+            room = new TreasureRoom();
         }
+        Catalog.getInstance().printAction("Actor "+actorName+" enters the room");
+
+
+
+
+
     }
 
     @Override
     public synchronized void releaseReadAccess(String actorName) {
-        if(actorName.equals("King"))
-        {
-            accountantInTreasureRoom--;
-            if(accountantInTreasureRoom==0)
-            {
-                notifyAll();
-            }
-        }
     }
 
     @Override
     public synchronized void releaseWriteAccess(String actorName) {
-        kingInTreasureRoom=false;
-        notifyAll();
+
     }
 
     @Override
@@ -89,4 +69,15 @@ public class King implements
     public List<Gem> lookAtAllGems() {
         return null;
     }
-}
+
+    @Override
+    public void run() {
+
+        Random random = new Random();
+
+        while (true)
+        {
+            int target = random.nextInt(100)+50;
+
+    }
+}}
