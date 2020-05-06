@@ -1,9 +1,8 @@
 package kingdom.Producer_Consumer;
 
-import Readers_Writers.Proxy.TreasureRoomDoor;
+import kingdom.Readers_Writers.Proxy.TreasureRoomDoor;
 import kingdom.Adapter.GemDeposit;
 import kingdom.Flyweight.Gem;
-import kingdom.Flyweight.GemMine;
 import kingdom.Singleton.Catalog;
 
 import java.util.ArrayList;

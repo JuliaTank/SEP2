@@ -1,6 +1,5 @@
-package Readers_Writers.Proxy;
+package kingdom.Readers_Writers.Proxy;
 
-import Readers_Writers.Proxy.TreasureRoomDoor;
 import kingdom.Flyweight.Gem;
 import kingdom.Singleton.Catalog;
 

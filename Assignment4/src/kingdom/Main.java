@@ -1,8 +1,8 @@
 package kingdom;
 
-import Readers_Writers.Accountant;
-import Readers_Writers.Proxy.TreasureRoomDoor;
-import Readers_Writers.Proxy.TreasureRoomGuardsman;
+import kingdom.Readers_Writers.Accountant;
+import kingdom.Readers_Writers.Proxy.TreasureRoomDoor;
+import kingdom.Readers_Writers.Proxy.TreasureRoomGuardsman;
 import kingdom.Adapter.GemDeposit;
 import kingdom.Producer_Consumer.GemMineWorker;
 import kingdom.Producer_Consumer.GemTransporter;

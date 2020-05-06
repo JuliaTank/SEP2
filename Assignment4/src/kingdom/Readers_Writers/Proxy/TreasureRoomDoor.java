@@ -1,4 +1,4 @@
-package Readers_Writers.Proxy;
+package kingdom.Readers_Writers.Proxy;
 
 import kingdom.Flyweight.Gem;
 
