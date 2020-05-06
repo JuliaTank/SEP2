@@ -118,9 +118,12 @@ class ArrayListTest {
      * Removes a value from the array and verifies the remove was successful. Approach:ZOMBIE
      */
     void removeZero() {
+        list.add(0, "Julia");
+        list.add(1, "Toms");
+        list.add(2, "Roxana");
 
-
-
+        assertEquals("Roxana", list.remove(null));
+        assertTrue(list.size() == 3);
     }
     @Test
     void removesOne()
@@ -150,7 +153,7 @@ class ArrayListTest {
     @Test
     void removeException()
     {
-
+        //already tested in isEmpty()
     }
 
     @Test
@@ -184,7 +187,7 @@ class ArrayListTest {
     @Test
     void indexOfException()
     {
-
+        assertThrows(IllegalArgumentException.class,()->list.get(-1));
     }
     // Tests the method contains() and asserts true if list contains added element. Approach:ZOMBIE
     @Test
@@ -214,7 +217,7 @@ class ArrayListTest {
     @Test
     void containsException()
     {
-
+        assertThrows(IllegalArgumentException.class,()->list.contains(null));
     }
     // Tests the method isEmpty() and return exception if you want to remove element if the arraylist is already empty.
     @Test
