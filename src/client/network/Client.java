@@ -10,4 +10,5 @@ public interface Client extends Subject {
     void report(String txt) throws RemoteException;
     String getNumberOfSubscriptions() throws RemoteException;
     void addRecipe(String recipe) throws RemoteException;
+    boolean logIn(String username, String password);
 }

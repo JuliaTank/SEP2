@@ -42,13 +42,15 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void loginClient() throws RemoteException {
-        numberOfClients++;
+    public void logIn(String username, String password) throws RemoteException {
+
+       // numberOfClients++;
+
     }
 
     @Override
-    public void logoutClient() throws RemoteException {
-        numberOfClients--;
+    public void logOut() throws RemoteException {
+       // numberOfClients--;
     }
 
     @Override

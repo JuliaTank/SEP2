@@ -59,7 +59,7 @@
                                        <children>
                                           <ImageView fx:id="recipePic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../../Downloads/carrotLogo.png" />
+                                                <Image/>
                                              </image>
                                           </ImageView>
                                           <ListView fx:id="igredientList" prefHeight="148.0" prefWidth="299.0" />
@@ -72,7 +72,7 @@
                                  <children>
                                     <ImageView fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../../../Downloads/rabbit.jpg" />
+                                          <Image />
                                        </image>
                                     </ImageView>
                                     <Hyperlink fx:id="userLink" onAction="#onUserLink" prefHeight="62.0" prefWidth="286.0" text="user">
@@ -88,7 +88,7 @@
                                        <effect>
                                           <ImageInput x="10.0" y="10.0">
                                              <source>
-                                                <Image  "heart.png" />
+                                                <Image/>
                                              </source>
                                           </ImageInput>
                                        </effect>
@@ -131,7 +131,7 @@
                            <effect>
                               <ImageInput x="2.0" y="2.0">
                                  <source>
-                                    <Image url="file:/C:/Users/tanki/Downloads/look.png" />
+                                    <Image/>
                                  </source>
                               </ImageInput>
                            </effect>

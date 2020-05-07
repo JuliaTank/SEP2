@@ -9,5 +9,6 @@ public interface VegSearchModel extends Subject {
     String getNumberOfSubscriptions() throws RemoteException;
     void saveUsername(String username);
     void addRecipe(String recipe) throws RemoteException;
+    boolean logIn(String username, String password);
 
 }

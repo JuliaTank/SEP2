@@ -8,10 +8,7 @@ import javafx.stage.Stage;
 public class VegSearchApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        /*ClientFactory cf = new ClientFactory();
-        ModelFactory mf = new ModelFactory(cf);
-        ViewModelFactory vmf = new ViewModelFactory(mf);
-        ViewHandler vh = new ViewHandler(vmf);
-        vh.start();*/
+        ViewHandler vh = ViewHandler.getInstance();
+        vh.start();
     }
 }

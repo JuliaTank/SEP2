@@ -23,12 +23,11 @@ public class ModelFactory {
         return instance;
     }
 
-   /* public VegSearchModel getChatModel() throws IOException, NotBoundException
+   public VegSearchModel getModel() throws IOException, NotBoundException
     {
         if(vegsearchModel==null)
-            vegsearchModel = new VegSearchModelManager((RMIClient)cf.getClient());
+            vegsearchModel = new VegSearchModelManager(ClientFactory.getInstance().getClient());
         return vegsearchModel;
-    }*/
-
+    }
 
 }

@@ -20,17 +20,17 @@ public class ViewHandler {
     private Stage stage;
     private ViewModelFactory vmf;
     private Queue<ViewModelFactory> vmfQueue;
+    //what is it for guys??
     private static ViewHandler instance;
 
-    private ViewHandler(ViewModelFactory vmf)
+    private ViewHandler()
     {
-        this.vmf = vmf;
     }
     public static ViewHandler getInstance()
     {
         if(instance==null)
         {
-            //instance=new ViewHandler();
+            instance=new ViewHandler();
         }
         return instance;
 
@@ -120,7 +120,7 @@ public class ViewHandler {
         Parent root = loader.load();
 
         ViewController ctrl = loader.getController();
-        //ctrl.init(this, vmf);
+        ctrl.init();
         return root;
     }
 

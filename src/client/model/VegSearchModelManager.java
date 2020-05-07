@@ -16,7 +16,7 @@ public class VegSearchModelManager implements VegSearchModel {
         this.client=client;
 
         client.startClient();
-        //client.addListener("");
+        //client.addListener();
     }
 
     @Override
@@ -37,6 +37,11 @@ public class VegSearchModelManager implements VegSearchModel {
     @Override
     public void addRecipe(String recipe) throws RemoteException {
         client.addRecipe(recipe);
+    }
+
+    @Override public boolean logIn(String username, String password)
+    {
+        return client.logIn(username,password);
     }
 
     @Override

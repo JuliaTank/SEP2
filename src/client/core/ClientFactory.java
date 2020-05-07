@@ -8,12 +8,19 @@ import java.rmi.RemoteException;
 public class ClientFactory {
 
     private Client client;
-    private  ClientFactory instance;
-
+    private static ClientFactory instance;
 
     private  ClientFactory()
     {
 
+    }
+    public static  synchronized  ClientFactory getInstance()
+    {
+        if(instance ==null)
+        {
+            instance= new ClientFactory();
+        }
+        return instance;
     }
     public Client getClient() throws RemoteException
     {

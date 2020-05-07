@@ -34,7 +34,7 @@ public class RMIClient implements Client, ClientCallBack {
         }
         catch (RemoteException e)
         {
-            throw new RemoteException("couldnt contact client");
+            throw new RemoteException("couldn't contact client");
         }
     }
 
@@ -51,8 +51,13 @@ public class RMIClient implements Client, ClientCallBack {
         }
         catch (RemoteException e)
         {
-            throw new RemoteException("couldnt contact client");
+            throw new RemoteException("couldn't contact client");
         }
+    }
+
+    @Override public boolean logIn(String username, String password)
+    {
+        return server.logIn(username,password);
     }
 
     @Override
