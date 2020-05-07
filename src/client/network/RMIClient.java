@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 
 public class RMIClient implements Client, ClientCallBack {
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
@@ -56,6 +57,7 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override public boolean logIn(String username, String password)
+        throws RemoteException, SQLException
     {
         return server.logIn(username,password);
     }

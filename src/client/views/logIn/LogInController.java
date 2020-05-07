@@ -1,4 +1,4 @@
-package client.views.LogIn;
+package client.views.logIn;
 
 import client.core.ViewModelFactory;
 import client.views.ViewController;
@@ -7,6 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class LogInController implements ViewController
 {
@@ -18,6 +23,10 @@ public class LogInController implements ViewController
   @FXML
   private PasswordField passwordField;
 
+  public LogInController() throws IOException, NotBoundException
+  {
+  }
+
   public void init()
   {
     usernameField.textProperty().bindBidirectional(vm.getUsernameField());
@@ -26,6 +35,7 @@ public class LogInController implements ViewController
   }
 
   public void onLoginButton(ActionEvent actionEvent)
+      throws RemoteException, SQLException
   {
     vm.logIn();
   }

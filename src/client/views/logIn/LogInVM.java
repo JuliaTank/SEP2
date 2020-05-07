@@ -1,13 +1,15 @@
-package client.views.LogIn;
+package client.views.logIn;
 
 import client.core.ModelFactory;
+import client.core.ViewHandler;
 import client.model.VegSearchModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class LogInVM {
 
@@ -15,6 +17,7 @@ public class LogInVM {
   private StringProperty passwordField;
   private StringProperty errorLabel;
   private  VegSearchModel model;
+  private ViewHandler vh = ViewHandler.getInstance();
 
   public LogInVM() throws IOException, NotBoundException
   {
@@ -39,7 +42,7 @@ public class LogInVM {
     return passwordField;
   }
 
-  public void logIn()
+  public void logIn() throws RemoteException, SQLException
   {
     if(usernameField.toString().equals("") || passwordField.toString().equals(""))
     {
@@ -49,6 +52,10 @@ public class LogInVM {
     {
       errorLabel.setValue("Wrong password or username");
       passwordField.setValue("");
+    }
+    else
+    {
+      vh.openMainPage();
     }
   }
 

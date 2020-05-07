@@ -1,14 +1,18 @@
 package server.network;
 
+import database.ProfilesData;
+import database.RecipesData;
 import server.model.Manager;
 import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
+import shared.transferObjects.Profile;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RMIServerImpl implements RMIServer {
@@ -16,12 +20,16 @@ public class RMIServerImpl implements RMIServer {
     private Manager manager;
     private ArrayList<ClientCallBack> clients;
     private int numberOfClients=0;
+    private ProfilesData profilesData;
+    private RecipesData recipesData;
 
 
-    public RMIServerImpl(Manager manager)
+    public RMIServerImpl(Manager manager) throws SQLException
     {
         this.manager = manager;
         clients=new ArrayList<>();
+        profilesData = ProfilesData.getInstance();
+        recipesData = RecipesData.getInstance();
     }
     public void startServer() throws RemoteException, AlreadyBoundException {
         UnicastRemoteObject.exportObject(this,0);
@@ -42,10 +50,17 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void logIn(String username, String password) throws RemoteException {
-
-       // numberOfClients++;
-
+    public boolean logIn(String username, String password)
+        throws RemoteException, SQLException
+    {
+      Profile profile  = profilesData.getProfile(username);
+      if(profile==null || !profile.getPassword().equals(password))
+      {
+        return false;
+      }
+      else {
+        return true;
+      }
     }
 
     @Override

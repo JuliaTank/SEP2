@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class VegSearchModelManager implements VegSearchModel {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -40,6 +41,7 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override public boolean logIn(String username, String password)
+        throws RemoteException, SQLException
     {
         return client.logIn(username,password);
     }

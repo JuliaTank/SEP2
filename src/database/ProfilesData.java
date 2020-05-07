@@ -10,7 +10,7 @@ public class ProfilesData {
 
     private static ProfilesData instance;
 
-    public ProfilesData() throws SQLException
+    private ProfilesData() throws SQLException
     {
         DriverManager.registerDriver(new org.postgresql.Driver());
     }
@@ -25,7 +25,7 @@ public class ProfilesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public Profile create(String username, String password, String picFile, String description, ArrayList<Profile>subscriptions) throws SQLException
     {

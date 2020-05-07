@@ -3,12 +3,14 @@ package client.model;
 import shared.util.Subject;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public interface VegSearchModel extends Subject {
     void report(String txt) throws RemoteException;
     String getNumberOfSubscriptions() throws RemoteException;
     void saveUsername(String username);
     void addRecipe(String recipe) throws RemoteException;
-    boolean logIn(String username, String password);
+    boolean logIn(String username, String password)
+        throws RemoteException, SQLException;
 
 }

@@ -43,7 +43,7 @@ public class ViewHandler {
     public void openLogIn() {
         if (logInScene == null) {
             try {
-                Parent root = loadFXML("../views/LogIn/LogIn.fxml");
+                Parent root = loadFXML("../views/logIn/logIn.fxml");
 
                 stage.setTitle("Log in ");
                 logInScene = new Scene(root);
@@ -58,7 +58,7 @@ public class ViewHandler {
     public void openSignIn() {
         if (signInScene == null) {
             try {
-                Parent root = loadFXML("../views/SignIn/SignIn.fxml");
+                Parent root = loadFXML("../views/SignIn/signIn.fxml");
 
                 stage.setTitle("Sign in ");
                 signInScene = new Scene(root);
@@ -69,7 +69,7 @@ public class ViewHandler {
         stage.setScene(signInScene);
         stage.show();
     }
-    public void mainPage() {
+    public void openMainPage() {
         if (mainPageScene == null) {
             try {
                 Parent root = loadFXML("../views/MainPage/mainPage.fxml");

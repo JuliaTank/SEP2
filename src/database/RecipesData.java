@@ -9,11 +9,20 @@ import java.util.ArrayList;
 public class RecipesData {
 
     private ProfilesData profilesData;
+    private static RecipesData instance;
 
-    public RecipesData() throws SQLException
+    private RecipesData() throws SQLException
     {
         DriverManager.registerDriver(new org.postgresql.Driver());
         profilesData = ProfilesData.getInstance();
+    }
+    public static synchronized RecipesData getInstance() throws SQLException
+    {
+        if(instance == null)
+        {
+            instance = new RecipesData();
+        }
+        return instance;
     }
     private Connection getConnection() throws SQLException
     {
@@ -94,13 +103,13 @@ public class RecipesData {
         }
     }
 
-    public ArrayList<Recipe> getRecipesByAuthor(String searchedProfile) throws SQLException
+    public ArrayList<Recipe> getRecipesByAuthor(String author) throws SQLException
     {
         ArrayList<Recipe> result=new ArrayList<>();
         try(Connection connection = getConnection())
         {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE username LIKE ?");
-            statement.setString(1, profilesData.getProfile(searchedProfile));
+            statement.setString(1, "%"+author+"%");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next())
