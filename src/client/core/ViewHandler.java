@@ -30,7 +30,7 @@ public class ViewHandler {
     {
         if(instance==null)
         {
-            instance=new ViewHandler();
+            //instance=new ViewHandler();
         }
         return instance;
 
@@ -120,7 +120,7 @@ public class ViewHandler {
         Parent root = loader.load();
 
         ViewController ctrl = loader.getController();
-        ctrl.init(this, vmf);
+        //ctrl.init(this, vmf);
         return root;
     }
 

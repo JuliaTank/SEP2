@@ -2,11 +2,11 @@ package shared.transferObjects;
 
 import java.io.Serializable;
 
-public class Report implements Serializable {
+public class Notification implements Serializable {
     private String username;
     private String message;
 
-    public Report(String username, String message) {
+    public Notification(String username, String message) {
         this.username=username;
 
         this.message = message;
@@ -20,5 +20,3 @@ public class Report implements Serializable {
                 '}';
     }
 }
-
-

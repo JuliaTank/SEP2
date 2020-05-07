@@ -16,7 +16,7 @@ public class VegSearchModelManager implements VegSearchModel {
         this.client=client;
 
         client.startClient();
-        client.addListener("")
+        //client.addListener("");
     }
 
     @Override

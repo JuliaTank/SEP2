@@ -159,7 +159,7 @@ public class ArrayList<T> implements ListADT<T>
 
       if (index == -1)
       {
-         throw new IllegalStateException();
+         //throw new IllegalStateException();
       }
 
       return remove(index);
