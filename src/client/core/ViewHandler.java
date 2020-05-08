@@ -18,6 +18,8 @@ public class ViewHandler {
     private Scene mainPageScene;
     private Scene inboxScene;
     private Scene profileScene;
+    private Scene reportUserScene;
+    private Scene reportAdmScene;
     private Stage stage;
     private ViewModelFactory vmf;
     private Queue<ViewModelFactory> vmfQueue;
@@ -113,7 +115,33 @@ public class ViewHandler {
         stage.setScene(profileScene);
         stage.show();
     }
+    public void openReportUser() {
+        if (logInScene == null) {
+            try {
+                Parent root = loadFXML("../views/ReportUser/reportUser.fxml");
 
+                stage.setTitle("Report recipe");
+                logInScene = new Scene(root);
+            } catch (IOException | NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+        stage.setScene(reportUserScene);
+        stage.show();
+    } public void openReportAdm() {
+        if (logInScene == null) {
+            try {
+                Parent root = loadFXML("../views/ReportAdm/reportAdm.fxml");
+
+                stage.setTitle("New Report");
+                logInScene = new Scene(root);
+            } catch (IOException | NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+        stage.setScene(reportAdmScene);
+        stage.show();
+    }
     private Parent loadFXML(String path) throws IOException, NotBoundException
     {
         FXMLLoader loader = new FXMLLoader();
