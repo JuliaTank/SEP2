@@ -44,12 +44,14 @@ public class LogInVM {
 
   public void logIn() throws RemoteException, SQLException
   {
+    System.out.println(usernameField.toString()+"  "+passwordField.toString());
     if(usernameField.toString().equals("") || passwordField.toString().equals(""))
     {
       errorLabel.setValue("Type in your username and password");
     }
-    else if(!model.logIn(usernameField.toString(),passwordField.toString()))
+    else if(!model.logIn(usernameField.getValue(), passwordField.getValue()))
     {
+
       errorLabel.setValue("Wrong password or username");
       passwordField.setValue("");
     }
@@ -61,6 +63,6 @@ public class LogInVM {
 
   public void join()
   {
-
+   vh.openSignIn();
   }
 }

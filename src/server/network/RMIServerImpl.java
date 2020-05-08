@@ -54,13 +54,8 @@ public class RMIServerImpl implements RMIServer {
         throws RemoteException, SQLException
     {
       Profile profile  = profilesData.getProfile(username);
-      if(profile==null || !profile.getPassword().equals(password))
-      {
-        return false;
-      }
-      else {
-        return true;
-      }
+
+        return profile!= null && profile.getPassword().equals(password);
     }
 
     @Override

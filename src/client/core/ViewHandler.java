@@ -1,5 +1,6 @@
 package client.core;
 
+import client.views.MainPage.MainPageController;
 import client.views.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,6 +120,7 @@ public class ViewHandler {
         loader.setLocation(getClass().getResource(path));
         Parent root = loader.load();
 
+        //
         ViewController ctrl = loader.getController();
         ctrl.init();
         return root;
