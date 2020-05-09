@@ -10,6 +10,7 @@ public class MainPageVM {
   public void logOut()
   {
     vh.openLogIn();
+
   }
   public void viewMyProfile()
   {
