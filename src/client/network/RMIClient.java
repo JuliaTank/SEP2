@@ -2,9 +2,12 @@ package client.network;
 
 import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
+import shared.transferObjects.Profile;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -60,6 +63,19 @@ public class RMIClient implements Client, ClientCallBack {
         throws RemoteException, SQLException
     {
         return server.logIn(username,password);
+    }
+
+    @Override public boolean signUp(String username, String password,
+        File picFile, String description)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return server.signUp(username,password,picFile,description);
+    }
+
+    @Override public Profile getProfile(String username)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return server.getProfile(username);
     }
 
     @Override

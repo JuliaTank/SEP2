@@ -7,6 +7,8 @@ import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
 import shared.transferObjects.Profile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -79,5 +81,27 @@ public class RMIServerImpl implements RMIServer {
         //
         manager.report(txt);
 
+    }
+
+    @Override public boolean signUp(String username, String password,
+        File picFile, String description)
+        throws SQLException, FileNotFoundException,RemoteException
+    {
+        if(ProfilesData.getInstance().getProfile(username)!=null)
+        {
+            return  false;
+        }
+        ProfilesData.getInstance().create(username,password,picFile,description,new ArrayList<>());
+       if(ProfilesData.getInstance().getProfile(username).getUsername().equals(username))
+       {
+           return  true;
+       }
+       else return false;
+    }
+
+    @Override public Profile getProfile(String username)
+        throws SQLException, FileNotFoundException, RemoteException
+    {
+        return profilesData.getProfile(username);
     }
 }

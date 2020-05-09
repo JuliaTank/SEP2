@@ -33,7 +33,7 @@ public class LogInController implements ViewController
 
   public void init()
   {
-    Image image3 = new Image("carrotLogo.png");
+    Image image3 = new Image("file:carrotLogo.png");
     VSlogo.setImage(image3);
 
     usernameField.textProperty().bindBidirectional(vm.getUsernameField());

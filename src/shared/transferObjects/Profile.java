@@ -1,16 +1,17 @@
 package shared.transferObjects;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Profile implements Serializable {
     private String username;
     private String password;
-    private String picFile;
+    private File picFile;
     private String description;
     private ArrayList<Profile>subs;
 
-    public Profile(String username, String password, String picFile, String description, ArrayList<Profile> subs)
+    public Profile(String username, String password, File picFile, String description, ArrayList<Profile> subs)
     {
         this.username=username;
         this.password=password;
@@ -27,7 +28,7 @@ public class Profile implements Serializable {
         return password;
     }
 
-    public String getPicFile() {
+    public File getPicFile() {
         return picFile;
     }
 

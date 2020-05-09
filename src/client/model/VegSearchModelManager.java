@@ -2,19 +2,20 @@ package client.model;
 
 import client.network.Client;
 import shared.transferObjects.Profile;
-import shared.transferObjects.Recipe;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class VegSearchModelManager implements VegSearchModel {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Client client;
     private String username;
+    private Profile loggedProfile;
 
     public VegSearchModelManager(Client client) throws RemoteException, NotBoundException {
         this.client=client;
@@ -29,8 +30,8 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public String getNumberOfSubscriptions(Profile profile) throws RemoteException {
-        return client.getNumberOfSubscriptions(profile);
+    public String getNumberOfSubscriptions() throws RemoteException {
+        return client.getNumberOfSubscriptions();
     }
 
     @Override
@@ -39,49 +40,34 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void signUp(String username, String password, String picFile, String description) {
-
-    }
-
-    @Override
     public void addRecipe(String recipe) throws RemoteException {
         client.addRecipe(recipe);
     }
 
-    @Override
-    public void subscribe(Profile subscriber, Profile profile) {
-
-    }
-
-    @Override
-    public void unsubscribe(Profile subscriber, Profile profile) {
-
-    }
-
     @Override public boolean logIn(String username, String password)
-        throws RemoteException, SQLException
+        throws RemoteException, SQLException, FileNotFoundException
     {
-        return client.logIn(username,password);
+        boolean logged = client.logIn(username,password);
+        if(logged)
+        {
+            setLoggedProfile(client.getProfile(username));
+        }
+        return logged;
     }
 
-    @Override
-    public void logOut() {
-
+    public Profile getLoggedProfile()
+    {
+        return loggedProfile;
     }
-
-    @Override
-    public void search(String searchWord) {
-
+    private void setLoggedProfile(Profile profile)
+    {
+        loggedProfile = profile;
     }
-
-    @Override
-    public boolean save(String title, String description, Profile profile, ArrayList<String> ingredients, String picFile) {
-        return false;
-    }
-
-    @Override
-    public void see(Recipe recipe) {
-
+    @Override public boolean signUp(String username, String password,
+        File picFile, String description)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+       return client.signUp(username, password, picFile,description);
     }
 
     @Override

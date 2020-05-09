@@ -6,6 +6,7 @@ import client.model.VegSearchModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -42,16 +43,16 @@ public class LogInVM {
     return passwordField;
   }
 
-  public void logIn() throws RemoteException, SQLException
+  public void logIn()
+      throws RemoteException, SQLException, FileNotFoundException
   {
     System.out.println(usernameField.toString()+"  "+passwordField.toString());
-    if(usernameField.toString().equals("") || passwordField.toString().equals(""))
+    if(usernameField.getValue()==null|| passwordField.getValue()==null)
     {
       errorLabel.setValue("Type in your username and password");
     }
     else if(!model.logIn(usernameField.getValue(), passwordField.getValue()))
     {
-
       errorLabel.setValue("Wrong password or username");
       passwordField.setValue("");
     }
