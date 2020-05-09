@@ -6,9 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import shared.transferObjects.Profile;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.sql.SQLException;
 import java.util.Queue;
 
 public class ViewHandler {
@@ -44,16 +46,16 @@ public class ViewHandler {
         openLogIn();
     }
     public void openLogIn() {
-        if (logInScene == null) {
-            try {
-                Parent root = loadFXML("../views/logIn/logIn.fxml");
+
+                try {
+                Parent root = loadFXML("../views/logIn/logIn.fxml",null);
 
                 stage.setTitle("Log in ");
                 logInScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
-        }
+
         stage.setScene(logInScene);
         stage.show();
     }
@@ -61,11 +63,11 @@ public class ViewHandler {
     public void openSignIn() {
         if (signInScene == null) {
             try {
-                Parent root = loadFXML("../views/SignIn/signIn.fxml");
+                Parent root = loadFXML("../views/SignIn/signIn.fxml",null);
 
                 stage.setTitle("Sign in ");
                 signInScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -75,11 +77,11 @@ public class ViewHandler {
     public void openMainPage() {
         if (mainPageScene == null) {
             try {
-                Parent root = loadFXML("../views/MainPage/mainPage.fxml");
+                Parent root = loadFXML("../views/MainPage/mainPage.fxml",null);
 
                 stage.setTitle("Main Page");
                 mainPageScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -90,39 +92,38 @@ public class ViewHandler {
     public void openInbox() {
         if (inboxScene == null) {
             try {
-                Parent root = loadFXML("../views/Inbox/inbox.fxml");
+                Parent root = loadFXML("../views/Inbox/inbox.fxml",null);
 
                 stage.setTitle("Inbox");
                 inboxScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
         stage.setScene(inboxScene);
         stage.show();
     }
-    public void openProfile() {
-        if (profileScene == null) {
+    public void openProfile(Profile profile) {
+
             try {
-                Parent root = loadFXML("../views/Profile/profile.fxml");
+                Parent root = loadFXML("../views/Profile/profile.fxml",profile);
 
                 stage.setTitle("Profile");
                 profileScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
-        }
         stage.setScene(profileScene);
         stage.show();
     }
     public void openReportUser() {
         if (logInScene == null) {
             try {
-                Parent root = loadFXML("../views/ReportUser/reportUser.fxml");
+                Parent root = loadFXML("../views/ReportUser/reportUser.fxml",null);
 
                 stage.setTitle("Report recipe");
                 logInScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -131,18 +132,19 @@ public class ViewHandler {
     } public void openReportAdm() {
         if (logInScene == null) {
             try {
-                Parent root = loadFXML("../views/ReportAdm/reportAdm.fxml");
+                Parent root = loadFXML("../views/ReportAdm/reportAdm.fxml",null);
 
                 stage.setTitle("New Report");
                 logInScene = new Scene(root);
-            } catch (IOException | NotBoundException e) {
+            } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
         stage.setScene(reportAdmScene);
         stage.show();
     }
-    private Parent loadFXML(String path) throws IOException, NotBoundException
+    private Parent loadFXML(String path,Profile profile)
+        throws IOException, NotBoundException, SQLException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(path));
@@ -150,7 +152,7 @@ public class ViewHandler {
 
         //
         ViewController ctrl = loader.getController();
-        ctrl.init();
+        ctrl.init(profile);
         return root;
     }
 

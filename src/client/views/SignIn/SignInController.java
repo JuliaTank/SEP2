@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import shared.transferObjects.Profile;
 
 import javax.swing.*;
 import java.io.*;
@@ -84,7 +85,7 @@ public class SignInController implements ViewController
     ViewHandler.getInstance().openLogIn();
   }
 
-  @Override public void init()
+  @Override public void init(Profile profile)
   {
     Image image = new Image("file:rabbit.jpg");
     userPic.setImage(image);

@@ -42,11 +42,17 @@ public class RMIClient implements Client, ClientCallBack {
         }
     }
 
-    @Override
+    @Override public String getNumberOfSubscriptions(Profile profile)
+        throws RemoteException
+    {
+        return null;
+    }
+
+   /* @Override
     public String getNumberOfSubscriptions() throws RemoteException {
         return server.getNumberOfSubscriptions();
     }
-
+*/
     @Override
     public void addRecipe(String recipe) throws RemoteException {
         try

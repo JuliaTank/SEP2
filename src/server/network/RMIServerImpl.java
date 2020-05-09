@@ -65,11 +65,6 @@ public class RMIServerImpl implements RMIServer {
        // numberOfClients--;
     }
 
-    @Override
-    public String getNumberOfSubscriptions(Profile profile) throws RemoteException, SQLException {
-
-        return profilesData.getProfile(profile.getUsername()).getSubs().size()+"";
-    }
 
     @Override
     public void addRecipe(String recipe, ClientCallBack client) throws RemoteException {

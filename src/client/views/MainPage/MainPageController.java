@@ -1,6 +1,9 @@
 package client.views.MainPage;
 
+import client.core.ModelFactory;
+import client.core.ViewHandler;
 import client.core.ViewModelFactory;
+import client.model.VegSearchModel;
 import client.views.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,9 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import shared.transferObjects.Profile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class MainPageController implements ViewController
 {
@@ -36,14 +43,20 @@ public class MainPageController implements ViewController
   private ImageView userPic;
   @FXML
   private Hyperlink userLink;
+
   private MainPageVM vm= ViewModelFactory.getInstance().getMainPageVM();
+  private ViewHandler vh = ViewHandler.getInstance();
+ // private VegSearchModel model = ModelFactory.getInstance().getModel();
 
   public MainPageController() throws IOException, NotBoundException
   {
   }
 
   public void onUserLink(ActionEvent actionEvent)
+      throws FileNotFoundException, SQLException, RemoteException
   {
+    vm.openProfile();
+
   }
 
   public void onLikeButton(ActionEvent actionEvent)
@@ -72,8 +85,10 @@ public class MainPageController implements ViewController
     vm.logOut();
   }
 
-  @Override public void init()
+  @Override public void init(Profile profile)
   {
+    userLink.textProperty().bindBidirectional(vm.getUserLink());
+    userLink.setText("Roksanka");
     Image image = new Image("file:rabbit.jpg");
     Image image1 = new Image("file:look.png");
     Image image2 = new Image("file:heart.png");

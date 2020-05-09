@@ -31,7 +31,7 @@ public class VegSearchModelManager implements VegSearchModel {
 
     @Override
     public String getNumberOfSubscriptions() throws RemoteException {
-        return client.getNumberOfSubscriptions();
+        return null;//client.getNumberOfSubscriptions();
     }
 
     @Override
@@ -59,6 +59,14 @@ public class VegSearchModelManager implements VegSearchModel {
     {
         return loggedProfile;
     }
+
+
+    @Override public Profile getProfile(String username)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return client.getProfile(username);
+    }
+
     private void setLoggedProfile(Profile profile)
     {
         loggedProfile = profile;

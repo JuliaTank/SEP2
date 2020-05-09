@@ -1,5 +1,6 @@
 package client.model;
 
+import shared.transferObjects.Profile;
 import shared.util.Subject;
 
 import java.io.File;
@@ -15,6 +16,9 @@ public interface VegSearchModel extends Subject {
     boolean logIn(String username, String password)
         throws RemoteException, SQLException, FileNotFoundException;
     boolean signUp(String username, String password, File picFile,String description)
+        throws FileNotFoundException, SQLException, RemoteException;
+    Profile getLoggedProfile();
+    Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException;
 
 }

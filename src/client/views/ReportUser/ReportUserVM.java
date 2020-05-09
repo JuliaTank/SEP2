@@ -13,7 +13,7 @@ public class ReportUserVM {
     private VegSearchModel model;
     private StringProperty textAreaProperty;
 
-    private ReportUserVM() throws IOException, NotBoundException {
+    public ReportUserVM() throws IOException, NotBoundException {
         this.model = ModelFactory.getInstance().getModel();
         textAreaProperty = new SimpleStringProperty();
     }

@@ -30,7 +30,7 @@ public class ProfilesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public Profile create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
         throws SQLException, FileNotFoundException

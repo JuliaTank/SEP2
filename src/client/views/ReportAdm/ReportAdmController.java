@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import shared.networking.RMIServer;
+import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
 import java.awt.*;
@@ -24,13 +25,13 @@ public class ReportAdmController implements ViewController {
     }
 
     @Override
-    public void init() {
+    public void init(Profile profile) {
         textArea.textProperty().bindBidirectional(vm.getAreaProperty());
         textArea.setWrapText(true);
     }
-    public void onRecipeButton() {
+   /* public void onRecipeButton() {
         vm.openRecipe(recipe);
-    }
+    }*/
 
 
 }
