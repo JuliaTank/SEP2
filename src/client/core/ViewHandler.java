@@ -1,6 +1,7 @@
 package client.core;
 
 import client.views.MainPage.MainPageController;
+import client.views.Recipe.RecipeController;
 import client.views.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -156,6 +157,24 @@ public class ViewHandler {
         return root;
     }
 
+    public RecipeController getRecipeDisplayPanel()
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/Recipe/recipe.fxml"));
+        Parent root = null;
+        try
+        {
+            root = loader.load();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        RecipeController controller  = loader.getController();
+        controller.init(root);
+        return  controller;
+    }
 
 
 

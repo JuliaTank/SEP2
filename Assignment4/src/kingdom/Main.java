@@ -1,6 +1,7 @@
 package kingdom;
 
 import kingdom.Readers_Writers.Accountant;
+import kingdom.Readers_Writers.King;
 import kingdom.Readers_Writers.Proxy.TreasureRoomDoor;
 import kingdom.Readers_Writers.Proxy.TreasureRoomGuardsman;
 import kingdom.Adapter.GemDeposit;
@@ -17,6 +18,9 @@ public class Main {
         Thread thread = new Thread(gemTransporter);
         GemTransporter gemTransporter2 =new GemTransporter(deposit,room);
         Thread thread1 = new Thread(gemTransporter2);
+
+        King king = new King(room);
+        Thread kingThread = new Thread(king);
 
         Accountant accountant = new Accountant(room);
         Thread  thread7 = new Thread(accountant);
@@ -39,6 +43,7 @@ public class Main {
         thread5.start();
         thread6.start();
         thread7.start();
+        kingThread.start();
 
     }
 }

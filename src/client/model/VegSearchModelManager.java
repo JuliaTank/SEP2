@@ -2,6 +2,7 @@ package client.model;
 
 import client.network.Client;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -10,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class VegSearchModelManager implements VegSearchModel {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -65,6 +67,11 @@ public class VegSearchModelManager implements VegSearchModel {
         throws FileNotFoundException, SQLException, RemoteException
     {
         return client.getProfile(username);
+    }
+
+    @Override public void setRecipes(ArrayList<Recipe> recipes)
+    {
+
     }
 
     private void setLoggedProfile(Profile profile)

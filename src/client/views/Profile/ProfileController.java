@@ -2,16 +2,21 @@ package client.views.Profile;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
+import client.views.Recipe.RecipeController;
 import client.views.ViewController;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +26,8 @@ import java.sql.SQLException;
 
 public class ProfileController implements ViewController
 {
+  @FXML
+  private VBox recipeContainer;
   @FXML
   private Button subscribeButton;
   @FXML
@@ -55,7 +62,28 @@ public class ProfileController implements ViewController
   }
 
   public void onNewRecipe(ActionEvent actionEvent) {
+
+    vm.addRecipeDisplay();
   }
+ private void OnRecipeAdded(ListChangeListener.Change<? extends ProfileVM.RecipeDisplay> change)
+
+ {
+   if(change.next())
+   {
+     ProfileVM.RecipeDisplay rd = change.getAddedSubList().get(0);
+
+     RecipeController recipeController =vh.getRecipeDisplayPanel();
+
+     rd.getReportField().bind(recipeController.reportField.textProperty());
+     rd.getCommentField().bind(recipeController.commentField.textProperty());
+     rd.getCommentsList().bind(recipeController.CommentsList.itemsProperty());
+     rd.getIngredientsList().bind(recipeController.ingredientList.itemsProperty());
+     rd.getUserLink().bind(recipeController.userLink.textProperty());
+
+     Parent recipeDisplayPanel  =  recipeController.getRoot();
+     recipeContainer.getChildren().add(recipeDisplayPanel);
+   }
+ }
 
   public void onDeleteButton(ActionEvent actionEvent) {
   }
@@ -67,6 +95,10 @@ public class ProfileController implements ViewController
   @Override public void init(Profile profile)
       throws FileNotFoundException, SQLException, RemoteException
   {
+    vm.getRecipeDisplays().addListener(this::OnRecipeAdded);
+
+
+
     username.setText(profile.getUsername());
 
     Image image = new Image(profile.getPicFile().toURI().toString());

@@ -1,12 +1,14 @@
 package client.model;
 
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 import shared.util.Subject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface VegSearchModel extends Subject {
     void report(String txt) throws RemoteException;
@@ -20,5 +22,6 @@ public interface VegSearchModel extends Subject {
     Profile getLoggedProfile();
     Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException;
+    void setRecipes(ArrayList<Recipe> recipes);
 
 }
