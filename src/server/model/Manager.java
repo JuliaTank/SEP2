@@ -1,5 +1,8 @@
 package server.model;
 
+import shared.transferObjects.Notification;
+import shared.transferObjects.Report;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -8,15 +11,21 @@ public class Manager implements ManagerModel{
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
 
     @Override
-    public String report(String txt) {
-        support.firePropertyChange("NewNotification",null,txt);
-        return txt;
+    public Report sendReport(Report report) {
+        support.firePropertyChange("NewReport",null,report);
+        return report;
     }
 
     @Override
     public String addRecipe(String recipe) {
-        support.firePropertyChange("NewNotification",null,recipe);
+        support.firePropertyChange("NewRecipe",null,recipe);
         return recipe;
+    }
+
+    @Override
+    public Notification sendNotification(Notification notification) {
+        support.firePropertyChange("NewNotification",null, notification);
+        return notification;
     }
 
     @Override

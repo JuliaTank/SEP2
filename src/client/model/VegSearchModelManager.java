@@ -3,6 +3,7 @@ package client.model;
 import client.network.Client;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
+import shared.transferObjects.Report;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,6 +19,7 @@ public class VegSearchModelManager implements VegSearchModel {
     private Client client;
     private String username;
     private Profile loggedProfile;
+    private Recipe recipe;
 
     public VegSearchModelManager(Client client) throws RemoteException, NotBoundException {
         this.client=client;
@@ -27,13 +29,14 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void report(String txt) throws RemoteException {
-        client.report(txt);
+    public void report(Report report) throws RemoteException {
+        client.sendReport(report);
     }
 
     @Override
     public String getNumberOfSubscriptions() throws RemoteException {
-        return null;//client.getNumberOfSubscriptions();
+        //return client.getNumberOfSubscriptions();
+        return  null;
     }
 
     @Override
@@ -42,8 +45,19 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
+    public void subscribe(Profile subscriber, Profile profile) throws RemoteException {
+        client.subscribe(subscriber,profile);
+    }
+
+    @Override
+    public void unsubscribe(Profile subscriber, Profile profile) throws RemoteException {
+        client.unsubscribe(subscriber,profile);
+    }
+
+    @Override
     public void addRecipe(String recipe) throws RemoteException {
         client.addRecipe(recipe);
+        client.sendNotification();
     }
 
     @Override public boolean logIn(String username, String password)
@@ -62,15 +76,31 @@ public class VegSearchModelManager implements VegSearchModel {
         return loggedProfile;
     }
 
+    @Override
+    public Recipe getRecipesByTitle(String searchedTitle)  {
+        if(recipe.getTitle().equals(searchedTitle))
+        {
 
-    @Override public Profile getProfile(String username)
-        throws FileNotFoundException, SQLException, RemoteException
-    {
-        return client.getProfile(username);
+        }
     }
 
-    @Override public void setRecipes(ArrayList<Recipe> recipes)
-    {
+    @Override
+    public Recipe getRecipesByAuthor(String searchedUsername)  {
+        return null;
+    }
+
+    @Override
+    public Recipe getRecipesByIngredient(String searchedIngredient) {
+        return null;
+    }
+
+    @Override
+    public Profile getProfile(String username)  {
+        return null;
+    }
+
+    @Override
+    public void setRecipes(ArrayList<Recipe> recipes) {
 
     }
 

@@ -71,7 +71,7 @@ class ArrayListTest {
 
         list.set(1, "Roxana");
 
-        assertEquals("Roxana", list.toString());
+        assertEquals("Roxana", list.get(1));
     }
     @Test
     void setMany() {
@@ -91,26 +91,26 @@ class ArrayListTest {
         assertThrows(IllegalArgumentException.class,()->list.set(-1,"kot"));
     }
 
-    // Test get() method and ............................. Approach:ZOMBIE
+    // Tests get() method and Approach:ZOMBIE
     @Test
     void getZero() {
-
+        //already tested in setZero()
     }
     @Test
     void getOne() {
-
+        //already tested in setOne()
     }
     @Test
     void getMany() {
-
+        //already tested in setMany()
     }
     @Test
     void getBoundary() {
-
+        //??????????????
     }
     @Test
     void getException() {
-
+        assertThrows(IllegalArgumentException.class,()->list.get(1)); //??
     }
 
     @Test

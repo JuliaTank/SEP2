@@ -1,11 +1,14 @@
 package server.network;
 
+import client.network.Client;
 import database.ProfilesData;
 import database.RecipesData;
 import server.model.Manager;
 import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Report;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,20 +43,20 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void registerClient(ClientCallBack client) throws RemoteException {
+    public void registerClient(ClientCallBack client)  {
         this.clients.add(client);
         System.out.println("Client was added");
     }
 
     @Override
-    public void unregisterClient(ClientCallBack client) throws RemoteException {
+    public void unregisterClient(ClientCallBack client)  {
         this.clients.remove(client);
         System.out.println("Client was removed");
     }
 
     @Override
     public boolean logIn(String username, String password)
-        throws RemoteException, SQLException
+        throws SQLException
     {
       Profile profile  = profilesData.getProfile(username);
 
@@ -67,20 +70,20 @@ public class RMIServerImpl implements RMIServer {
 
 
     @Override
-    public void addRecipe(String recipe, ClientCallBack client) throws RemoteException {
+    public void addRecipe(String recipe, ClientCallBack client) {
 
     }
 
     @Override
-    public void report(String txt, ClientCallBack client) throws RemoteException {
+    public void report(Report report, ClientCallBack client)  {
         //
-        manager.report(txt);
+        manager.sendReport(report);
 
     }
 
     @Override public boolean signUp(String username, String password,
         File picFile, String description)
-        throws SQLException, FileNotFoundException,RemoteException
+        throws SQLException, FileNotFoundException
     {
         if(ProfilesData.getInstance().getProfile(username)!=null)
         {
@@ -95,8 +98,41 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override public Profile getProfile(String username)
-        throws SQLException, FileNotFoundException, RemoteException
+        throws SQLException
     {
         return profilesData.getProfile(username);
+    }
+
+    @Override
+    public void subscribe(Profile subscriber, Profile profile){
+       profile.getSubs().add(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Profile subscriber, Profile profile) {
+        profile.getSubs().remove(subscriber);
+    }
+
+    @Override
+    public void sendNotification(Notification notification, ClientCallBack subscriber)  {
+        manager.sendNotification(notification);
+        updateSubscribers(notification,subscriber);
+
+    }
+
+    private void updateSubscribers(Notification notification, ClientCallBack unsubscriber)
+    {
+        for(ClientCallBack client: clients)
+        {
+            if(client.equals(unsubscriber)) continue;
+            try
+            {
+                client.updateNotification(notification);
+            }
+            catch (RemoteException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }
