@@ -2,7 +2,9 @@ package client.network;
 
 import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Report;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,7 +20,9 @@ import java.sql.SQLException;
 public class RMIClient implements Client, ClientCallBack {
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
     private RMIServer server;
-    private String message = "";
+    private Profile profile;
+    private Notification notification;
+    private Report report;
     public RMIClient() throws RemoteException
     {
         UnicastRemoteObject.exportObject(this,0);
@@ -31,28 +35,27 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void report(String txt) throws RemoteException {
+    public void sendReport(Report report) throws RemoteException {
         try
         {
-            server.report(txt, null);
+            server.report(report, null);
         }
         catch (RemoteException e)
         {
-            throw new RemoteException("couldn't contact client");
+            throw new RemoteException();
         }
     }
 
-    @Override public String getNumberOfSubscriptions(Profile profile)
-        throws RemoteException
-    {
+    @Override
+    public String getNumberOfSubscriptions(Profile profile) throws RemoteException {
         return null;
     }
 
-   /* @Override
+    /*@Override
     public String getNumberOfSubscriptions() throws RemoteException {
         return server.getNumberOfSubscriptions();
-    }
-*/
+    }*/
+
     @Override
     public void addRecipe(String recipe) throws RemoteException {
         try
@@ -61,7 +64,7 @@ public class RMIClient implements Client, ClientCallBack {
         }
         catch (RemoteException e)
         {
-            throw new RemoteException("couldn't contact client");
+            throw new RemoteException();
         }
     }
 
@@ -85,6 +88,16 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
+    public void subscribe(Profile subscriber, Profile profile, Notification notification) throws RemoteException {
+        server.subscribe(subscriber,profile,notification);
+    }
+
+    @Override
+    public void unsubscribe(Profile subscriber, Profile profile) throws RemoteException {
+        server.unsubscribe(subscriber,profile);
+    }
+
+    @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName, listener);
     }
@@ -92,5 +105,37 @@ public class RMIClient implements Client, ClientCallBack {
     @Override
     public void removeListener(String eventName, PropertyChangeListener listener) {
         support.removePropertyChangeListener(eventName, listener);
+    }
+
+    @Override
+    public void sendNotification(Notification notification) throws RemoteException {
+        for (int i = 0; i < profile.getSubs().size(); i++) {
+            if(profile.getSubs().contains(i))
+            {
+                try
+                {
+                    server.sendNotification(notification,null);
+                }
+                catch (RemoteException e)
+                {
+                    throw new RemoteException();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void updateNotification(Notification notification)  {
+        Notification oldValue = this.notification;
+        this.notification = notification;
+        support.firePropertyChange("NewNotification",oldValue,notification);
+    }
+
+    @Override
+    public void updateReport(Report report)  {
+        Report oldValue = this.report;
+        this.report = report;
+        support.firePropertyChange("NewReport",oldValue,report);
     }
 }

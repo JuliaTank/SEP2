@@ -24,6 +24,7 @@ public class ViewHandler {
     private Scene reportUserScene;
     private Scene reportAdmScene;
     private Stage stage;
+    private Stage stageNotification;
     private ViewModelFactory vmf;
     private Queue<ViewModelFactory> vmfQueue;
     //what is it for guys??
@@ -46,6 +47,7 @@ public class ViewHandler {
         stage = new Stage();
         openLogIn();
     }
+
     public void openLogIn() {
 
                 try {
@@ -74,6 +76,10 @@ public class ViewHandler {
         }
         stage.setScene(signInScene);
         stage.show();
+    }
+    public void closeProfile()
+    {
+
     }
     public void openMainPage() {
         if (mainPageScene == null) {

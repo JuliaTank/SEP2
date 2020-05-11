@@ -67,8 +67,8 @@ public class MainPageController implements ViewController
   {
   }
 
-  public void onReportButton(ActionEvent actionEvent)
-  {
+  public void onReportButton(ActionEvent actionEvent) throws IOException, NotBoundException {
+    vm.report();
   }
 
   public void onSearchButton(ActionEvent actionEvent)
