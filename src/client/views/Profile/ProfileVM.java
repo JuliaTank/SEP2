@@ -42,60 +42,40 @@ public class ProfileVM {
         return recipeDisplays;
     }
 
-    public void newRecipe()
+  /*  public void newRecipe()
     {
         //ArrayList<Recipe> recipes =  new ArrayList<>();
-    }
+    }*/
 
     public StringProperty getSubsLabel() {
         return subsLabel;
     }
 
     public void subscribe() throws RemoteException {
+
         subsLabel.set(model.getNumberOfSubscriptions());
     }
     public void unsubscribe() throws RemoteException {
+
         subsLabel.set(model.getNumberOfSubscriptions());
     }
     public Profile getLoggedProfile()
     {
        return model.getLoggedProfile();
     }
+
     public Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException
     {
         return  model.getProfile(username);
     }
+
     public class RecipeDisplay{
         private StringProperty userLink = new SimpleStringProperty();
-        private StringProperty commentField = new SimpleStringProperty();
-        private StringProperty reportField = new SimpleStringProperty();
-        private ListProperty<String> ingredientsList = new SimpleListProperty<>();
-        private ListProperty<String> commentsList  = new SimpleListProperty<>();
-
-        public StringProperty getCommentField()
-        {
-            return commentField;
-        }
 
         public StringProperty getUserLink()
         {
             return userLink;
-        }
-
-        public ListProperty<String> getCommentsList()
-        {
-            return commentsList;
-        }
-
-        public ListProperty<String> getIngredientsList()
-        {
-            return ingredientsList;
-        }
-
-        public StringProperty getReportField()
-        {
-            return reportField;
         }
     }
 }

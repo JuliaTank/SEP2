@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import shared.transferObjects.Recipe;
 
 public class RecipeController
 {
@@ -27,7 +28,6 @@ public class RecipeController
   @FXML
   public ListView CommentsList;
 
-  private Parent root;
 
   public void onUserLink(ActionEvent actionEvent)
   {
@@ -45,13 +45,9 @@ public class RecipeController
   {
   }
 
-  public void init(Parent root)
+  public void init(Recipe recipe)
   {
-    this.root  =  root;
+
   }
 
-  public Parent getRoot()
-  {
-    return root;
-  }
 }

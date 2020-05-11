@@ -2,12 +2,14 @@ package client.core;
 
 import client.views.MainPage.MainPageController;
 import client.views.Recipe.RecipeController;
+import client.views.RecipeDemo.RecipeDemoController;
 import client.views.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -24,6 +26,7 @@ public class ViewHandler {
     private Scene reportUserScene;
     private Scene reportAdmScene;
     private Stage stage;
+    private Scene recipeScene;
     private ViewModelFactory vmf;
     private Queue<ViewModelFactory> vmfQueue;
     //what is it for guys??
@@ -157,10 +160,10 @@ public class ViewHandler {
         return root;
     }
 
-    public RecipeController getRecipeDisplayPanel()
+    public RecipeDemoController getRecipeDisplayPanel(Recipe recipe)
     {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../views/Recipe/recipe.fxml"));
+        loader.setLocation(getClass().getResource("../views/RecipeDemo/recipeDemo.fxml"));
         Parent root = null;
         try
         {
@@ -171,11 +174,23 @@ public class ViewHandler {
             e.printStackTrace();
         }
 
-        RecipeController controller  = loader.getController();
-        controller.init(root);
+        RecipeDemoController controller  = loader.getController();
+        controller.init(root,recipe);
         return  controller;
     }
+   public void openRecipeView(Recipe recipe) throws IOException
+   {
+       FXMLLoader loader = new FXMLLoader();
+       loader.setLocation(getClass().getResource("../views/Recipe/recipe.fxml"));
+       Parent root = loader.load();
 
+       RecipeController ctrl = loader.getController();
+       ctrl.init(recipe);
+       stage.setTitle(recipe.getTitle());
+       recipeScene =  new Scene(root);
+       stage.setScene(recipeScene);
+       stage.show();
+   }
 
 
 }

@@ -12,7 +12,7 @@
    <children>
       <HBox layoutY="-3.0" prefHeight="76.0" prefWidth="619.0">
          <children>
-            <ImageView fitHeight="77.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="recipePic" fitHeight="77.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
             <Pane prefHeight="78.0" prefWidth="250.0">
                <children>
                   <Hyperlink fx:id="recipeLink" layoutX="8.0" layoutY="27.0" onAction="#onRecipeLink" prefHeight="23.0" prefWidth="234.0">
