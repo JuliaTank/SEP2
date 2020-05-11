@@ -20,7 +20,7 @@ public class GemTransporter implements Runnable{
         gems = new ArrayList<>();
         Catalog.getInstance().printAction("Gem transporter was created");
     }
-    private void addGemToTreasureRoom(Gem gem)
+    private void addGemToTreasureRoom(Gem gem) throws InterruptedException
     {
         room.acquireWriteAccess("transporter");
         room.addValuable(gem);

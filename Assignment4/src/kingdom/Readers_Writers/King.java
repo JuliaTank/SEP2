@@ -13,13 +13,8 @@ public class King implements Runnable
 
 {
     private TreasureRoomDoor room ;
-    ArrayList<Gem> gems =  new ArrayList<>();
+    private ArrayList<Gem> gems =  new ArrayList<>();
 
-    public static void tellAboutGems()
-    {
-        //tell catalog about throwing/ canceling parties
-        Catalog.getInstance().printAction("Amazing, we are going to the party!");
-    }
 public  King(TreasureRoomDoor room)
 {
   this.room = room;
@@ -34,9 +29,9 @@ public  King(TreasureRoomDoor room)
         {
             int target = random.nextInt(100)+50;
           System.out.println("............................."+target);
-            room.acquireWriteAccess("king");
+          room.acquireWriteAccess("king");
 
-           int total = 0;
+          int total = 0;
            int a =room.lookAtAllGems().size();
             for (int i = 0; i < a; i++)
             {

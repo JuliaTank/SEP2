@@ -20,7 +20,7 @@ public class Accountant implements Runnable{
     {
       int total = 0;
       room.acquireReadAccess("accountant");
-       List<Gem> temp = room.lookAtAllGems();
+      List<Gem> temp = room.lookAtAllGems();
       try
       {
         Thread.sleep(4000);

@@ -9,9 +9,11 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
 {
     private TreasureRoomDoor room;
 
-    // I used strategy from slides, similar to SeaBear exercise
-    @Override public void acquireReadAccess(String actorName)
+
+    // I used strategy from slides
+    @Override public synchronized void acquireReadAccess(String actorName)
     {
+
         if (room == null)
         {
             room = new TreasureRoom();
@@ -24,9 +26,10 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
                 room.acquireReadAccess("accountant");
             }
         }
+
     }
 
-    @Override public void acquireWriteAccess(String actorName)
+    @Override public synchronized void acquireWriteAccess(String actorName)
     {
     if(room ==null)
     {
@@ -38,16 +41,17 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     {
         case "transporter":
         {
-            room.acquireReadAccess("transporter");
+            room.acquireWriteAccess("transporter");
         }
         case "king":
         {
             room.acquireWriteAccess("king");
         }
     }
+
      }
     @Override
-    public void releaseReadAccess(String actorName) {
+    public synchronized void releaseReadAccess(String actorName) {
         if (room == null)
         {
             room = new TreasureRoom();
@@ -60,10 +64,11 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
                 room.releaseReadAccess("accountant");
             }
         }
+
     }
 
     @Override
-    public void releaseWriteAccess(String actorName) {
+    public synchronized void releaseWriteAccess(String actorName) {
         if (room == null)
         {
             room = new TreasureRoom();
@@ -75,12 +80,16 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
             {
                 room.releaseWriteAccess("transporter");
             }
+            case "king":
+            {
+                room.releaseWriteAccess("king");
+            }
         }
 
     }
 
     @Override
-    public Gem retrieveValuable() {
+    public  Gem retrieveValuable() {
         return room.retrieveValuable();
     }
 
