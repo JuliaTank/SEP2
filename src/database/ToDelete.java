@@ -27,19 +27,18 @@ public class ToDelete
       System.out.println(profile.getSubs().get(i).getUsername());
     }*/
 
-   /* ArrayList<String> ingredients =  new ArrayList<>();
-    ingredients.add("carrot");
-    ingredients.add("potato");
-    ingredients.add("dough");
-    File file =  new File("Tomspic.jpg");*/
-   //RecipesData.getInstance().update("niedobre jedzenie","fooood","cook food",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
- /*   Profile profile = ProfilesData.getInstance().getProfile("Toms");
-   Recipe recipe =  RecipesData.getInstance().getRecipesByTitle("fooood");
+    ArrayList<String> ingredients =  new ArrayList<>();
+    File file =  new File("Tomspic.jpg");
+
+   RecipesData.getInstance().update("fooood","fooood","cook food",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
+    Profile profile = ProfilesData.getInstance().getProfile("Toms");
+
+   Recipe recipe =  RecipesData.getInstance().getRecipesByTitle("Pierogi");
 
     for (int i = 0; i < recipe.getIngredients().size(); i++)
     {
       System.out.println(recipe.getIngredients().get(i));
-    }*/
+    }
 
   }
 }

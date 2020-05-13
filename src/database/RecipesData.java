@@ -105,13 +105,13 @@ public class RecipesData {
 
         try(Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE title LIKE ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT title, description, username, picfile, ingredients::text::text[] as ingredients FROM \"VegSearch\".Recipe WHERE title LIKE ?");
             statement.setString(1, searchedTitle);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next())
             {
-                String title  = resultSet.getString("title");
+                String title = resultSet.getString("title");
                 System.out.println(title);
                 String description = resultSet.getString("description");
                 System.out.println(description);
@@ -119,31 +119,46 @@ public class RecipesData {
                 System.out.println(username);
                 byte[] imgBytes = resultSet.getBytes(4);
                 //using private method from below
-                File picFile = getPicFile(imgBytes,title);
+                File picFile = getPicFile(imgBytes, title);
 
                 Array ingredients = resultSet.getArray("ingredients");
                 System.out.println(ingredients);
 
-                String[] ing = (String[])ingredients.getArray();
+                String[] ing = (String[]) ingredients.getArray();
+                System.out.println(ingredients.getArray());
 
                 System.out.println(Arrays.toString(ing));
-                ArrayList<String> ingredientsArray = new ArrayList<>(Arrays.asList(ing));
+               ArrayList<String> ingredientsArray = new ArrayList<>();
 
-                result = new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile);
+                result = new Recipe(title, description, profilesData.getProfile(username),
+                    getIng(ingredients), picFile);
             }
 
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
+
         return result;
     }
 
+    public ArrayList<String> getIng(Array array) throws SQLException
+    {
+        String[] ings =(String[]) array.getArray();
+        ArrayList<String> ingss = new ArrayList<>();
+        for (int i = 0; i < ings.length; i++)
+        {
+            ingss.add(ings[i]);
+        }
+        return ingss;
+    }
     public ArrayList<Recipe> getRecipesByAuthor(String author) throws SQLException
     {
         ArrayList<Recipe> result=new ArrayList<>();
         try(Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE username LIKE ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT title,description, profile,picfile,array[1, 2, 3] AS my_data FROM \"VegSearch\".Recipe WHERE username LIKE ?");
             statement.setString(1, "%"+author+"%");
             ResultSet resultSet = statement.executeQuery();
 
@@ -159,6 +174,7 @@ public class RecipesData {
 
 
                 String[] ing = (String[])ingredients.getArray();
+
                 ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 for (int i = 0; i < ing.length; i++) {
