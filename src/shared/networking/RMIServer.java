@@ -23,6 +23,7 @@ public interface RMIServer extends Remote {
     void subscribe(Profile subscriber, Profile profile) throws RemoteException;
     void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
     void sendNotification(Notification notification, ClientCallBack subscriber) throws RemoteException;
+    void delete(String username) throws SQLException;
 
 
 

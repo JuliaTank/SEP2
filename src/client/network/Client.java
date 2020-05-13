@@ -25,4 +25,5 @@ public interface Client extends Subject {
     Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
     void subscribe(Profile subscriber, Profile profile) throws RemoteException;
     void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
+    void delete(String username) throws SQLException;
 }

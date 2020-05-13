@@ -97,6 +97,11 @@ public class RMIClient implements Client, ClientCallBack {
         server.unsubscribe(subscriber,profile);
     }
 
+    @Override public void delete(String username) throws SQLException
+    {
+        server.delete(username);
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName, listener);

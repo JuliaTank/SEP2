@@ -72,7 +72,6 @@ public class ProfilesData {
                 File picFile = getPicFile(imgBytes,username);
                 String description = resultSet.getString("description");
                 Array subscriptions = resultSet.getArray(4);
-                System.out.println(subscriptions);
                 String[] subs = (String[])subscriptions.getArray();
                 ArrayList<Profile> subscribers = getSubs(subs);
 
@@ -134,13 +133,30 @@ public class ProfilesData {
             statement.setString(1,newUsername);
             statement.setString(2,password);
             statement.setBinaryStream(3,fis,(int)picFile.length());
+
             statement.setString(4,description);
             Array array  = connection.createArrayOf("varchar",getSubsForDB(subscriptions));
             statement.setArray(5, array);
             statement.setString(6,oldUsername);
 
+            if(!oldUsername.equals(newUsername))
+            {
+                new File(oldUsername+"pic.jpg").delete();
+            }
+
             statement.executeUpdate();
             return new Profile(newUsername,password,picFile,description,subscriptions);
+        }
+    }
+    public void delete(String username) throws SQLException
+    {
+        try (Connection connection = getConnection())
+        {
+            PreparedStatement statement= connection.prepareStatement("DELETE FROM \"VegSearch\".Profile WHERE username =? ");
+            statement.setString(1,username);
+            statement.executeUpdate();
+            new File(username+"pic.jpg").delete();
+            RecipesData.getInstance().deleteRecipe(username);
         }
     }
 }

@@ -56,7 +56,7 @@ public class RecipesData {
         ArrayList<Recipe> result=new ArrayList<>();
         try(Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE title LIKE ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT title, description, username, picfile, ingredients::text::text[] as ingredients FROM \"VegSearch\".Recipe WHERE ingredients LIKE ?");
             statement.setString(1, "%" +searchedIngredient+"%");
             ResultSet resultSet = statement.executeQuery();
 
@@ -143,7 +143,17 @@ public class RecipesData {
         return result;
     }
 
-    public ArrayList<String> getIng(Array array) throws SQLException
+    public void deleteRecipe(String username) throws SQLException
+    {
+        try (Connection connection = getConnection())
+        {
+            PreparedStatement statement= connection.prepareStatement("DELETE FROM \"VegSearch\".Recipe WHERE username =? ");
+            statement.setString(1,username);
+            statement.executeUpdate();
+        }
+    }
+
+    private ArrayList<String> getIng(Array array) throws SQLException
     {
         String[] ings =(String[]) array.getArray();
         ArrayList<String> ingss = new ArrayList<>();

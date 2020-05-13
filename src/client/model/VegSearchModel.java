@@ -29,5 +29,6 @@ public interface VegSearchModel extends Subject {
     Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException;
     void setRecipes(ArrayList<Recipe> recipes);
+    void delete() throws SQLException;
 
 }

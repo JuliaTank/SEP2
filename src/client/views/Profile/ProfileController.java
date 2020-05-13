@@ -85,7 +85,8 @@ public class ProfileController implements ViewController
    }
  }
 
-  public void onDeleteButton(ActionEvent actionEvent) {
+  public void onDeleteButton(ActionEvent actionEvent) throws SQLException
+  {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Are you sure?");
     alert.setHeaderText("Are you sure you want to delete your profile? All data related to it will be gone");

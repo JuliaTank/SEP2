@@ -70,9 +70,9 @@ public class ProfileVM {
     {
         return  model.getProfile(username);
     }
-    public void delete()
+    public void delete() throws SQLException
     {
-
+        model.delete();
     }
 
 }

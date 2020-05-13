@@ -107,6 +107,11 @@ public class VegSearchModelManager implements VegSearchModel {
 
     }
 
+    @Override public void delete() throws SQLException
+    {
+        client.delete(loggedProfile.getUsername());
+    }
+
     private void setLoggedProfile(Profile profile)
     {
         loggedProfile = profile;

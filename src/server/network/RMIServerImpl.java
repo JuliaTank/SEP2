@@ -120,6 +120,11 @@ public class RMIServerImpl implements RMIServer {
 
     }
 
+    @Override public void delete(String username) throws SQLException
+    {
+        profilesData.delete(username);
+    }
+
     private void updateSubscribers(Notification notification, ClientCallBack unsubscriber)
     {
         for(ClientCallBack client: clients)
@@ -135,4 +140,5 @@ public class RMIServerImpl implements RMIServer {
             }
         }
     }
+
 }
