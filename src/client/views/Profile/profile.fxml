@@ -71,16 +71,16 @@
                         <Button fx:id="newRecipeButton" mnemonicParsing="false" onAction="#onNewRecipe" text="New Recipe" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
-                  <TextArea fx:id="descriptionArea" prefHeight="171.0" prefWidth="573.0" />
+                  <TextArea fx:id="descriptionArea" editable="false" prefHeight="171.0" prefWidth="573.0" />
                </children>
             </VBox>
          </children>
       </HBox>
       <ScrollPane layoutX="11.0" layoutY="246.0" prefHeight="514.0" prefWidth="730.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="759.0" prefWidth="722.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="4388.0" prefWidth="722.0">
                <children>
-                  <VBox fx:id="recipeContainer" layoutX="3.0" layoutY="1.0" prefHeight="496.0" prefWidth="706.0" />
+                  <VBox fx:id="recipeContainer" layoutX="14.0" prefHeight="582.0" prefWidth="690.0" />
                </children>
             </AnchorPane>
         </content>

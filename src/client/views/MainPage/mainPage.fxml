@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ImageInput?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,9 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="478.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller ="client.views.MainPage.MainPageController">
+<AnchorPane prefHeight="478.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.MainPage.MainPageController">
    <children>
       <GridPane layoutX="4.0" prefHeight="614.0" prefWidth="594.0">
         <columnConstraints>
@@ -35,71 +28,7 @@
          <children>
             <ScrollPane prefHeight="592.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <content>
-                  <VBox prefHeight="768.0" prefWidth="514.0">
-                     <children>
-                        <GridPane prefHeight="436.0" prefWidth="514.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="53.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="10.0" prefWidth="456.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="0.0" prefWidth="5.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="326.0" minHeight="0.0" prefHeight="311.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <VBox prefHeight="295.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <HBox prefHeight="152.0" prefWidth="429.0">
-                                       <children>
-                                          <ImageView fx:id="recipePic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                          </ImageView>
-                                          <ListView fx:id="ingredientList" prefHeight="148.0" prefWidth="299.0" />
-                                       </children>
-                                    </HBox>
-                                    <TextArea editable="false" prefHeight="157.0" prefWidth="426.0" promptText="Recipe content" />
-                                 </children>
-                              </VBox>
-                              <HBox prefHeight="51.0" prefWidth="448.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <ImageView fx:id="userPic" fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                                    </ImageView>
-                                    <Hyperlink fx:id="userLink" onAction="#onUserLink" prefHeight="51.0" prefWidth="238.0" text="user">
-                                       <font>
-                                          <Font name="Verdana" size="14.0" />
-                                       </font>
-                                    </Hyperlink>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                                 <children>
-                                    <Button fx:id="likeButton" mnemonicParsing="false" onAction="#onLikeButton" prefHeight="36.0" prefWidth="37.0">
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <effect>
-                                          <ImageInput />
-                                       </effect>
-                                    </Button>
-                                    <Label fx:id="likeLabel" prefHeight="27.0" prefWidth="26.0" />
-                                    <TextField fx:id="commentField" />
-                                    <Button mnemonicParsing="false" onAction="#onCommentButton" text="Comment" />
-                                    <TextField fx:id="reportField" prefHeight="25.0" prefWidth="118.0" />
-                                    <Button mnemonicParsing="false" onAction="#onReportButton" prefHeight="25.0" prefWidth="56.0" text="Report" />
-                                 </children>
-                              </HBox>
-                              <VBox prefHeight="41.0" prefWidth="456.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label prefHeight="16.0" prefWidth="62.0" text="Comments" />
-                                    <ListView fx:id="CommentsList" prefHeight="200.0" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </VBox>
+                  <VBox fx:id="recipeContainer" prefHeight="4864.0" prefWidth="514.0" />
                </content>
             </ScrollPane>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">

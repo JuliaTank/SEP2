@@ -3,6 +3,7 @@ package client.views.Profile;
 
 import client.core.ModelFactory;
 import client.model.VegSearchModel;
+import client.views.RecipeDisplay;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -69,13 +70,9 @@ public class ProfileVM {
     {
         return  model.getProfile(username);
     }
+    public void delete()
+    {
 
-    public class RecipeDisplay{
-        private StringProperty userLink = new SimpleStringProperty();
-
-        public StringProperty getUserLink()
-        {
-            return userLink;
-        }
     }
+
 }

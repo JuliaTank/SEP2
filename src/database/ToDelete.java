@@ -1,6 +1,7 @@
 package database;
 
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,15 +13,33 @@ public class ToDelete
   public static void main(String[] args)
       throws SQLException, FileNotFoundException
   {
-/*
-    File file =  new File("Tomspic.jpg");
-    ArrayList<Profile> subs =  new ArrayList<>();
 
 
-    ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);*/
-    /*Profile profile = ProfilesData.getInstance().getProfile("mial");
-    System.out.println(profile);*/
+   /* ArrayList<Profile> subs =  new ArrayList<>();
+    subs.add(ProfilesData.getInstance().getProfile("Julia"));
+    subs.add(ProfilesData.getInstance().getProfile("Roksanka"));
 
+    //ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);
+   Profile profile = ProfilesData.getInstance().getProfile("Toms");
+
+    for (int i = 0; i < profile.getSubs().size() ; i++)
+    {
+      System.out.println(profile.getSubs().get(i).getUsername());
+    }*/
+
+   /* ArrayList<String> ingredients =  new ArrayList<>();
+    ingredients.add("carrot");
+    ingredients.add("potato");
+    ingredients.add("dough");
+    File file =  new File("Tomspic.jpg");*/
+   //RecipesData.getInstance().update("niedobre jedzenie","fooood","cook food",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
+ /*   Profile profile = ProfilesData.getInstance().getProfile("Toms");
+   Recipe recipe =  RecipesData.getInstance().getRecipesByTitle("fooood");
+
+    for (int i = 0; i < recipe.getIngredients().size(); i++)
+    {
+      System.out.println(recipe.getIngredients().get(i));
+    }*/
 
   }
 }

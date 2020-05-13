@@ -88,8 +88,8 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void subscribe(Profile subscriber, Profile profile, Notification notification) throws RemoteException {
-        server.subscribe(subscriber,profile,notification);
+    public void subscribe(Profile subscriber, Profile profile) throws RemoteException {
+        server.subscribe(subscriber,profile);
     }
 
     @Override

@@ -20,25 +20,6 @@ public class Recipe implements Serializable {
         this.picFile=picFile;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public ArrayList<String> getIngredients() {
-        return ingredients;
-    }
-
-    public File getPicFile() {
-        return picFile;
-    }
 
     @Override
     public String toString() {

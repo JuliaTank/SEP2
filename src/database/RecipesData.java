@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipesData {
 
@@ -30,7 +31,7 @@ public class RecipesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public Recipe create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
         FileInputStream fis  = new FileInputStream(picFile);
@@ -71,7 +72,7 @@ public class RecipesData {
                 String[] ing = (String[])ingredients.getArray();
                 ArrayList<String> ingredientsArray = new ArrayList<>();
                 for (int i = 0; i < ing.length; i++) {
-                    ingredientsArray.add(ing[0]);
+                    ingredientsArray.add(ing[i]);
                 }
 
                 result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile));
@@ -98,31 +99,37 @@ public class RecipesData {
             ImageIO.write(image,"jpg",picFile);
         return picFile;
     }
-    public ArrayList<Recipe> getRecipesByTitle(String searchedTitle) throws SQLException
+    public Recipe getRecipesByTitle(String searchedTitle) throws SQLException
     {
-        ArrayList<Recipe> result=new ArrayList<>();
+        Recipe result = null;
+
         try(Connection connection = getConnection())
         {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE ingredient LIKE ?");
-            statement.setString(1, "%" +searchedTitle+"%");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Recipe WHERE title LIKE ?");
+            statement.setString(1, searchedTitle);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next())
             {
                 String title  = resultSet.getString("title");
+                System.out.println(title);
                 String description = resultSet.getString("description");
-                String username = resultSet.getString("profile");
+                System.out.println(description);
+                String username = resultSet.getString("username");
+                System.out.println(username);
                 byte[] imgBytes = resultSet.getBytes(4);
                 //using private method from below
                 File picFile = getPicFile(imgBytes,title);
-                Array ingredients = resultSet.getArray("ingredients");
-                String[] ing = (String[])ingredients.getArray();
-                ArrayList<String> ingredientsArray = new ArrayList<>();
-                for (int i = 0; i < ing.length; i++) {
-                    ingredientsArray.add(ing[0]);
-                }
 
-                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile));
+                Array ingredients = resultSet.getArray("ingredients");
+                System.out.println(ingredients);
+
+                String[] ing = (String[])ingredients.getArray();
+
+                System.out.println(Arrays.toString(ing));
+                ArrayList<String> ingredientsArray = new ArrayList<>(Arrays.asList(ing));
+
+                result = new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile);
             }
 
         } catch (IOException e) {
@@ -149,14 +156,15 @@ public class RecipesData {
                 //using private method from below
                 File picFile = getPicFile(imgBytes,title);
                 Array ingredients = resultSet.getArray("ingredients");
+
+
                 String[] ing = (String[])ingredients.getArray();
                 ArrayList<String> ingredientsArray = new ArrayList<>();
+
                 for (int i = 0; i < ing.length; i++) {
-                    ingredientsArray.add(ing[0]);
+                    ingredientsArray.add(ing[i]);
                 }
-
                 result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile));
-
             }
 
         } catch (IOException e) {
@@ -164,7 +172,24 @@ public class RecipesData {
         }
         return result;
     }
+public Recipe update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file)
+    throws FileNotFoundException, SQLException
+{
+    FileInputStream fis = new FileInputStream(file);
+    try(Connection connection  = getConnection())
+    {
+        PreparedStatement statement = connection.prepareStatement("UPDATE \"VegSearch\".Recipe SET  username = ?, description  =?,title = ?,ingredients = ?,picfile = ? WHERE title = ?" );
+        statement.setString(1,profile.getUsername());
+        statement.setString(2,description);
+        statement.setString(3,newTitle);
+        Array array = connection.createArrayOf("varchar", ingredients.toArray());
+        statement.setArray(4, array);
+        statement.setBinaryStream(5,fis,(int)file.length());
+        statement.setString(6,title );
 
-
+        statement.executeUpdate();
+        return new Recipe(newTitle, description,profile, ingredients,file);
+    }
+}
 
 }

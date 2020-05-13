@@ -21,6 +21,6 @@ public class ReportUserVM {
         return textAreaProperty;
     }
     public void report(String text) throws RemoteException {
-        model.report(text);
+       // model.report(text);
     }
 }

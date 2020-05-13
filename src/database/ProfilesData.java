@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class ProfilesData {
@@ -70,11 +71,13 @@ public class ProfilesData {
                 //using private method from below
                 File picFile = getPicFile(imgBytes,username);
                 String description = resultSet.getString("description");
-                Array subscriptions = resultSet.getArray("subscriptions");
+                Array subscriptions = resultSet.getArray(4);
+                System.out.println(subscriptions);
                 String[] subs = (String[])subscriptions.getArray();
+                ArrayList<Profile> subscribers = getSubs(subs);
 
-                Profile profile = new Profile(username,password,picFile,description, getSubs(subs));
-                result = profile;
+                result = new Profile(username,password,picFile,description,subscribers );
+
             }
         }
         catch (IOException e)
@@ -83,6 +86,7 @@ public class ProfilesData {
         }
         return result;
     }
+
     private File getPicFile(byte[] imgBytes, String username) throws IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
@@ -98,11 +102,13 @@ public class ProfilesData {
         ImageIO.write(image,"jpg",picFile);
         return picFile;
     }
+
     //here I'm transforming array of subscribers usernames(read from database) into ArrayList of Profiles
     private ArrayList<Profile> getSubs(String[] subs) throws SQLException {
         ArrayList<Profile> subscribers = new ArrayList<>();
         for (int i = 0; i < subs.length ;i++) {
-            subscribers.add(getProfile(subs[i]));
+            Profile profile = getProfile(subs[i]);
+            subscribers.add(profile);
         }
         return  subscribers;
     }
@@ -114,6 +120,7 @@ public class ProfilesData {
         for (int i = 0; i <subs.size() ; i++) {
             usernames[i] = subs.get(i).getUsername();
         }
+
         return  usernames;
     }
     public Profile update(String oldUsername,String newUsername, String password, File picFile, String description, ArrayList<Profile> subscriptions)

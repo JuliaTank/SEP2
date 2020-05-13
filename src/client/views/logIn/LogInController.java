@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import shared.transferObjects.Profile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,16 +33,6 @@ public class LogInController implements ViewController
   {
   }
 
-  public void init()
-  {
-    Image image3 = new Image("file:carrotLogo.png");
-    VSlogo.setImage(image3);
-
-    usernameField.textProperty().bindBidirectional(vm.getUsernameField());
-    errorLabel.textProperty().bind(vm.getErrorLabel());
-    passwordField.textProperty().bindBidirectional(vm.getPasswordField());
-  }
-
   public void onLoginButton(ActionEvent actionEvent)
           throws RemoteException, SQLException, FileNotFoundException {
     vm.logIn();
@@ -49,5 +40,16 @@ public class LogInController implements ViewController
   public void onJoinButton(ActionEvent actionEvent)
   {
     vm.join();
+  }
+
+  @Override public void init(Profile profile)
+      throws FileNotFoundException, SQLException, RemoteException
+  {
+    Image image3 = new Image("file:carrotLogo.png");
+    VSlogo.setImage(image3);
+
+    usernameField.textProperty().bindBidirectional(vm.getUsernameField());
+    errorLabel.textProperty().bind(vm.getErrorLabel());
+    passwordField.textProperty().bindBidirectional(vm.getPasswordField());
   }
 }

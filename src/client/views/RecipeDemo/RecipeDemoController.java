@@ -27,7 +27,7 @@ public class RecipeDemoController
         "-fx-border-radius: 5;"+
         "-fx-border-color: black;");
     recipeLink.setText(recipe.getTitle());
-    recipePic.setImage(new Image(recipe.getPicFile().toURI().getPath()));
+    recipePic.setImage(new Image("file:carrotLogo.png"));
   }
   public Parent getRoot()
   {

@@ -1,5 +1,6 @@
 package client.core;
 
+import client.views.Recipe.RecipeVM;
 import client.views.ReportAdm.ReportAdmVM;
 import client.views.ReportUser.ReportUserVM;
 import client.views.logIn.LogInVM;
@@ -23,6 +24,7 @@ public class ViewModelFactory {
   private SignInVM signInVM;
   private ReportAdmVM reportAdmVM;
   private ReportUserVM reportUserVM;
+  private RecipeVM recipeVM;
 
   private ViewModelFactory() throws IOException, NotBoundException
   {
@@ -34,6 +36,7 @@ public class ViewModelFactory {
     signInVM  = new SignInVM();
     reportAdmVM = new ReportAdmVM();
     reportUserVM = new ReportUserVM();
+    recipeVM = new RecipeVM();
 
   }
 
@@ -83,5 +86,10 @@ public class ViewModelFactory {
 
   public ReportUserVM getReportUserVM() {
     return reportUserVM;
+  }
+
+  public RecipeVM getRecipeVM()
+  {
+    return recipeVM;
   }
 }

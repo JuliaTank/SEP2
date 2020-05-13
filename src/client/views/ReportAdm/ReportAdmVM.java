@@ -24,10 +24,10 @@ public class ReportAdmVM {
         model.addListener("NewReport",this::receiveReport);
         model.addListener("NewUsername",this::setUsername);
     }
-    public void openRecipe(Recipe recipe)
+   /* public void openRecipe(Recipe recipe)
     {
        model.getRecipe();
-    }
+    }*/
     public void setUsername(PropertyChangeEvent evt)
     {
         if(usernameLabel.get()!=null)

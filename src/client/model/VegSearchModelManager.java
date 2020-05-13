@@ -57,7 +57,7 @@ public class VegSearchModelManager implements VegSearchModel {
     @Override
     public void addRecipe(String recipe) throws RemoteException {
         client.addRecipe(recipe);
-        client.sendNotification();
+       // client.sendNotification();
     }
 
     @Override public boolean logIn(String username, String password)
@@ -82,6 +82,7 @@ public class VegSearchModelManager implements VegSearchModel {
         {
 
         }
+        return  null;
     }
 
     @Override
@@ -95,8 +96,10 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public Profile getProfile(String username)  {
-        return null;
+    public Profile getProfile(String username)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return client.getProfile(username);
     }
 
     @Override
