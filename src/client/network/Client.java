@@ -2,6 +2,7 @@ package client.network;
 
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 import shared.util.Subject;
 
@@ -10,13 +11,13 @@ import java.io.FileNotFoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface Client extends Subject {
     void startClient() throws RemoteException, NotBoundException;
     void sendReport(Report report) throws RemoteException;
     void sendNotification(Notification notification) throws RemoteException;
-    String getNumberOfSubscriptions(Profile profile) throws RemoteException;
-    void addRecipe(String recipe) throws RemoteException;
+    boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
         throws RemoteException, SQLException;
     boolean signUp(String username, String password,
@@ -25,5 +26,12 @@ public interface Client extends Subject {
     Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
     void subscribe(Profile subscriber, Profile profile) throws RemoteException;
     void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
-    void delete(String username) throws SQLException;
+    void delete(String username) throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByIngredient(String ingredient)
+        throws SQLException, RemoteException;
+    Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByUsername(String username)
+        throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByTitle(String title)
+        throws SQLException, RemoteException;
 }

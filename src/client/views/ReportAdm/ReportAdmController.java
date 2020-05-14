@@ -14,6 +14,7 @@ import shared.transferObjects.Recipe;
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.sql.SQLException;
 
 public class ReportAdmController implements ViewController {
     private ReportAdmVM vm= ViewModelFactory.getInstance().getReportAdmVM();
@@ -24,7 +25,9 @@ public class ReportAdmController implements ViewController {
     @FXML
     private TextArea textArea;
 
-    public ReportAdmController() throws IOException, NotBoundException {
+    public ReportAdmController()
+        throws IOException, NotBoundException, SQLException
+    {
     }
 
     @Override

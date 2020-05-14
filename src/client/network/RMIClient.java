@@ -4,6 +4,7 @@ import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 
 import java.beans.PropertyChangeListener;
@@ -16,6 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RMIClient implements Client, ClientCallBack {
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
@@ -47,22 +49,12 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public String getNumberOfSubscriptions(Profile profile) throws RemoteException {
-        return null;
-    }
-
-    /*@Override
-    public String getNumberOfSubscriptions() throws RemoteException {
-        return server.getNumberOfSubscriptions();
-    }*/
-
-    @Override
-    public void addRecipe(String recipe) throws RemoteException {
+    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile) throws RemoteException {
         try
         {
-            server.addRecipe(recipe, null);
+          return server.addRecipe(title,description,username,ingredients,picfile);
         }
-        catch (RemoteException e)
+        catch (RemoteException | FileNotFoundException | SQLException e)
         {
             throw new RemoteException();
         }
@@ -97,9 +89,36 @@ public class RMIClient implements Client, ClientCallBack {
         server.unsubscribe(subscriber,profile);
     }
 
-    @Override public void delete(String username) throws SQLException
+    @Override public void delete(String username)
+        throws SQLException, RemoteException
     {
         server.delete(username);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
+        throws SQLException, RemoteException
+    {
+        return server.getRecipesByIngredient(ingredient);
+    }
+
+    @Override public Recipe getRecipeByTitle(String title)
+        throws SQLException, RemoteException
+    {
+        return server.getRecipeByTitle(title);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByUsername(String username)
+        throws SQLException, RemoteException
+    {
+        System.out.println("client works "+server.getRecipesByUsername(username).toString());
+        System.out.println(server.getRecipesByUsername("Julia"));
+        return server.getRecipesByUsername(username);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByTitle(String title)
+        throws SQLException, RemoteException
+    {
+        return server.getRecipesByTitle(title);
     }
 
     @Override

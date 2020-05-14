@@ -2,9 +2,8 @@ package client.views.Profile;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
-import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
-import client.views.RecipeDisplay;
+import client.views.RecipeDemo.RecipeDemoVM;
 import client.views.ViewController;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -18,7 +17,6 @@ import javafx.scene.text.Text;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,7 +52,7 @@ public class ProfileController implements ViewController
   private Profile profile;
   private ViewHandler vh = ViewHandler.getInstance();
 
-  public ProfileController() throws IOException, NotBoundException
+  public ProfileController() throws IOException, NotBoundException, SQLException
   {
   }
   public void onEditButton(ActionEvent actionEvent)
@@ -65,27 +63,24 @@ public class ProfileController implements ViewController
   }
 
   public void onNewRecipe(ActionEvent actionEvent) {
-    vm.addRecipeDisplay();
+    vm.newRecipe();
   }
- private void OnRecipeAdded(ListChangeListener.Change<? extends RecipeDisplay> change)
+ private void OnRecipeAdded(ListChangeListener.Change<? extends RecipeDemoVM> change)
  {
    if(change.next())
    {
-    RecipeDisplay rd = change.getAddedSubList().get(0);
+     RecipeDemoVM vm = change.getAddedSubList().get(0);
 
-     //delete it later(recipes need to come from DB)
-     Recipe recipe = new Recipe("pierogi","miaaaaaaaaaaaaaaaaaaaaaaal",null,new ArrayList<>(),new File("file:carrotLogo.png"));
-     //end of delete section
-     RecipeDemoController recipeController =vh.getRecipeDisplayPanel(recipe);
+     RecipeDemoController recipeController = vh.getRecipeDisplayPanel(vm.getRecipe());
 
-     rd.getUserLink().bind(recipeController.recipeLink.textProperty());
+     vm.getRecipeLink().bind(recipeController.recipeLink.textProperty());
 
      Parent recipeDisplayPanel  =  recipeController.getRoot();
      recipeContainer.getChildren().add(recipeDisplayPanel);
    }
  }
-
-  public void onDeleteButton(ActionEvent actionEvent) throws SQLException
+  public void onDeleteButton(ActionEvent actionEvent)
+      throws SQLException, RemoteException
   {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Are you sure?");
@@ -101,9 +96,7 @@ public class ProfileController implements ViewController
     {
       alert.close();
     }
-
   }
-
   public void onSubscribeButton(ActionEvent actionEvent) {
   }
   public void onUnsubscribeButton(ActionEvent actionEvent) {
@@ -111,9 +104,16 @@ public class ProfileController implements ViewController
   @Override public void init(Profile profile)
       throws FileNotFoundException, SQLException, RemoteException
   {
-    vm.getRecipeDisplays().addListener(this::OnRecipeAdded);
+    System.out.println("profile opened: "+profile.getUsername());
 
+    username.textProperty().bindBidirectional(vm.getUsername());
+    vm.getRecipeDemoVMS().addListener(this::OnRecipeAdded);
 
+    for (Recipe recipe :vm.getRecipes(profile.getUsername()) )
+    {
+      vm.addRecipeDisplay(recipe);
+      System.out.println("recipe added: "+ recipe.getTitle());
+    }
 
     username.setText(profile.getUsername());
 

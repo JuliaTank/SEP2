@@ -18,7 +18,9 @@ public class NotificationController implements ViewController {
     private NotificationVM vm= ViewModelFactory.getInstance().getNotificationVM();
     @FXML
     TextArea textArea;
-    public NotificationController() throws IOException, NotBoundException {
+    public NotificationController()
+        throws IOException, NotBoundException, SQLException
+    {
     }
 
     public void onSeeButton(ActionEvent actionEvent) {

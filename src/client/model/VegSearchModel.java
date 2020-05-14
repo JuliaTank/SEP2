@@ -13,22 +13,27 @@ import java.util.ArrayList;
 
 public interface VegSearchModel extends Subject {
     void report(Report report) throws RemoteException;
-    String getNumberOfSubscriptions() throws RemoteException;
-    void saveUsername(String username);
+   // void saveUsername(String username);
     void subscribe(Profile subscriber, Profile profile) throws RemoteException;
     void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
-    void addRecipe(String recipe) throws RemoteException;
+    boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
         throws RemoteException, SQLException, FileNotFoundException;
     boolean signUp(String username, String password, File picFile,String description)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getLoggedProfile();
-    Recipe getRecipesByTitle(String searchedTitle) throws  RemoteException;
-    Recipe getRecipesByAuthor(String searchedUsername) throws  RemoteException;
-    Recipe getRecipesByIngredient(String searchedIngredient) throws  RemoteException;
+
     Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException;
     void setRecipes(ArrayList<Recipe> recipes);
-    void delete() throws SQLException;
+    void delete() throws SQLException, RemoteException;
+
+    ArrayList<Recipe> getRecipesByIngredient(String ingredient)
+        throws SQLException, RemoteException;
+    Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByUsername(String username)
+        throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByTitle(String title)
+        throws SQLException, RemoteException;
 
 }

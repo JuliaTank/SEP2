@@ -12,6 +12,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class ReportUserController implements ViewController {
 
@@ -20,7 +21,9 @@ public class ReportUserController implements ViewController {
     @FXML
     private TextArea textArea;
 
-    public ReportUserController() throws IOException, NotBoundException {
+    public ReportUserController()
+        throws IOException, NotBoundException, SQLException
+    {
     }
 
     public void onReportButton() throws RemoteException {

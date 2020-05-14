@@ -12,6 +12,7 @@ import client.views.SignIn.SignInVM;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.sql.SQLException;
 
 public class ViewModelFactory {
   private static ViewModelFactory instance;
@@ -26,7 +27,7 @@ public class ViewModelFactory {
   private ReportUserVM reportUserVM;
   private RecipeVM recipeVM;
 
-  private ViewModelFactory() throws IOException, NotBoundException
+  private ViewModelFactory() throws IOException, NotBoundException, SQLException
   {
     logInVM = new LogInVM();
     mainPageVM =new MainPageVM();
@@ -41,7 +42,7 @@ public class ViewModelFactory {
   }
 
   public static synchronized ViewModelFactory getInstance()
-      throws IOException, NotBoundException
+      throws IOException, NotBoundException, SQLException
   {
     if(instance==null)
     {

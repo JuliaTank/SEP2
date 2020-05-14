@@ -7,12 +7,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="76.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.RecipeDemo.RecipeDemoController">
    <children>
       <HBox layoutY="-3.0" prefHeight="76.0" prefWidth="619.0">
          <children>
-            <ImageView fx:id="recipePic" fitHeight="77.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
+            <Pane prefHeight="76.0" prefWidth="78.0">
+               <children>
+                  <ImageView fx:id="recipePic" fitHeight="55.0" fitWidth="57.0" layoutX="11.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
             <Pane prefHeight="78.0" prefWidth="250.0">
                <children>
                   <Hyperlink fx:id="recipeLink" layoutX="8.0" layoutY="27.0" onAction="#onRecipeLink" prefHeight="23.0" prefWidth="234.0">

@@ -34,7 +34,8 @@ public class MainPageController implements ViewController
   private ViewHandler vh = ViewHandler.getInstance();
  // private VegSearchModel model = ModelFactory.getInstance().getModel();
 
-  public MainPageController() throws IOException, NotBoundException
+  public MainPageController()
+      throws IOException, NotBoundException, SQLException
   {
   }
 

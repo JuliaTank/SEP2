@@ -34,17 +34,6 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public String getNumberOfSubscriptions() throws RemoteException {
-        //return client.getNumberOfSubscriptions();
-        return  null;
-    }
-
-    @Override
-    public void saveUsername(String username) {
-        this.username=username;
-    }
-
-    @Override
     public void subscribe(Profile subscriber, Profile profile) throws RemoteException {
         client.subscribe(subscriber,profile);
     }
@@ -55,9 +44,8 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void addRecipe(String recipe) throws RemoteException {
-        client.addRecipe(recipe);
-       // client.sendNotification();
+    public boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException {
+       return client.addRecipe(title,description,loggedProfile.getUsername(),ingredients,picfile);
     }
 
     @Override public boolean logIn(String username, String password)
@@ -77,25 +65,6 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public Recipe getRecipesByTitle(String searchedTitle)  {
-        if(recipe.getTitle().equals(searchedTitle))
-        {
-
-        }
-        return  null;
-    }
-
-    @Override
-    public Recipe getRecipesByAuthor(String searchedUsername)  {
-        return null;
-    }
-
-    @Override
-    public Recipe getRecipesByIngredient(String searchedIngredient) {
-        return null;
-    }
-
-    @Override
     public Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException
     {
@@ -107,9 +76,33 @@ public class VegSearchModelManager implements VegSearchModel {
 
     }
 
-    @Override public void delete() throws SQLException
+    @Override public void delete() throws SQLException, RemoteException
     {
         client.delete(loggedProfile.getUsername());
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
+        throws SQLException, RemoteException
+    {
+        return client.getRecipesByIngredient(ingredient);
+    }
+
+    @Override public Recipe getRecipeByTitle(String title)
+        throws SQLException, RemoteException
+    {
+        return client.getRecipeByTitle(title);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByUsername(String username)
+        throws SQLException, RemoteException
+    {
+        return client.getRecipesByUsername(username);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByTitle(String title)
+        throws SQLException, RemoteException
+    {
+        return client.getRecipesByTitle(title);
     }
 
     private void setLoggedProfile(Profile profile)

@@ -8,6 +8,7 @@ import shared.networking.ClientCallBack;
 import shared.networking.RMIServer;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
+import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 
 import java.io.File;
@@ -48,11 +49,11 @@ public class RMIServerImpl implements RMIServer {
         System.out.println("Client was added");
     }
 
-    @Override
+   /* @Override
     public void unregisterClient(ClientCallBack client)  {
         this.clients.remove(client);
         System.out.println("Client was removed");
-    }
+    }*/
 
     @Override
     public boolean logIn(String username, String password)
@@ -63,15 +64,23 @@ public class RMIServerImpl implements RMIServer {
         return profile!= null && profile.getPassword().equals(password);
     }
 
-    @Override
+   /* @Override
     public void logOut() throws RemoteException {
        // numberOfClients--;
     }
 
-
+*/
     @Override
-    public void addRecipe(String recipe, ClientCallBack client) {
-
+    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
+        throws FileNotFoundException, SQLException
+    {
+      if (recipesData.getRecipeByTitle(title)==null)
+      {
+        recipesData.create(title, description, username, ingredients, picfile);
+        return true;
+      }
+      else
+      return false;
     }
 
     @Override
@@ -123,6 +132,31 @@ public class RMIServerImpl implements RMIServer {
     @Override public void delete(String username) throws SQLException
     {
         profilesData.delete(username);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
+        throws SQLException
+    {
+        return recipesData.getRecipesByIngredient(ingredient);
+    }
+
+    @Override public Recipe getRecipeByTitle(String title) throws SQLException
+    {
+        return recipesData.getRecipeByTitle(title);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByUsername(String username)
+        throws SQLException
+    {
+      System.out.println("server works "+ recipesData.getRecipesByAuthor("Julia"));
+     // System.out.println("server works "+ recipesData.getRecipesByAuthor(username).toString());
+        return recipesData.getRecipesByAuthor(username);
+    }
+
+    @Override public ArrayList<Recipe> getRecipesByTitle(String title)
+        throws SQLException
+    {
+        return recipesData.getRecipesByTitle(title);
     }
 
     private void updateSubscribers(Notification notification, ClientCallBack unsubscriber)

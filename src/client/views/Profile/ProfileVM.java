@@ -3,9 +3,7 @@ package client.views.Profile;
 
 import client.core.ModelFactory;
 import client.model.VegSearchModel;
-import client.views.RecipeDisplay;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
+import client.views.RecipeDemo.RecipeDemoVM;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -22,44 +20,58 @@ import java.util.ArrayList;
 
 public class ProfileVM {
 
-    private ObservableList<RecipeDisplay> recipeDisplays;
+    private ObservableList<RecipeDemoVM> recipeDemoVMS;
 
     private VegSearchModel model;
     private StringProperty subsLabel;
+    private StringProperty username;
 
-    public ProfileVM() throws IOException, NotBoundException {
+    public ProfileVM() throws IOException, NotBoundException, SQLException, RemoteException{
+
         this.model = ModelFactory.getInstance().getModel();
         this.subsLabel=new SimpleStringProperty();
-        recipeDisplays = FXCollections.observableArrayList();
+        this.username = new SimpleStringProperty();
+        recipeDemoVMS = FXCollections.observableArrayList();
+
     }
 
-    public void addRecipeDisplay()
+    public void addRecipeDisplay(Recipe recipe)
+
     {
-        RecipeDisplay rd = new RecipeDisplay();
-        recipeDisplays.add(rd);
+        RecipeDemoVM rd = new RecipeDemoVM(recipe);
+        recipeDemoVMS.add(rd);
     }
-    public ObservableList<RecipeDisplay> getRecipeDisplays()
+    public ObservableList<RecipeDemoVM> getRecipeDemoVMS()
     {
-        return recipeDisplays;
+        return recipeDemoVMS;
+    }
+    public ArrayList<Recipe> getRecipes(String username) throws SQLException, RemoteException
+    {
+        //System.out.println(model.getRecipesByUsername(username.getValue()).get(0).getTitle());
+        return model.getRecipesByUsername(username);
     }
 
-  /*  public void newRecipe()
+    public void newRecipe()
     {
         //ArrayList<Recipe> recipes =  new ArrayList<>();
-    }*/
+    }
 
     public StringProperty getSubsLabel() {
         return subsLabel;
     }
 
+    public StringProperty getUsername()
+    {
+        return username;
+    }
+
     public void subscribe() throws RemoteException {
 
-        subsLabel.set(model.getNumberOfSubscriptions());
     }
     public void unsubscribe() throws RemoteException {
 
-        subsLabel.set(model.getNumberOfSubscriptions());
     }
+
     public Profile getLoggedProfile()
     {
        return model.getLoggedProfile();
@@ -70,7 +82,7 @@ public class ProfileVM {
     {
         return  model.getProfile(username);
     }
-    public void delete() throws SQLException
+    public void delete() throws SQLException, RemoteException
     {
         model.delete();
     }

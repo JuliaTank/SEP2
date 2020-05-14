@@ -1,5 +1,8 @@
 package client.views.Recipe;
 
+import client.core.ModelFactory;
+import client.core.ViewHandler;
+import client.model.VegSearchModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,6 +10,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 import javax.print.DocFlavor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class RecipeVM
 {
@@ -17,7 +25,11 @@ public class RecipeVM
   private StringProperty reportField;
   private ListProperty<String> comments;
 
-public  RecipeVM(){
+  private ViewHandler vh =  ViewHandler.getInstance();
+  private VegSearchModel model = ModelFactory.getInstance().getModel();
+
+public  RecipeVM() throws IOException, NotBoundException
+{
 
   ingredients =  new SimpleListProperty<>();
   userLink = new SimpleStringProperty();
@@ -55,5 +67,19 @@ public  RecipeVM(){
   public ListProperty<String> commentsProperty()
   {
     return comments;
+  }
+
+  public void onUserLink()
+      throws FileNotFoundException, SQLException, RemoteException
+  {
+    vh.openProfile(model.getProfile(userLink.getValue()));
+  }
+  public void onMainPage()
+  {
+    vh.openMainPage();
+  }
+  public void onProfile()
+  {
+    vh.openProfile(model.getLoggedProfile());
   }
 }

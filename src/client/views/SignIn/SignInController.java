@@ -40,7 +40,7 @@ public class SignInController implements ViewController
 
   private File picFile;
 
-  public SignInController() throws IOException, NotBoundException
+  public SignInController() throws IOException, NotBoundException, SQLException
   {
   }
 

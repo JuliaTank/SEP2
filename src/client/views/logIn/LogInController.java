@@ -29,7 +29,7 @@ public class LogInController implements ViewController
   @FXML
   private PasswordField passwordField;
 
-  public LogInController() throws IOException, NotBoundException
+  public LogInController() throws IOException, NotBoundException, SQLException
   {
   }
 
