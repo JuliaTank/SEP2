@@ -23,13 +23,13 @@ public class ViewHandler {
     private Scene mainPageScene;
     private Scene inboxScene;
     private Scene profileScene;
+    private Scene notificationScene;
     private Scene reportUserScene;
     private Scene reportAdmScene;
     private Stage stage;
+    private Stage stageNotification = new Stage();
     private Scene recipeScene;
     private ViewModelFactory vmf;
-    private Queue<ViewModelFactory> vmfQueue;
-    //what is it for guys??
     private static ViewHandler instance;
 
     private ViewHandler()
@@ -121,7 +121,7 @@ public class ViewHandler {
         stage.show();
     }
     public void openReportUser() {
-        if (logInScene == null) {
+        if (reportUserScene == null) {
             try {
                 Parent root = loadFXML("../views/ReportUser/reportUser.fxml",null);
 
@@ -133,8 +133,27 @@ public class ViewHandler {
         }
         stage.setScene(reportUserScene);
         stage.show();
-    } public void openReportAdm() {
-        if (logInScene == null) {
+    }
+    public void openNotification() {
+        if (notificationScene == null) {
+            try {
+                Parent root = loadFXML("../views/Notification/notification.fxml",null);
+
+                stageNotification.setTitle("New notification");
+                notificationScene = new Scene(root);
+            } catch (IOException | NotBoundException | SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        stageNotification.setScene(notificationScene);
+        stageNotification.show();
+    }
+    public void closeNotification()
+    {
+        stageNotification.close();
+    }
+    public void openReportAdm() {
+        if (reportAdmScene == null) {
             try {
                 Parent root = loadFXML("../views/ReportAdm/reportAdm.fxml",null);
 

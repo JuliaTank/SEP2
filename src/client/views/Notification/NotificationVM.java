@@ -6,6 +6,7 @@ import client.model.VegSearchModel;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.transferObjects.Recipe;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -20,13 +21,11 @@ public class NotificationVM {
         this.textAreaProperty= new SimpleStringProperty();
         this.model = ModelFactory.getInstance().getModel();
     }
-    public void see()
-    {
-
+    public void see() throws IOException {
+       //vh.openRecipeView(model.getRecipesByTitle());
     }
-    public void cancel()
-    {
-
+    public void cancel(){
+        vh.closeNotification();
     }
 
     public StringProperty getAreaProperty() {

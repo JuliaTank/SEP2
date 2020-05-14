@@ -2,6 +2,7 @@ package client.views.Profile;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
+import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
 import client.views.RecipeDemo.RecipeDemoVM;
 import client.views.ViewController;
@@ -17,6 +18,7 @@ import javafx.scene.text.Text;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -96,10 +98,19 @@ public class ProfileController implements ViewController
     {
       alert.close();
     }
+
   }
-  public void onSubscribeButton(ActionEvent actionEvent) {
-  }
-  public void onUnsubscribeButton(ActionEvent actionEvent) {
+  public void onSubscribeButton(ActionEvent actionEvent) throws RemoteException, FileNotFoundException, SQLException {
+   if(subscribeButton.getText().equals("Subscribe"))
+   {
+     vm.subscribe();
+     subscribeButton.setText("Unsubscribe");
+   }
+   else
+   {
+     vm.unsubscribe();
+     subscribeButton.setText("Subscribe");
+   }
   }
   @Override public void init(Profile profile)
       throws FileNotFoundException, SQLException, RemoteException

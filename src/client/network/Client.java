@@ -24,14 +24,13 @@ public interface Client extends Subject {
         File picFile, String description)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
-    void subscribe(Profile subscriber, Profile profile) throws RemoteException;
-    void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
+    void subscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
+    void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
     void delete(String username) throws SQLException, RemoteException;
-    ArrayList<Recipe> getRecipesByIngredient(String ingredient)
-        throws SQLException, RemoteException;
     Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByUsername(String username)
         throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByTitle(String title)
         throws SQLException, RemoteException;
+    ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws RemoteException, SQLException;
 }

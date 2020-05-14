@@ -23,15 +23,18 @@ public interface RMIServer extends Remote {
     void report(Report report, ClientCallBack client) throws RemoteException;
     boolean signUp(String username, String password,File picFile, String description) throws SQLException, FileNotFoundException, RemoteException;
     Profile getProfile(String username)throws SQLException, FileNotFoundException, RemoteException;
-    void subscribe(Profile subscriber, Profile profile) throws RemoteException;
-    void unsubscribe(Profile subscriber, Profile profile) throws RemoteException;
-    void sendNotification(Notification notification, ClientCallBack subscriber) throws RemoteException;
+    //void sendNotification(Notification notification, ClientCallBack subscriber) throws RemoteException;
     void delete(String username) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByIngredient(String ingredient)
         throws SQLException,RemoteException;
     Recipe getRecipeByTitle(String title) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByUsername(String username) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByTitle(String title) throws SQLException,RemoteException;
+    void subscribe(String subscriber, Profile profile) throws RemoteException, SQLException, FileNotFoundException;
+    void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
+    void notify(Recipe recipe, ClientCallBack owner) throws RemoteException;
+
+
 
 
 

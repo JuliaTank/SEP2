@@ -26,8 +26,7 @@ public class ProfileVM {
     private StringProperty subsLabel;
     private StringProperty username;
 
-    public ProfileVM() throws IOException, NotBoundException, SQLException, RemoteException{
-
+    public ProfileVM() throws IOException, NotBoundException {
         this.model = ModelFactory.getInstance().getModel();
         this.subsLabel=new SimpleStringProperty();
         this.username = new SimpleStringProperty();
@@ -70,8 +69,8 @@ public class ProfileVM {
     }
     public void unsubscribe() throws RemoteException {
 
-    }
 
+    }
     public Profile getLoggedProfile()
     {
        return model.getLoggedProfile();

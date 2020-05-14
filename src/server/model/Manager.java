@@ -1,6 +1,7 @@
 package server.model;
 
 import shared.transferObjects.Notification;
+import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 
 import java.beans.PropertyChangeListener;
@@ -17,7 +18,7 @@ public class Manager implements ManagerModel{
     }
 
     @Override
-    public String addRecipe(String recipe) {
+    public Recipe addRecipe(Recipe recipe) {
         support.firePropertyChange("NewRecipe",null,recipe);
         return recipe;
     }

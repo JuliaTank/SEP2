@@ -64,12 +64,9 @@ public class RMIServerImpl implements RMIServer {
         return profile!= null && profile.getPassword().equals(password);
     }
 
-   /* @Override
-    public void logOut() throws RemoteException {
-       // numberOfClients--;
-    }
 
-*/
+
+
     @Override
     public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
         throws FileNotFoundException, SQLException
@@ -113,19 +110,22 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void subscribe(Profile subscriber, Profile profile){
-       profile.getSubs().add(subscriber);
+    public void subscribe(String subscriber, Profile profile) throws SQLException, FileNotFoundException {
+
+        ArrayList<Profile>subs=profile.getSubs();
+        subs.add(ProfilesData.getInstance().getProfile(subscriber));
+       profilesData.update(profile.getUsername(),profile.getUsername(),profile.getPassword(),profile.getPicFile(),profile.getDescription(),subs);
     }
 
     @Override
-    public void unsubscribe(Profile subscriber, Profile profile) {
-        profile.getSubs().remove(subscriber);
+    public void unsubscribe(String subscriber, Profile profile) throws FileNotFoundException, SQLException {
+        ArrayList<Profile>subs=profile.getSubs();
+        subs.remove(ProfilesData.getInstance().getProfile(subscriber));
+        profilesData.update(profile.getUsername(),profile.getUsername(),profile.getPassword(),profile.getPicFile(),profile.getDescription(),subs);
     }
 
     @Override
-    public void sendNotification(Notification notification, ClientCallBack subscriber)  {
-        manager.sendNotification(notification);
-        updateSubscribers(notification,subscriber);
+    public void notify(Recipe recipe, ClientCallBack owner)  {
 
     }
 
@@ -159,20 +159,7 @@ public class RMIServerImpl implements RMIServer {
         return recipesData.getRecipesByTitle(title);
     }
 
-    private void updateSubscribers(Notification notification, ClientCallBack unsubscriber)
-    {
-        for(ClientCallBack client: clients)
-        {
-            if(client.equals(unsubscriber)) continue;
-            try
-            {
-                client.updateNotification(notification);
-            }
-            catch (RemoteException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
+
+
 
 }

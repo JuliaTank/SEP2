@@ -34,13 +34,18 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void subscribe(Profile subscriber, Profile profile) throws RemoteException {
-        client.subscribe(subscriber,profile);
+    public void saveUsername(String username) {
+        this.username=username;
     }
 
     @Override
-    public void unsubscribe(Profile subscriber, Profile profile) throws RemoteException {
-        client.unsubscribe(subscriber,profile);
+    public void subscribe(String subscriber) throws FileNotFoundException, RemoteException, SQLException {
+        client.subscribe(subscriber,loggedProfile);
+    }
+
+    @Override
+    public void unsubscribe(String subscriber) throws RemoteException, FileNotFoundException, SQLException {
+        client.unsubscribe(subscriber,loggedProfile);
     }
 
     @Override
@@ -63,6 +68,7 @@ public class VegSearchModelManager implements VegSearchModel {
     {
         return loggedProfile;
     }
+
 
     @Override
     public Profile getProfile(String username)
@@ -103,6 +109,11 @@ public class VegSearchModelManager implements VegSearchModel {
         throws SQLException, RemoteException
     {
         return client.getRecipesByTitle(title);
+    }
+
+    @Override
+    public void see() {
+
     }
 
     private void setLoggedProfile(Profile profile)

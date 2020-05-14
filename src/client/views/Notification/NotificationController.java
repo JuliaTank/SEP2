@@ -23,7 +23,7 @@ public class NotificationController implements ViewController {
     {
     }
 
-    public void onSeeButton(ActionEvent actionEvent) {
+    public void onSeeButton(ActionEvent actionEvent) throws IOException {
         vm.see();
     }
 

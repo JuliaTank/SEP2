@@ -18,6 +18,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RMIClient implements Client, ClientCallBack {
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
@@ -52,7 +53,7 @@ public class RMIClient implements Client, ClientCallBack {
     public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile) throws RemoteException {
         try
         {
-          return server.addRecipe(title,description,username,ingredients,picfile);
+          return   server.addRecipe(title, description, username, ingredients, picfile);
         }
         catch (RemoteException | FileNotFoundException | SQLException e)
         {
@@ -80,12 +81,12 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void subscribe(Profile subscriber, Profile profile) throws RemoteException {
+    public void subscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException {
         server.subscribe(subscriber,profile);
     }
 
     @Override
-    public void unsubscribe(Profile subscriber, Profile profile) throws RemoteException {
+    public void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException {
         server.unsubscribe(subscriber,profile);
     }
 
@@ -133,27 +134,7 @@ public class RMIClient implements Client, ClientCallBack {
 
     @Override
     public void sendNotification(Notification notification) throws RemoteException {
-        for (int i = 0; i < profile.getSubs().size(); i++) {
-            if(profile.getSubs().contains(i))
-            {
-                try
-                {
-                    server.sendNotification(notification,null);
-                }
-                catch (RemoteException e)
-                {
-                    throw new RemoteException();
-                }
-            }
-        }
-    }
 
-
-    @Override
-    public void updateNotification(Notification notification)  {
-        Notification oldValue = this.notification;
-        this.notification = notification;
-        support.firePropertyChange("NewNotification",oldValue,notification);
     }
 
     @Override

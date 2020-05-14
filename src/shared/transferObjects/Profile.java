@@ -3,6 +3,7 @@ package shared.transferObjects;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Profile implements Serializable {
     private String username;
@@ -11,7 +12,7 @@ public class Profile implements Serializable {
     private String description;
     private ArrayList<Profile>subs;
 
-    public Profile(String username, String password, File picFile, String description, ArrayList<Profile> subs)
+    public Profile(String username, String password, File picFile, String description, List<Profile> subs)
     {
         this.username=username;
         this.password=password;
@@ -19,7 +20,10 @@ public class Profile implements Serializable {
         this.description=description;
         this.subs=new ArrayList<>();
     }
-
+    public void applyNotify(String recipeName, String author)
+    {
+        System.out.println("Author "+author +"recipe name "+recipeName);
+    }
     public String getUsername() {
         return username;
     }
