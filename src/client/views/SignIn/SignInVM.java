@@ -37,7 +37,7 @@ public class SignInVM {
   }
 
   public void signUp(File picFile)
-      throws FileNotFoundException, SQLException, RemoteException
+      throws IOException, SQLException, NotBoundException
   {
     if(model.signUp(usernameCreationField.getValue(),passwordCreationField.getValue(),picFile, getDescriptionArea().getValue()))
     {

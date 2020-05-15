@@ -15,30 +15,33 @@ public class ToDelete
   {
 
 
-   /* ArrayList<Profile> subs =  new ArrayList<>();
+  ArrayList<Profile> subs =  new ArrayList<>();
     subs.add(ProfilesData.getInstance().getProfile("Julia"));
     subs.add(ProfilesData.getInstance().getProfile("Roksanka"));
-
-    //ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);
-   Profile profile = ProfilesData.getInstance().getProfile("Toms");
-
-    for (int i = 0; i < profile.getSubs().size() ; i++)
-    {
-      System.out.println(profile.getSubs().get(i).getUsername());
-    }*/
-
-   /* ArrayList<String> ingredients =  new ArrayList<>();
     File file =  new File("Tomspic.jpg");
 
-   RecipesData.getInstance().update("fooood","fooood","cook food",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
-    Profile profile = ProfilesData.getInstance().getProfile("Toms");*/
+    ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);
 
-   ArrayList<Recipe> recipes=  RecipesData.getInstance().getRecipesByAuthor("Julia");
 
-    for (int i = 0; i < recipes.size(); i++)
+    /*  for (int i = 0; i < profile.getSubs().size() ; i++)
     {
-      System.out.println(recipes.get(i).getTitle());
+      System.out.println(profile.getSubs().get(i).getUsername());
     }
+
+
+/*
+    ArrayList<String> ingredients =  new ArrayList<>();
+    ingredients.add("solly lolly");
+    */
+
+
+   //RecipesData.getInstance().update("solly lolly","solly lolly","freeze solly lolly",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
+
+/*
+    for (int i = 0; i <profiles.size() ; i++)
+    {
+      System.out.println(profiles.get(i).getUsername());
+    }*/
 
   }
 }

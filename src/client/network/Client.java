@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public interface Client extends Subject {
     void startClient() throws RemoteException, NotBoundException;
-    void sendReport(Report report) throws RemoteException;
+    void sendReport(String title, String username, String message) throws RemoteException;
     void sendNotification(Notification notification) throws RemoteException;
     boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
@@ -24,8 +24,9 @@ public interface Client extends Subject {
         File picFile, String description)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
-    void subscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
-    void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
+    ArrayList<Profile> getProfiles(String username) throws FileNotFoundException, SQLException, RemoteException;
+    void subscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
+    void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
     void delete(String username) throws SQLException, RemoteException;
     Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByUsername(String username)
@@ -33,4 +34,5 @@ public interface Client extends Subject {
     ArrayList<Recipe> getRecipesByTitle(String title)
         throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws RemoteException, SQLException;
+    ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
 }

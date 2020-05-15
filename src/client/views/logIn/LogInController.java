@@ -48,8 +48,12 @@ public class LogInController implements ViewController
     Image image3 = new Image("file:carrotLogo.png");
     VSlogo.setImage(image3);
 
+    usernameField.clear();
+    errorLabel.setText("");
+    passwordField.clear();
+
     usernameField.textProperty().bindBidirectional(vm.getUsernameField());
-    errorLabel.textProperty().bind(vm.getErrorLabel());
+    errorLabel.textProperty().bindBidirectional(vm.getErrorLabel());
     passwordField.textProperty().bindBidirectional(vm.getPasswordField());
   }
 }

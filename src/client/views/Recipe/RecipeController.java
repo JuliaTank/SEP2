@@ -2,6 +2,8 @@ package client.views.Recipe;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -20,6 +22,10 @@ import java.sql.SQLException;
 public class RecipeController
 {
   @FXML
+  public Label errorLabel;
+  @FXML
+  public Label titleLabel;
+  @FXML
   public ImageView recipePic;
   @FXML
   public ListView ingredientList;
@@ -37,9 +43,8 @@ public class RecipeController
   public TextField reportField;
   @FXML
   public ListView commentsList;
-
-
-
+  @FXML
+  private TextArea descriptionArea;
 
   private RecipeVM vm= ViewModelFactory.getInstance().getRecipeVM();
 
@@ -63,9 +68,16 @@ public class RecipeController
 
   }
 
-  public void onReportButton(ActionEvent actionEvent)
+  public void onReportButton(ActionEvent actionEvent) throws RemoteException
   {
-
+    if(!reportField.getText().equals(null))
+    {
+      vm.report(titleLabel.getText(), userLink.getText(), reportField.getText());
+    }
+    else
+    {
+      errorLabel.setText("you cannot send empty report, please write something interesting;))");
+    }
   }
 
   public void init(Recipe recipe)
@@ -76,9 +88,17 @@ public class RecipeController
     commentField.textProperty().bindBidirectional(vm.commentFieldProperty());
     reportField.textProperty().bindBidirectional(vm.reportFieldProperty());
     commentsList.cellFactoryProperty().bindBidirectional(vm.commentsProperty());
-
     userLink.setText(recipe.getProfile().getUsername());
+    titleLabel.setText(recipe.getTitle());
+    ObservableList<String> ol = FXCollections.observableArrayList();
 
+    for (int i = 0; i < recipe.getIngredients().size(); i++)
+    {
+      ol.add(recipe.getIngredients().get(i));
+    }
+
+    ingredientList.setItems(ol);
+     descriptionArea.setText(recipe.getDescription());
     Image image = new Image(recipe.getProfile().getPicFile().toURI().toString());
     Image image2 = new Image("file:heart.png");
     Image image3 = new Image(recipe.getPicFile().toURI().toString());
@@ -87,4 +107,13 @@ public class RecipeController
     recipePic.setImage(image3);
   }
 
+  public void onMyProfile(ActionEvent actionEvent)
+  {
+    vm.onProfile();
+  }
+
+  public void onMainPage(ActionEvent actionEvent)
+  {
+   vm.onMainPage();
+  }
 }

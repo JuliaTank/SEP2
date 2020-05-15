@@ -1,19 +1,25 @@
 package client.core;
 
 import client.views.MainPage.MainPageController;
+import client.views.ProfileDemo.ProfileDemoController;
 import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
 import client.views.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Queue;
 
 public class ViewHandler {
@@ -28,7 +34,9 @@ public class ViewHandler {
     private Scene reportAdmScene;
     private Stage stage;
     private Stage stageNotification = new Stage();
+
     private Scene recipeScene;
+    private Scene newRecipeScene;
     private ViewModelFactory vmf;
     private static ViewHandler instance;
 
@@ -44,51 +52,58 @@ public class ViewHandler {
         return instance;
 
     }
-    public void start()
+    public void start() throws IOException, SQLException, NotBoundException
     {
         stage = new Stage();
+        stage.getIcons().add(new Image("file:carrotIcon.png"));
         openLogIn();
     }
-    public void openLogIn() {
+    public void openLogIn() throws NotBoundException, SQLException, IOException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/logIn/logIn.fxml"));
+        Parent root = loader.load();
 
-                try {
-                Parent root = loadFXML("../views/logIn/logIn.fxml",null);
+        ViewController ctrl = loader.getController();
+        ctrl.init(null);
+        stage.setTitle("Log in");
 
-                stage.setTitle("Log in ");
-                logInScene = new Scene(root);
-            } catch (IOException | NotBoundException | SQLException e) {
-                e.printStackTrace();
-            }
-
+        logInScene =  new Scene(root);
         stage.setScene(logInScene);
         stage.show();
+            /*Parent root = loadFXML("../views/logIn/logIn.fxml",null);
+            logInScene = new Scene(root);
+
+        stage.setTitle("Log in");
+        stage.setScene(logInScene);
+        stage.show();*/
     }
 
     public void openSignIn() {
-        if (signInScene == null) {
             try {
                 Parent root = loadFXML("../views/SignIn/signIn.fxml",null);
 
-                stage.setTitle("Sign in ");
+
                 signInScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
-        }
+        stage.setTitle("Sign in ");
         stage.setScene(signInScene);
         stage.show();
     }
     public void openMainPage() {
-        if (mainPageScene == null) {
+
             try {
                 Parent root = loadFXML("../views/MainPage/mainPage.fxml",null);
 
-                stage.setTitle("Main Page");
+
                 mainPageScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
-        }
+
+        stage.setTitle("Main Page");
         stage.setScene(mainPageScene);
         stage.show();
     }
@@ -98,12 +113,13 @@ public class ViewHandler {
             try {
                 Parent root = loadFXML("../views/Inbox/inbox.fxml",null);
 
-                stage.setTitle("Inbox");
+
                 inboxScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
         }
+        stage.setTitle("Inbox");
         stage.setScene(inboxScene);
         stage.show();
     }
@@ -112,11 +128,12 @@ public class ViewHandler {
             try {
                 Parent root = loadFXML("../views/Profile/profile.fxml",profile);
 
-                stage.setTitle("Profile");
+
                 profileScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
+            stage.setTitle(profile.getUsername());
         stage.setScene(profileScene);
         stage.show();
     }
@@ -147,6 +164,16 @@ public class ViewHandler {
         }
         stageNotification.setScene(notificationScene);
         stageNotification.show();
+    }
+    public void toDelete() throws IOException, SQLException
+    {
+        Popup popup = new Popup();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/ReportUser/reportUser.fxml"));
+        Parent root = loader.load();
+
+        ViewController ctrl  = loader.getController();
+        ctrl.init(null);
+        popup.getContent().add(root);
     }
     public void closeNotification()
     {
@@ -194,7 +221,26 @@ public class ViewHandler {
         }
 
         RecipeDemoController controller  = loader.getController();
+
         controller.init(root,recipe);
+        return controller;
+    }
+    public ProfileDemoController getProfileDisplayPanel(Profile profile)
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/ProfileDemo/profileDemo.fxml"));
+        Parent root = null;
+        try
+        {
+            root = loader.load();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        ProfileDemoController controller  = loader.getController();
+        controller.init(root,profile);
         return  controller;
     }
    public void openRecipeView(Recipe recipe) throws IOException
@@ -210,6 +256,20 @@ public class ViewHandler {
        stage.setScene(recipeScene);
        stage.show();
    }
+    public void openNewRecipeView() throws IOException, SQLException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/NewRecipe/newRecipe.fxml"));
+        Parent root = loader.load();
+
+        ViewController ctrl = loader.getController();
+        ctrl.init(null);
+        stage.setTitle("New recipe");
+
+        newRecipeScene =  new Scene(root);
+        stage.setScene(newRecipeScene);
+        stage.show();
+    }
 
 
 }

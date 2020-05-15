@@ -26,6 +26,8 @@ public class RMIClient implements Client, ClientCallBack {
     private Profile profile;
     private Notification notification;
     private Report report;
+    private String username;
+
     public RMIClient() throws RemoteException
     {
         UnicastRemoteObject.exportObject(this,0);
@@ -38,15 +40,8 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void sendReport(Report report) throws RemoteException {
-        try
-        {
-            server.report(report, null);
-        }
-        catch (RemoteException e)
-        {
-            throw new RemoteException();
-        }
+    public void sendReport(String title, String username, String message) throws RemoteException {
+        server.report(title, username, message);
     }
 
     @Override
@@ -64,7 +59,12 @@ public class RMIClient implements Client, ClientCallBack {
     @Override public boolean logIn(String username, String password)
         throws RemoteException, SQLException
     {
-        return server.logIn(username,password);
+      boolean temp = server.logIn(username,password);
+      if(temp)
+      {
+        this.username = username;
+      }
+      return  temp;
     }
 
     @Override public boolean signUp(String username, String password,
@@ -80,14 +80,20 @@ public class RMIClient implements Client, ClientCallBack {
         return server.getProfile(username);
     }
 
-    @Override
-    public void subscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException {
-        server.subscribe(subscriber,profile);
+    @Override public ArrayList<Profile> getProfiles(String username)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return server.getProfiles(username);
     }
 
     @Override
-    public void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException {
-        server.unsubscribe(subscriber,profile);
+    public void subscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException {
+        server.subscribe(user,subscriber);
+    }
+
+    @Override
+    public void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException {
+        server.unsubscribe(user,subscriber);
     }
 
     @Override public void delete(String username)
@@ -100,6 +106,12 @@ public class RMIClient implements Client, ClientCallBack {
         throws SQLException, RemoteException
     {
         return server.getRecipesByIngredient(ingredient);
+    }
+
+    @Override public ArrayList<Recipe> getAllRecipes()
+        throws SQLException, RemoteException
+    {
+        return server.getAllRecipes();
     }
 
     @Override public Recipe getRecipeByTitle(String title)
@@ -116,7 +128,8 @@ public class RMIClient implements Client, ClientCallBack {
         return server.getRecipesByUsername(username);
     }
 
-    @Override public ArrayList<Recipe> getRecipesByTitle(String title)
+    @Override
+    public ArrayList<Recipe> getRecipesByTitle(String title)
         throws SQLException, RemoteException
     {
         return server.getRecipesByTitle(title);
@@ -137,10 +150,9 @@ public class RMIClient implements Client, ClientCallBack {
 
     }
 
-    @Override
-    public void updateReport(Report report)  {
-        Report oldValue = this.report;
-        this.report = report;
-        support.firePropertyChange("NewReport",oldValue,report);
-    }
+  @Override public String getUsername()
+  {
+    return username;
+  }
+
 }

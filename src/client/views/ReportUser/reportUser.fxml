@@ -42,7 +42,7 @@
                   </Text>
                </children>
             </GridPane>
-            <TextArea prefHeight="195.0" prefWidth="343.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="textArea" prefHeight="195.0" prefWidth="343.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="10.0" prefWidth="145.33333333333334" />

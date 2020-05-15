@@ -18,7 +18,7 @@ public class Profile implements Serializable {
         this.password=password;
         this.picFile=picFile;
         this.description=description;
-        this.subs=new ArrayList<>();
+        this.subs=(ArrayList<Profile>)subs;
     }
     public void applyNotify(String recipeName, String author)
     {

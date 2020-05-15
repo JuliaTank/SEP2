@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import shared.transferObjects.Report;
 
 import javax.print.DocFlavor;
 import java.io.FileNotFoundException;
@@ -38,7 +39,11 @@ public  RecipeVM() throws IOException, NotBoundException
   reportField = new SimpleStringProperty();
   comments =new SimpleListProperty<>();
 }
-
+public void report(String title, String username, String message)
+    throws RemoteException
+{
+  model.report(title,username,message);
+}
   public ListProperty<String> ingredientsProperty()
   {
     return ingredients;

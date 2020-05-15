@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ImageInput?>
@@ -11,36 +12,39 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="478.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.MainPage.MainPageController">
+<AnchorPane prefHeight="623.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.MainPage.MainPageController">
    <children>
-      <GridPane layoutX="4.0" prefHeight="614.0" prefWidth="594.0">
+      <GridPane layoutX="4.0" prefHeight="623.0" prefWidth="654.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="0.0" prefWidth="28.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="527.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="0.0" prefWidth="22.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="599.8" minWidth="10.0" prefWidth="599.8" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="0.0" prefWidth="0.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="123.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="561.0" minHeight="10.0" prefHeight="537.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="196.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="20.999991798400877" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="123.0" minHeight="0.0" prefHeight="50.79998703002931" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="564.8000244140625" minHeight="10.0" prefHeight="550.0000129699706" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="196.0" minHeight="0.0" prefHeight="3.9999755859374773" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="196.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScrollPane prefHeight="592.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ScrollPane prefHeight="546.0" prefWidth="560.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <content>
-                  <VBox fx:id="recipeContainer" prefHeight="4864.0" prefWidth="514.0" />
+                  <VBox fx:id="recipeContainer" prefHeight="4848.0" prefWidth="550.0" />
                </content>
             </ScrollPane>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <HBox prefHeight="63.0" prefWidth="550.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Pane prefHeight="63.0" prefWidth="260.0">
                      <children>
-                        <TextField fx:id="searchField" layoutX="-2.0" layoutY="19.0" prefHeight="25.0" prefWidth="260.0" promptText="What are you looking for?" />
+                        <TextField fx:id="searchField" layoutY="13.0" prefHeight="25.0" prefWidth="260.0" promptText="What are you looking for?" />
                      </children>
                   </Pane>
                   <Pane prefHeight="63.0" prefWidth="51.0">
                      <children>
-                        <Button fx:id="searchButton" layoutX="8.0" layoutY="16.0" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="33.0" prefWidth="33.0">
+                        <Button fx:id="searchButton" layoutX="9.0" layoutY="9.0" mnemonicParsing="false" onAction="#onSearchButton" prefHeight="33.0" prefWidth="33.0">
                            <effect>
                               <ImageInput />
                            </effect>
@@ -49,16 +53,21 @@
                   </Pane>
                   <Pane prefHeight="63.0" prefWidth="88.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#onViewProfileButton" prefHeight="25.0" prefWidth="99.0" text="View my Profile" />
+                        <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#onViewProfileButton" prefHeight="25.0" prefWidth="99.0" text="View my Profile" />
                      </children>
                   </Pane>
                   <Pane prefHeight="63.0" prefWidth="131.0">
                      <children>
-                        <Button layoutX="39.0" layoutY="19.0" mnemonicParsing="false" onAction="#onLogoutButton" prefHeight="25.0" prefWidth="60.0" text="Log out" />
+                        <Button layoutX="36.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLogoutButton" prefHeight="25.0" prefWidth="60.0" text="Log out" />
                      </children>
                   </Pane>
                </children>
             </HBox>
+            <Label fx:id="errorLabel" prefHeight="19.0" prefWidth="597.0" textFill="#ca0f0f" GridPane.columnIndex="1">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

@@ -23,7 +23,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextArea prefHeight="155.0" prefWidth="289.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea  fx:id="textArea" prefHeight="155.0" prefWidth="289.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <GridPane GridPane.columnIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.33331298828125" minWidth="10.0" prefWidth="66.99997965494792" />

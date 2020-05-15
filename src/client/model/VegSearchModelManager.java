@@ -29,8 +29,8 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void report(Report report) throws RemoteException {
-        client.sendReport(report);
+    public void report(String title, String username, String message) throws RemoteException {
+        client.sendReport(title,username,message);
     }
 
     @Override
@@ -39,13 +39,13 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void subscribe(String subscriber) throws FileNotFoundException, RemoteException, SQLException {
-        client.subscribe(subscriber,loggedProfile);
+    public void subscribe(String user) throws FileNotFoundException, RemoteException, SQLException {
+        client.subscribe(user,loggedProfile);
     }
 
     @Override
-    public void unsubscribe(String subscriber) throws RemoteException, FileNotFoundException, SQLException {
-        client.unsubscribe(subscriber,loggedProfile);
+    public void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException {
+        client.unsubscribe(user,loggedProfile);
     }
 
     @Override
@@ -77,7 +77,13 @@ public class VegSearchModelManager implements VegSearchModel {
         return client.getProfile(username);
     }
 
-    @Override
+  @Override public ArrayList<Profile> getProfiles(String username)
+      throws FileNotFoundException, SQLException, RemoteException
+  {
+    return client.getProfiles(username);
+  }
+
+  @Override
     public void setRecipes(ArrayList<Recipe> recipes) {
 
     }
@@ -111,7 +117,13 @@ public class VegSearchModelManager implements VegSearchModel {
         return client.getRecipesByTitle(title);
     }
 
-    @Override
+  @Override public ArrayList<Recipe> getAllRecipes()
+      throws SQLException, RemoteException
+  {
+    return client.getAllRecipes();
+  }
+
+  @Override
     public void see() {
 
     }

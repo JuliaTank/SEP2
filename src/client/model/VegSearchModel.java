@@ -12,18 +12,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface VegSearchModel extends Subject {
-    void report(Report report) throws RemoteException;
+    void report(String title, String username, String message) throws RemoteException;
     void saveUsername(String username);
-    void subscribe(String subscriber) throws RemoteException, FileNotFoundException, SQLException;
-    void unsubscribe(String subscriber) throws RemoteException, FileNotFoundException, SQLException;
+    void subscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
+    void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
     boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
         throws RemoteException, SQLException, FileNotFoundException;
     boolean signUp(String username, String password, File picFile,String description)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getLoggedProfile();
-    Profile getProfile(String username)
-        throws FileNotFoundException, SQLException, RemoteException;
+    Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
+    ArrayList<Profile> getProfiles(String username) throws FileNotFoundException, SQLException, RemoteException;
     void setRecipes(ArrayList<Recipe> recipes);
     void delete() throws SQLException, RemoteException;
 
@@ -34,6 +34,7 @@ public interface VegSearchModel extends Subject {
         throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByTitle(String title)
         throws SQLException, RemoteException;
+    ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
 
     void see();
 }

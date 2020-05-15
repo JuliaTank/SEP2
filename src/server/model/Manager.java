@@ -12,15 +12,15 @@ public class Manager implements ManagerModel{
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
 
     @Override
-    public Report sendReport(Report report) {
-        support.firePropertyChange("NewReport",null,report);
-        return report;
+    public Notification sendReport(Notification notification) {
+        support.firePropertyChange("NewReport",null,notification);
+        return notification;
     }
 
     @Override
-    public Recipe addRecipe(Recipe recipe) {
-        support.firePropertyChange("NewRecipe",null,recipe);
-        return recipe;
+    public Notification addRecipe(Notification notification) {
+        support.firePropertyChange("NewRecipe",null,notification);
+        return notification;
     }
 
     @Override

@@ -64,7 +64,9 @@ public class ProfileController implements ViewController
     vh.openMainPage();
   }
 
-  public void onNewRecipe(ActionEvent actionEvent) {
+  public void onNewRecipe(ActionEvent actionEvent)
+      throws IOException, SQLException
+  {
     vm.newRecipe();
   }
  private void OnRecipeAdded(ListChangeListener.Change<? extends RecipeDemoVM> change)
@@ -82,7 +84,7 @@ public class ProfileController implements ViewController
    }
  }
   public void onDeleteButton(ActionEvent actionEvent)
-      throws SQLException, RemoteException
+      throws SQLException, IOException, NotBoundException
   {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Are you sure?");
@@ -115,8 +117,6 @@ public class ProfileController implements ViewController
   @Override public void init(Profile profile)
       throws FileNotFoundException, SQLException, RemoteException
   {
-    System.out.println("profile opened: "+profile.getUsername());
-
     username.textProperty().bindBidirectional(vm.getUsername());
     vm.getRecipeDemoVMS().addListener(this::OnRecipeAdded);
 

@@ -64,7 +64,7 @@ public class SignInController implements ViewController
   }
 
   public void onSignUp2Button(ActionEvent actionEvent)
-      throws FileNotFoundException, SQLException, RemoteException
+      throws IOException, SQLException, NotBoundException
   {
     if(usernameCreationField.getText().length()<3|| passwordCreationField.getText().length()<3)
     {
@@ -81,6 +81,7 @@ public class SignInController implements ViewController
   }
 
   public void onCancelButton(ActionEvent actionEvent)
+      throws IOException, SQLException, NotBoundException
   {
     ViewHandler.getInstance().openLogIn();
   }

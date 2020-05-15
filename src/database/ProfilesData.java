@@ -31,7 +31,7 @@ public class ProfilesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public Profile create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
         throws SQLException, FileNotFoundException
@@ -75,7 +75,7 @@ public class ProfilesData {
                 String[] subs = (String[])subscriptions.getArray();
                 ArrayList<Profile> subscribers = getSubs(subs);
 
-                result = new Profile(username,password,picFile,description,subscribers );
+                result = new Profile(username,password,picFile,description,subscribers);
 
             }
         }
@@ -85,7 +85,37 @@ public class ProfilesData {
         }
         return result;
     }
+    public ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
+    {
+        ArrayList<Profile> result = new ArrayList<>();
 
+        try(Connection connection = getConnection())
+        {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Profile WHERE username LIKE ?");
+            statement.setString(1, "%"+searchedUsername+"%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next())
+            {
+                String username  = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                byte[] imgBytes = resultSet.getBytes(3);
+                //using private method from below
+                File picFile = getPicFile(imgBytes,username);
+                String description = resultSet.getString("description");
+                Array subscriptions = resultSet.getArray(4);
+                String[] subs = (String[])subscriptions.getArray();
+                ArrayList<Profile> subscribers = getSubs(subs);
+
+                result.add(new Profile(username,password,picFile,description,subscribers ));
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
     private File getPicFile(byte[] imgBytes, String username) throws IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);

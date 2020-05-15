@@ -31,7 +31,7 @@ public class RecipesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public Recipe create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
         FileInputStream fis  = new FileInputStream(picFile);
@@ -98,9 +98,44 @@ public class RecipesData {
             ImageIO.write(image,"jpg",picFile);
         return picFile;
     }
+    public ArrayList<Recipe> getAllRecipes() throws SQLException
+    {
+        ArrayList<Recipe> result = new ArrayList<>();
+
+        try(Connection connection = getConnection())
+        {
+            PreparedStatement statement = connection.prepareStatement("SELECT title, description, username, picfile, ingredients::text::text[] as ingredients FROM \"VegSearch\".Recipe");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next())
+            {
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                String username = resultSet.getString("username");
+                byte[] imgBytes = resultSet.getBytes(4);
+                //using private method from below
+                File picFile = getPicFile(imgBytes, title);
+
+                Array ingredients = resultSet.getArray("ingredients");
+
+                String[] ing = (String[]) ingredients.getArray();
+
+                ArrayList<String> ingredientsArray = new ArrayList<>();
+
+                result.add(new Recipe(title,description,profilesData.getProfile(username), getIng(ingredients), picFile)) ;
+            }
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
     public ArrayList<Recipe> getRecipesByTitle(String searchedTitle) throws SQLException
     {
-        ArrayList<Recipe> result = null;
+        ArrayList<Recipe> result = new ArrayList<>();
 
         try(Connection connection = getConnection())
         {
@@ -111,22 +146,14 @@ public class RecipesData {
             while (resultSet.next())
             {
                 String title = resultSet.getString("title");
-                System.out.println(title);
                 String description = resultSet.getString("description");
-                System.out.println(description);
                 String username = resultSet.getString("username");
-                System.out.println(username);
                 byte[] imgBytes = resultSet.getBytes(4);
                 //using private method from below
                 File picFile = getPicFile(imgBytes, title);
 
                 Array ingredients = resultSet.getArray("ingredients");
-                System.out.println(ingredients);
-
                 String[] ing = (String[]) ingredients.getArray();
-                System.out.println(ingredients.getArray());
-
-                System.out.println(Arrays.toString(ing));
                ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 result.add(new Recipe(title, description, profilesData.getProfile(username),

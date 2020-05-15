@@ -2,6 +2,7 @@ package client.views.Profile;
 
 
 import client.core.ModelFactory;
+import client.core.ViewHandler;
 import client.model.VegSearchModel;
 import client.views.RecipeDemo.RecipeDemoVM;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,16 +23,18 @@ public class ProfileVM {
 
     private ObservableList<RecipeDemoVM> recipeDemoVMS;
 
+    private ViewHandler vh = ViewHandler.getInstance();
     private VegSearchModel model;
     private StringProperty subsLabel;
     private StringProperty username;
+
+
 
     public ProfileVM() throws IOException, NotBoundException {
         this.model = ModelFactory.getInstance().getModel();
         this.subsLabel=new SimpleStringProperty();
         this.username = new SimpleStringProperty();
         recipeDemoVMS = FXCollections.observableArrayList();
-
     }
 
     public void addRecipeDisplay(Recipe recipe)
@@ -50,9 +53,9 @@ public class ProfileVM {
         return model.getRecipesByUsername(username);
     }
 
-    public void newRecipe()
+    public void newRecipe() throws IOException, SQLException
     {
-        //ArrayList<Recipe> recipes =  new ArrayList<>();
+        vh.openNewRecipeView();
     }
 
     public StringProperty getSubsLabel() {
@@ -64,11 +67,15 @@ public class ProfileVM {
         return username;
     }
 
-    public void subscribe() throws RemoteException {
-
+    public void subscribe()
+        throws RemoteException, FileNotFoundException, SQLException
+    {
+        model.subscribe(username.getValue());
     }
-    public void unsubscribe() throws RemoteException {
-
+    public void unsubscribe()
+        throws RemoteException, FileNotFoundException, SQLException
+    {
+        model.unsubscribe(username.getValue());
 
     }
     public Profile getLoggedProfile()

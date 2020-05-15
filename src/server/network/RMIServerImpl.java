@@ -33,7 +33,7 @@ public class RMIServerImpl implements RMIServer {
     public RMIServerImpl(Manager manager) throws SQLException
     {
         this.manager = manager;
-        clients=new ArrayList<>();
+        clients = new ArrayList<>();
         profilesData = ProfilesData.getInstance();
         recipesData = RecipesData.getInstance();
     }
@@ -69,11 +69,14 @@ public class RMIServerImpl implements RMIServer {
 
     @Override
     public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
-        throws FileNotFoundException, SQLException
+        throws FileNotFoundException, SQLException, RemoteException
     {
       if (recipesData.getRecipeByTitle(title)==null)
       {
         recipesData.create(title, description, username, ingredients, picfile);
+        Notification notification  = new Notification(username,"New recipe",title);
+        sendNotification(notification);
+        manager.addRecipe(notification);
         return true;
       }
       else
@@ -81,11 +84,11 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void report(Report report, ClientCallBack client)  {
-        //
-        manager.sendReport(report);
-
+    public void report(String title, String username, String message)  {
+      Notification notification = new Notification(username,"New report",title);
+      manager.sendReport(notification);
     }
+
 
     @Override public boolean signUp(String username, String password,
         File picFile, String description)
@@ -109,25 +112,52 @@ public class RMIServerImpl implements RMIServer {
         return profilesData.getProfile(username);
     }
 
-    @Override
-    public void subscribe(String subscriber, Profile profile) throws SQLException, FileNotFoundException {
+  @Override public ArrayList<Profile> getProfiles(String username)
+      throws SQLException, FileNotFoundException, RemoteException
+  {
+    return profilesData.getProfiles(username);
+  }
 
-        ArrayList<Profile>subs=profile.getSubs();
-        subs.add(ProfilesData.getInstance().getProfile(subscriber));
-       profilesData.update(profile.getUsername(),profile.getUsername(),profile.getPassword(),profile.getPicFile(),profile.getDescription(),subs);
+  private void sendNotification(Notification notification) throws RemoteException, SQLException
+  {
+   Profile profile = profilesData.getProfile(notification.getUsername());
+    ArrayList<String> subscribers = new ArrayList<>();
+    ArrayList<Profile> subscribersProfiles = profile.getSubs();
+    for (Profile subscribersProfile : subscribersProfiles)
+    {
+      subscribers.add(subscribersProfile.getUsername());
+    }
+    for (ClientCallBack client : clients)
+    {
+      for (String s : subscribers)
+      {
+        if (client.getUsername().equals(s))
+        {
+          client.sendNotification(notification);
+        }
+      }
+    }
+  }
+
+
+  @Override
+    public void subscribe(String user, Profile subscriber) throws SQLException, FileNotFoundException {
+
+    Profile subscribedProfile = profilesData.getProfile(user);
+        ArrayList<Profile>subs=subscribedProfile.getSubs();
+        subs.add(profilesData.getProfile(subscriber.getUsername()));
+       profilesData.update(subscribedProfile.getUsername(),subscribedProfile.getUsername(),subscribedProfile.getPassword(),subscribedProfile.getPicFile(),subscribedProfile.getDescription(),subs);
     }
 
     @Override
-    public void unsubscribe(String subscriber, Profile profile) throws FileNotFoundException, SQLException {
-        ArrayList<Profile>subs=profile.getSubs();
-        subs.remove(ProfilesData.getInstance().getProfile(subscriber));
-        profilesData.update(profile.getUsername(),profile.getUsername(),profile.getPassword(),profile.getPicFile(),profile.getDescription(),subs);
-    }
-
-    @Override
-    public void notify(Recipe recipe, ClientCallBack owner)  {
+    public void unsubscribe(String user, Profile unsubscriber) throws FileNotFoundException, SQLException {
+      Profile unsubscribedProfile = profilesData.getProfile(user);
+      ArrayList<Profile>subs=unsubscribedProfile.getSubs();
+      subs.remove(profilesData.getProfile(unsubscriber.getUsername()));
+      profilesData.update(unsubscribedProfile.getUsername(),unsubscribedProfile.getUsername(),unsubscribedProfile.getPassword(),unsubscribedProfile.getPicFile(),unsubscribedProfile.getDescription(),subs);
 
     }
+
 
     @Override public void delete(String username) throws SQLException
     {
@@ -159,7 +189,9 @@ public class RMIServerImpl implements RMIServer {
         return recipesData.getRecipesByTitle(title);
     }
 
-
-
+  @Override public ArrayList<Recipe> getAllRecipes() throws SQLException
+  {
+    return recipesData.getAllRecipes();
+  }
 
 }

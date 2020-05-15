@@ -3,6 +3,7 @@ package client.views.NewRecipe;
 import client.core.ModelFactory;
 import client.core.ViewHandler;
 import client.model.VegSearchModel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.File;
@@ -18,6 +19,7 @@ public class NewRecipeVM {
 
   public NewRecipeVM() throws IOException, NotBoundException
   {
+    errorLabel = new SimpleStringProperty();
   }
 
   public StringProperty getErrorLabel()
