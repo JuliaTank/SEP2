@@ -15,11 +15,10 @@ public class ToDelete
   {
 
 
- /* ArrayList<Profile> subs =  new ArrayList<>();
-    subs.add(ProfilesData.getInstance().getProfile("Julia"));
-    subs.add(ProfilesData.getInstance().getProfile("Roksanka"));
-    File file =  new File("Tomspic.jpg");
+  //ArrayList<Profile> subs =  new ArrayList<>();
+   // subs.remove(ProfilesData.getInstance().getProfile("meow"));
 
+/*
     ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);*/
 
     System.out.println(ProfilesData.getInstance().getProfile("Julia").getDescription());
