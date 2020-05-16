@@ -85,7 +85,7 @@ public class RMIServerImpl implements RMIServer {
 
     @Override
     public void report(String title, String username, String message)  {
-      Notification notification = new Notification(username,"New report",title);
+      Notification notification = new Notification(username,"New report :"+message,title);
       manager.sendReport(notification);
     }
 
@@ -106,7 +106,20 @@ public class RMIServerImpl implements RMIServer {
        else return false;
     }
 
-    @Override public Profile getProfile(String username)
+  @Override public boolean editProfile(String oldUsername,String newUsername, String password,
+      File picFile, String description,ArrayList<Profile> subs)
+      throws SQLException, FileNotFoundException, RemoteException
+  {
+    //here i'm checking if username which user wants as new one doesn't belong to any other user already
+    if(!oldUsername.equals(newUsername) && profilesData.getProfile(newUsername)!=null)
+      return  false;
+   else {
+      profilesData.update(oldUsername,newUsername,password,picFile,description,subs);
+      return true;
+   }
+  }
+
+  @Override public Profile getProfile(String username)
         throws SQLException
     {
         return profilesData.getProfile(username);
@@ -133,7 +146,7 @@ public class RMIServerImpl implements RMIServer {
       {
         if (client.getUsername().equals(s))
         {
-          client.sendNotification(notification);
+          client.receiveNotification(notification);
         }
       }
     }
@@ -158,8 +171,25 @@ public class RMIServerImpl implements RMIServer {
 
     }
 
+  @Override public boolean doIsubscribeIt(String user, Profile subscriber)
+      throws RemoteException, FileNotFoundException, SQLException
+  {
+    Profile profile = profilesData.getProfile(user);
+    ArrayList<Profile>subs=profile.getSubs();
+    System.out.println(subs.size()+" "+subs.toString());
+    boolean bbb = false;
+    for (int i = 0; i < subs.size(); i++)
+    {
+      if (subs.get(i).equals(subscriber))
+      {
+        bbb = true;
+      }
+    }
+    System.out.println("server does "+subscriber.getUsername()+" subscribe "+user+"? :"+bbb);
+    return bbb;
+  }
 
-    @Override public void delete(String username) throws SQLException
+  @Override public void delete(String username) throws SQLException
     {
         profilesData.delete(username);
     }

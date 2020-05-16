@@ -5,10 +5,12 @@ import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -21,14 +23,21 @@ public class VegSearchModelManager implements VegSearchModel {
     private Profile loggedProfile;
     private Recipe recipe;
 
-    public VegSearchModelManager(Client client) throws RemoteException, NotBoundException {
+    public VegSearchModelManager(Client client)
+        throws IOException, NotBoundException, SQLException
+    {
         this.client=client;
 
         client.startClient();
-        //client.addListener();
+        client.addListener("NewNotification" ,this::onNewNotification);
     }
 
-    @Override
+  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
+  {
+    support.firePropertyChange(propertyChangeEvent);
+  }
+
+  @Override
     public void report(String title, String username, String message) throws RemoteException {
         client.sendReport(title,username,message);
     }
@@ -48,7 +57,13 @@ public class VegSearchModelManager implements VegSearchModel {
         client.unsubscribe(user,loggedProfile);
     }
 
-    @Override
+  @Override public boolean doIsubscribeIt(String user)
+      throws RemoteException, FileNotFoundException, SQLException
+  {
+    return client.doIsubscribeIt(user,loggedProfile);
+  }
+
+  @Override
     public boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException {
        return client.addRecipe(title,description,loggedProfile.getUsername(),ingredients,picfile);
     }
@@ -122,12 +137,6 @@ public class VegSearchModelManager implements VegSearchModel {
   {
     return client.getAllRecipes();
   }
-
-  @Override
-    public void see() {
-
-    }
-
     private void setLoggedProfile(Profile profile)
     {
         loggedProfile = profile;
@@ -139,8 +148,17 @@ public class VegSearchModelManager implements VegSearchModel {
        return client.signUp(username, password, picFile,description);
     }
 
-    @Override
-    public void addListener(String eventName, PropertyChangeListener listener) {
+  @Override public boolean editProfile(String oldUsername, String newUsername,
+      String password, File picFile, String description,
+      ArrayList<Profile> subs)
+      throws FileNotFoundException, SQLException, RemoteException
+  {
+    return client.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+  }
+
+  @Override
+    public void addListener(String eventName, PropertyChangeListener listener) throws
+      IOException, SQLException{
         support.addPropertyChangeListener(eventName, listener);
     }
 

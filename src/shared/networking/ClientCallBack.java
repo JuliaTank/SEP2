@@ -8,7 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ClientCallBack extends Remote {
-    void sendNotification(Notification notification) throws RemoteException;
+    void receiveNotification(Notification notification) throws RemoteException;
     String getUsername() throws RemoteException;
 
 }

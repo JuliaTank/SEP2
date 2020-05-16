@@ -112,5 +112,6 @@ public class MainPageController implements ViewController
     {
       vm.addRecipeDisplay(recipe);
     }
+
   }
 }

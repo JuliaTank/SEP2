@@ -8,9 +8,11 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Report;
 
 import javax.print.DocFlavor;
+import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -29,7 +31,7 @@ public class RecipeVM
   private ViewHandler vh =  ViewHandler.getInstance();
   private VegSearchModel model = ModelFactory.getInstance().getModel();
 
-public  RecipeVM() throws IOException, NotBoundException
+public  RecipeVM() throws IOException, NotBoundException, SQLException
 {
 
   ingredients =  new SimpleListProperty<>();
@@ -38,8 +40,21 @@ public  RecipeVM() throws IOException, NotBoundException
   commentField =  new SimpleStringProperty();
   reportField = new SimpleStringProperty();
   comments =new SimpleListProperty<>();
+  model.addListener("NewNotification",this::onNewNotification);
 }
-public void report(String title, String username, String message)
+
+  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
+  {
+    try{
+      vh.openNotification((Notification)propertyChangeEvent.getNewValue());
+    }
+    catch (IOException|SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  public void report(String title, String username, String message)
     throws RemoteException
 {
   model.report(title,username,message);

@@ -1,6 +1,7 @@
 package client.core;
 
 import client.views.MainPage.MainPageController;
+import client.views.Notification.NotificationController;
 import client.views.ProfileDemo.ProfileDemoController;
 import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
@@ -30,8 +32,6 @@ public class ViewHandler {
     private Scene inboxScene;
     private Scene profileScene;
     private Scene notificationScene;
-    private Scene reportUserScene;
-    private Scene reportAdmScene;
     private Stage stage;
     private Stage stageNotification = new Stage();
 
@@ -79,16 +79,16 @@ public class ViewHandler {
         stage.show();*/
     }
 
-    public void openSignIn() {
+    public void openSignIn(Profile profile) {
             try {
-                Parent root = loadFXML("../views/SignIn/signIn.fxml",null);
+                Parent root = loadFXML("../views/SignIn/signIn.fxml",profile);
 
 
                 signInScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
             }
-        stage.setTitle("Sign in ");
+        stage.setTitle(":)");
         stage.setScene(signInScene);
         stage.show();
     }
@@ -108,21 +108,6 @@ public class ViewHandler {
         stage.show();
     }
 
-    public void openInbox() {
-        if (inboxScene == null) {
-            try {
-                Parent root = loadFXML("../views/Inbox/inbox.fxml",null);
-
-
-                inboxScene = new Scene(root);
-            } catch (IOException | NotBoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        stage.setTitle("Inbox");
-        stage.setScene(inboxScene);
-        stage.show();
-    }
     public void openProfile(Profile profile) {
 
             try {
@@ -137,33 +122,21 @@ public class ViewHandler {
         stage.setScene(profileScene);
         stage.show();
     }
-    public void openReportUser() {
-        if (reportUserScene == null) {
-            try {
-                Parent root = loadFXML("../views/ReportUser/reportUser.fxml",null);
 
-                stage.setTitle("Report recipe");
-                logInScene = new Scene(root);
-            } catch (IOException | NotBoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        stage.setScene(reportUserScene);
-        stage.show();
-    }
-    public void openNotification() {
-        if (notificationScene == null) {
-            try {
-                Parent root = loadFXML("../views/Notification/notification.fxml",null);
+    public void openNotification(Notification notification) throws IOException, SQLException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../views/Notification/notification.fxml"));
+        Parent root = loader.load();
 
-                stageNotification.setTitle("New notification");
-                notificationScene = new Scene(root);
-            } catch (IOException | NotBoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        NotificationController ctrl = loader.getController();
+        ctrl.init(notification);
+        stage.setTitle("");
+
+        notificationScene =  new Scene(root);
         stageNotification.setScene(notificationScene);
         stageNotification.show();
+
     }
     public void toDelete() throws IOException, SQLException
     {
@@ -179,20 +152,7 @@ public class ViewHandler {
     {
         stageNotification.close();
     }
-    public void openReportAdm() {
-        if (reportAdmScene == null) {
-            try {
-                Parent root = loadFXML("../views/ReportAdm/reportAdm.fxml",null);
 
-                stage.setTitle("New Report");
-                logInScene = new Scene(root);
-            } catch (IOException | NotBoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        stage.setScene(reportAdmScene);
-        stage.show();
-    }
     private Parent loadFXML(String path,Profile profile)
         throws IOException, NotBoundException, SQLException
     {

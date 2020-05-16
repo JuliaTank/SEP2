@@ -59,6 +59,7 @@ public class ProfileController implements ViewController
   }
   public void onEditButton(ActionEvent actionEvent)
   {
+    vh.openSignIn(profile);
   }
   public void onMainPage(ActionEvent actionEvent) {
     vh.openMainPage();
@@ -117,6 +118,7 @@ public class ProfileController implements ViewController
   @Override public void init(Profile profile)
       throws FileNotFoundException, SQLException, RemoteException
   {
+    this.profile = profile;
     username.textProperty().bindBidirectional(vm.getUsername());
     vm.getRecipeDemoVMS().addListener(this::OnRecipeAdded);
 
@@ -132,6 +134,10 @@ public class ProfileController implements ViewController
     imgView.setImage(image);
     subsLabel.setText(" "+profile.getSubs().size());
     descriptionArea.setText(profile.getDescription());
+    if(vm.doIsubscribeIt())
+    {
+      subscribeButton.setText("Unsubscribe");
+    }
 
     if(vm.getLoggedProfile().getUsername().equals(profile.getUsername()))
     {

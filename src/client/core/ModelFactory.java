@@ -6,6 +6,7 @@ import client.network.RMIClient;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.sql.SQLException;
 
 public class ModelFactory {
 
@@ -23,8 +24,9 @@ public class ModelFactory {
         return instance;
     }
 
-   public VegSearchModel getModel() throws IOException, NotBoundException
-    {
+   public VegSearchModel getModel()
+       throws IOException, NotBoundException, SQLException
+   {
         if(vegsearchModel==null)
             vegsearchModel = new VegSearchModelManager(ClientFactory.getInstance().getClient());
         return vegsearchModel;

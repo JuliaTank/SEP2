@@ -4,11 +4,7 @@ import client.core.ModelFactory;
 import client.core.ViewHandler;
 import client.model.VegSearchModel;
 import client.views.Notification.NotificationController;
-import client.views.Profile.ProfileVM;
 import client.views.RecipeDemo.RecipeDemoVM;
-import client.views.ReportUser.ReportUserController;
-import client.views.ViewController;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -16,10 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
+import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -36,11 +33,25 @@ public class MainPageVM {
   private StringProperty errorLabel;
 
 
-  public MainPageVM() throws IOException, NotBoundException
+  public MainPageVM() throws IOException, NotBoundException, SQLException
   {
     recipeDemoVMS = FXCollections.observableArrayList();
     errorLabel = new SimpleStringProperty();
+    model.addListener("NewNotification",this::onNewNotification);
   }
+
+  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
+  {
+    try{
+      vh.openNotification((Notification)propertyChangeEvent.getNewValue());
+    }
+    catch (IOException|SQLException e)
+    {
+      e.printStackTrace();
+    }
+
+  }
+
   public void addRecipeDisplay(Recipe recipe)
   {
     RecipeDemoVM rd= new RecipeDemoVM(recipe);
@@ -67,20 +78,8 @@ public class MainPageVM {
     return model.getAllRecipes();
   }
 
-  public void showNotification() throws IOException, NotBoundException, SQLException {
-    {
-      Popup popup = new Popup();
-      NotificationController controller = new NotificationController();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/Notification/notification.fxml"));
-      loader.setController(controller);
-      popup.getContent().add((Parent)loader.load());
-    }
-  }
-  public void report() throws IOException, NotBoundException, SQLException {
-   vh.openNotification();
-  }
   public void search(String text)
-      throws FileNotFoundException, SQLException, RemoteException
+      throws SQLException, RemoteException
   {
     ArrayList<Recipe> recipes  = model.getRecipesByTitle(text);
     ArrayList<Recipe> recipesByIngredients = model.getRecipesByIngredient(text);

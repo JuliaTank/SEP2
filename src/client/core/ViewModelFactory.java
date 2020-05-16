@@ -1,8 +1,6 @@
 package client.core;
 
 import client.views.Recipe.RecipeVM;
-import client.views.ReportAdm.ReportAdmVM;
-import client.views.ReportUser.ReportUserVM;
 import client.views.logIn.LogInVM;
 import client.views.MainPage.MainPageVM;
 import client.views.NewRecipe.NewRecipeVM;
@@ -23,8 +21,6 @@ public class ViewModelFactory {
   private NotificationVM notificationVM;
   private ProfileVM profileVM;
   private SignInVM signInVM;
-  private ReportAdmVM reportAdmVM;
-  private ReportUserVM reportUserVM;
   private RecipeVM recipeVM;
 
   private ViewModelFactory() throws IOException, NotBoundException, SQLException
@@ -35,8 +31,6 @@ public class ViewModelFactory {
     notificationVM = new NotificationVM();
     profileVM = new ProfileVM();
     signInVM  = new SignInVM();
-    reportAdmVM = new ReportAdmVM();
-    reportUserVM = new ReportUserVM();
     recipeVM = new RecipeVM();
 
   }
@@ -79,14 +73,6 @@ public class ViewModelFactory {
   public SignInVM getSignInVM()
   {
     return signInVM;
-  }
-
-  public ReportAdmVM getReportAdmVM() {
-    return reportAdmVM;
-  }
-
-  public ReportUserVM getReportUserVM() {
-    return reportUserVM;
   }
 
   public RecipeVM getRecipeVM()

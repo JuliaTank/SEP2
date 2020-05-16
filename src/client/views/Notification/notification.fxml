@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -23,7 +24,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextArea  fx:id="textArea" prefHeight="155.0" prefWidth="289.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <GridPane GridPane.columnIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.33331298828125" minWidth="10.0" prefWidth="66.99997965494792" />
@@ -56,6 +56,20 @@
                   <Button mnemonicParsing="false" onAction="#onCancelButton" prefHeight="25.0" prefWidth="57.0" text="Cancel" GridPane.columnIndex="2" />
                </children>
             </GridPane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="titleLabel" layoutX="-5.0" layoutY="11.0" prefHeight="22.0" prefWidth="289.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="contentLabel" layoutX="-1.0" layoutY="29.0" prefHeight="116.0" prefWidth="295.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </GridPane>
    </children>

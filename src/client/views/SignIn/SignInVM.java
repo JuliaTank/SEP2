@@ -5,6 +5,7 @@ import client.core.ViewHandler;
 import client.model.VegSearchModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.transferObjects.Profile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SignInVM {
 
@@ -26,7 +28,7 @@ public class SignInVM {
 
   private VegSearchModel model = ModelFactory.getInstance().getModel();
 
-  public SignInVM() throws IOException, NotBoundException
+  public SignInVM() throws IOException, NotBoundException, SQLException
   {
     errorLabel = new SimpleStringProperty();
     passwordRepeatField = new SimpleStringProperty();
@@ -69,6 +71,12 @@ public class SignInVM {
     return passwordCreationField;
   }
 
+  public boolean save(String oldUsername,String newUsername, String password,
+      File picFile, String description, ArrayList<Profile> subs)
+      throws FileNotFoundException, SQLException, RemoteException
+  {
+    return model.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+  }
   public StringProperty getUsernameCreationField()
   {
     return usernameCreationField;

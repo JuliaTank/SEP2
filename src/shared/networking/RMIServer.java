@@ -22,6 +22,8 @@ public interface RMIServer extends Remote {
         throws RemoteException, FileNotFoundException, SQLException;
     void report(String title, String username, String message) throws RemoteException;
     boolean signUp(String username, String password,File picFile, String description) throws SQLException, FileNotFoundException, RemoteException;
+    boolean editProfile(String oldUsername,String newUsername, String password,
+        File picFile, String description,ArrayList<Profile> subs) throws SQLException, FileNotFoundException, RemoteException;
     Profile getProfile(String username)throws SQLException, FileNotFoundException, RemoteException;
     ArrayList<Profile> getProfiles(String username)throws SQLException, FileNotFoundException, RemoteException;
     void delete(String username) throws SQLException,RemoteException;
@@ -31,8 +33,9 @@ public interface RMIServer extends Remote {
     ArrayList<Recipe> getRecipesByUsername(String username) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByTitle(String title) throws SQLException,RemoteException;
     ArrayList<Recipe> getAllRecipes() throws SQLException,RemoteException;
-    void subscribe(String subscriber, Profile profile) throws RemoteException, SQLException, FileNotFoundException;
-    void unsubscribe(String subscriber, Profile profile) throws RemoteException, FileNotFoundException, SQLException;
+    void subscribe(String user, Profile subscriber) throws RemoteException, SQLException, FileNotFoundException;
+    void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
+    boolean doIsubscribeIt(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
 
 
 

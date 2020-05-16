@@ -74,6 +74,14 @@ public class RMIClient implements Client, ClientCallBack {
         return server.signUp(username,password,picFile,description);
     }
 
+    @Override public boolean editProfile(String oldUsername, String newUsername,
+        String password, File picFile, String description,
+        ArrayList<Profile> subs)
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        return server.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+    }
+
     @Override public Profile getProfile(String username)
         throws FileNotFoundException, SQLException, RemoteException
     {
@@ -94,6 +102,12 @@ public class RMIClient implements Client, ClientCallBack {
     @Override
     public void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException {
         server.unsubscribe(user,subscriber);
+    }
+
+    @Override public boolean doIsubscribeIt(String user, Profile subscriber)
+        throws RemoteException, FileNotFoundException, SQLException
+    {
+        return server.doIsubscribeIt(user, subscriber);
     }
 
     @Override public void delete(String username)
@@ -146,13 +160,15 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void sendNotification(Notification notification) throws RemoteException {
-
+    public void receiveNotification(Notification notification) throws RemoteException {
+        support.firePropertyChange("NewNotification",null,notification);
     }
 
   @Override public String getUsername()
   {
     return username;
   }
+
+
 
 }

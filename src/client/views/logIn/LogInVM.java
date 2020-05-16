@@ -20,7 +20,7 @@ public class LogInVM {
   private  VegSearchModel model;
   private ViewHandler vh = ViewHandler.getInstance();
 
-  public LogInVM() throws IOException, NotBoundException
+  public LogInVM() throws IOException, NotBoundException, SQLException
   {
     usernameField = new SimpleStringProperty();
     passwordField = new SimpleStringProperty();
@@ -63,6 +63,6 @@ public class LogInVM {
 
   public void join()
   {
-   vh.openSignIn();
+   vh.openSignIn(null);
   }
 }

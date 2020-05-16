@@ -16,10 +16,14 @@ public interface VegSearchModel extends Subject {
     void saveUsername(String username);
     void subscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
     void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
+    boolean doIsubscribeIt(String user) throws RemoteException, FileNotFoundException, SQLException;
     boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
         throws RemoteException, SQLException, FileNotFoundException;
     boolean signUp(String username, String password, File picFile,String description)
+        throws FileNotFoundException, SQLException, RemoteException;
+    boolean editProfile(String oldUsername,String newUsername, String password,
+        File picFile, String description,ArrayList<Profile> subs)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getLoggedProfile();
     Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
@@ -36,5 +40,5 @@ public interface VegSearchModel extends Subject {
         throws SQLException, RemoteException;
     ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
 
-    void see();
+
 }

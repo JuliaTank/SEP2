@@ -9,9 +9,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
+import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -30,11 +32,24 @@ public class ProfileVM {
 
 
 
-    public ProfileVM() throws IOException, NotBoundException {
+    public ProfileVM() throws IOException, NotBoundException, SQLException
+    {
         this.model = ModelFactory.getInstance().getModel();
         this.subsLabel=new SimpleStringProperty();
         this.username = new SimpleStringProperty();
         recipeDemoVMS = FXCollections.observableArrayList();
+        model.addListener("NewNotification",this::onNewNotification);
+    }
+
+    private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
+    {
+        try{
+            vh.openNotification((Notification)propertyChangeEvent.getNewValue());
+        }
+        catch (IOException|SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void addRecipeDisplay(Recipe recipe)
@@ -76,6 +91,12 @@ public class ProfileVM {
         throws RemoteException, FileNotFoundException, SQLException
     {
         model.unsubscribe(username.getValue());
+
+    }
+    public boolean doIsubscribeIt()
+        throws RemoteException, FileNotFoundException, SQLException
+    {
+      return model.doIsubscribeIt(username.getValue());
 
     }
     public Profile getLoggedProfile()

@@ -54,4 +54,14 @@ public class Profile implements Serializable {
                 ", subs=" + subs +
                 '}';
     }
+
+    public boolean equals(Object obj)
+    {
+        if(!(obj instanceof Profile))
+        {
+            return  false;
+        }
+        Profile other = (Profile)obj;
+        return other.getUsername().equals(username);
+    }
 }

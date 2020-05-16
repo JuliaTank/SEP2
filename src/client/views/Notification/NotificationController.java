@@ -5,7 +5,9 @@ import client.views.ViewController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 
 import java.io.FileNotFoundException;
@@ -14,27 +16,42 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
-public class NotificationController implements ViewController {
+public class NotificationController {
     private NotificationVM vm= ViewModelFactory.getInstance().getNotificationVM();
+    private  Notification notification;
     @FXML
-    TextArea textArea;
+    Label titleLabel;
+
+    @FXML
+    Label contentLabel;
+
     public NotificationController()
         throws IOException, NotBoundException, SQLException
     {
     }
 
-    public void onSeeButton(ActionEvent actionEvent) throws IOException {
-        vm.see();
+    public void onSeeButton(ActionEvent actionEvent)
+        throws IOException, SQLException
+    {
+        vm.see(notification.getRecipeTitle());
     }
 
     public void onCancelButton(ActionEvent actionEvent) {
         vm.cancel();
     }
 
+    public void init(Notification notification) throws FileNotFoundException, SQLException, RemoteException {
+        this.notification = notification;
 
-    @Override
-    public void init(Profile profile) throws FileNotFoundException, SQLException, RemoteException {
-        textArea.textProperty().bindBidirectional(vm.getAreaProperty());
-        textArea.setWrapText(true);
+        titleLabel.textProperty().bindBidirectional(vm.getTitleLabelProperty());
+        contentLabel.textProperty().bindBidirectional(vm.getContentLabelProperty());
+
+        if(vm.)
+            titleLabel.setText("New recipe from"+notification.getUsername()+": "+notification.getRecipeTitle());
+       else if()
+            titleLabel.setText("New report from"+notification.getUsername()+": "+notification.getRecipeTitle());
+
+       if()
+        contentLabel.setText(notification.getMessage());
     }
 }

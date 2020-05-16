@@ -5,11 +5,14 @@ import client.core.ViewHandler;
 import client.model.VegSearchModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.transferObjects.Notification;
 
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NewRecipeVM {
@@ -17,9 +20,22 @@ public class NewRecipeVM {
   private VegSearchModel model= ModelFactory.getInstance().getModel();
   private ViewHandler vh = ViewHandler.getInstance();
 
-  public NewRecipeVM() throws IOException, NotBoundException
+  public NewRecipeVM() throws IOException, NotBoundException, SQLException
   {
     errorLabel = new SimpleStringProperty();
+    model.addListener("NewNotification",this::onNewNotification);
+  }
+
+  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
+  {
+    try{
+      vh.openNotification((Notification)propertyChangeEvent.getNewValue());
+    }
+    catch (IOException|SQLException e)
+    {
+      e.printStackTrace();
+    }
+
   }
 
   public StringProperty getErrorLabel()
