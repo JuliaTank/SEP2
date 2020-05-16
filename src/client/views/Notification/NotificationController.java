@@ -46,12 +46,12 @@ public class NotificationController {
         titleLabel.textProperty().bindBidirectional(vm.getTitleLabelProperty());
         contentLabel.textProperty().bindBidirectional(vm.getContentLabelProperty());
 
-        if(vm.)
+        if(vm.getContentLabelProperty()==null)
             titleLabel.setText("New recipe from"+notification.getUsername()+": "+notification.getRecipeTitle());
-       else if()
+       else
             titleLabel.setText("New report from"+notification.getUsername()+": "+notification.getRecipeTitle());
-
-       if()
-        contentLabel.setText(notification.getMessage());
+        System.out.println(titleLabel.getText());
+       //if()
+       //     contentLabel.setText(notification.getMessage());
     }
 }

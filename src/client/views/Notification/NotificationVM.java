@@ -35,6 +35,8 @@ public class NotificationVM {
         vh.closeNotification();
     }
 
+
+
     public StringProperty getTitleLabelProperty() {
         return titleLabelProperty;
     }

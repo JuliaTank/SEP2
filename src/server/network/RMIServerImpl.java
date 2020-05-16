@@ -180,6 +180,8 @@ public class RMIServerImpl implements RMIServer {
     boolean bbb = false;
     for (int i = 0; i < subs.size(); i++)
     {
+        if(subs==null)
+            break;
       if (subs.get(i).equals(subscriber))
       {
         bbb = true;
