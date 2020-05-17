@@ -8,6 +8,7 @@ import shared.util.Subject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -24,8 +25,8 @@ public interface Client extends Subject {
     boolean editProfile(String oldUsername,String newUsername, String password,
         File picFile, String description,ArrayList<Profile> subs)
         throws FileNotFoundException, SQLException, RemoteException;
-    Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
-    ArrayList<Profile> getProfiles(String username) throws FileNotFoundException, SQLException, RemoteException;
+    Profile getProfile(String username) throws IOException, SQLException;
+    ArrayList<Profile> getProfiles(String username) throws IOException, SQLException;
     void subscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
     void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
     boolean doIsubscribeIt(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
@@ -37,4 +38,5 @@ public interface Client extends Subject {
         throws SQLException, RemoteException;
     ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws RemoteException, SQLException;
     ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
+    File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException;
 }

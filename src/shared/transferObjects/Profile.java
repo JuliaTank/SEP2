@@ -11,14 +11,16 @@ public class Profile implements Serializable {
     private File picFile;
     private String description;
     private ArrayList<Profile>subs;
+    private  byte[] imgBytes;
 
-    public Profile(String username, String password, File picFile, String description, List<Profile> subs)
+    public Profile(String username, String password, byte[] imgBytes,File picFile, String description, List<Profile> subs)
     {
         this.username=username;
         this.password=password;
         this.picFile=picFile;
         this.description=description;
         this.subs=(ArrayList<Profile>)subs;
+        this.imgBytes =  imgBytes;
     }
     public void applyNotify(String recipeName, String author)
     {
@@ -36,6 +38,15 @@ public class Profile implements Serializable {
         return picFile;
     }
 
+    public byte[] getImgBytes()
+    {
+        return imgBytes;
+    }
+
+    public void setPicFile(File picFile)
+    {
+        this.picFile = picFile;
+    }
     public String getDescription() {
         return description;
     }

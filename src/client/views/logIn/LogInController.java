@@ -34,7 +34,7 @@ public class LogInController implements ViewController
   }
 
   public void onLoginButton(ActionEvent actionEvent)
-          throws RemoteException, SQLException, FileNotFoundException {
+          throws IOException, SQLException {
     vm.logIn();
   }
   public void onJoinButton(ActionEvent actionEvent)

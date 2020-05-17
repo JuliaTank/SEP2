@@ -1,5 +1,7 @@
 package database;
 
+import server.network.RMIServerImpl;
+import shared.networking.RMIServer;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 
@@ -21,7 +23,7 @@ public class ToDelete
 /*
     ProfilesData.getInstance().update("Toms","Toms","kotkidwa",file,"jestem toms",subs);*/
 
-    System.out.println(ProfilesData.getInstance().getProfile("Julia").getDescription());
+   // System.out.println(ProfilesData.getInstance().getProfile("Julia").getDescription());
 
     /*  for (int i = 0; i < profile.getSubs().size() ; i++)
     {
@@ -35,7 +37,12 @@ public class ToDelete
     */
 
 
-   //RecipesData.getInstance().update("solly lolly","solly lolly","freeze solly lolly",ProfilesData.getInstance().getProfile("Julia"),ingredients,file);
+   Recipe recipe = RecipesData.getInstance().getRecipeByTitle("cake");
+   /* System.out.println(recipe.
+            getPicFile().
+            toURI().
+            toString());*/
+
 
 /*
     for (int i = 0; i <profiles.size() ; i++)

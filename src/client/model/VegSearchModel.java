@@ -7,6 +7,7 @@ import shared.util.Subject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,15 +20,15 @@ public interface VegSearchModel extends Subject {
     boolean doIsubscribeIt(String user) throws RemoteException, FileNotFoundException, SQLException;
     boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException;
     boolean logIn(String username, String password)
-        throws RemoteException, SQLException, FileNotFoundException;
+            throws IOException, SQLException;
     boolean signUp(String username, String password, File picFile,String description)
         throws FileNotFoundException, SQLException, RemoteException;
     boolean editProfile(String oldUsername,String newUsername, String password,
         File picFile, String description,ArrayList<Profile> subs)
         throws FileNotFoundException, SQLException, RemoteException;
     Profile getLoggedProfile();
-    Profile getProfile(String username) throws FileNotFoundException, SQLException, RemoteException;
-    ArrayList<Profile> getProfiles(String username) throws FileNotFoundException, SQLException, RemoteException;
+    Profile getProfile(String username) throws IOException, SQLException;
+    ArrayList<Profile> getProfiles(String username) throws IOException, SQLException;
     void setRecipes(ArrayList<Recipe> recipes);
     void delete() throws SQLException, RemoteException;
 

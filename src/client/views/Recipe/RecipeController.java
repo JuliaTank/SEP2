@@ -53,8 +53,7 @@ public class RecipeController
   }
 
   public void onUserLink(ActionEvent actionEvent)
-      throws FileNotFoundException, SQLException, RemoteException
-  {
+          throws IOException, SQLException {
     vm.onUserLink();
   }
 

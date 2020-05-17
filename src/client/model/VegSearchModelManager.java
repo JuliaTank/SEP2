@@ -69,8 +69,7 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override public boolean logIn(String username, String password)
-        throws RemoteException, SQLException, FileNotFoundException
-    {
+            throws IOException, SQLException {
         boolean logged = client.logIn(username,password);
         if(logged)
         {
@@ -87,14 +86,12 @@ public class VegSearchModelManager implements VegSearchModel {
 
     @Override
     public Profile getProfile(String username)
-        throws FileNotFoundException, SQLException, RemoteException
-    {
+            throws IOException, SQLException {
         return client.getProfile(username);
     }
 
   @Override public ArrayList<Profile> getProfiles(String username)
-      throws FileNotFoundException, SQLException, RemoteException
-  {
+          throws IOException, SQLException {
     return client.getProfiles(username);
   }
 

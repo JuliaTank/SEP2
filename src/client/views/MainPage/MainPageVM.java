@@ -96,8 +96,7 @@ public class MainPageVM {
 
   }
   public ArrayList<Profile> getProfilesForSearch(String text)
-      throws FileNotFoundException, SQLException, RemoteException
-  {
+          throws IOException, SQLException {
     ArrayList<Profile> profiles = model.getProfiles(text);
     return  profiles;
   }

@@ -90,8 +90,7 @@ public  RecipeVM() throws IOException, NotBoundException, SQLException
   }
 
   public void onUserLink()
-      throws FileNotFoundException, SQLException, RemoteException
-  {
+          throws IOException, SQLException {
     vh.openProfile(model.getProfile(userLink.getValue()));
   }
   public void onMainPage()

@@ -44,8 +44,7 @@ public class LogInVM {
   }
 
   public void logIn()
-      throws RemoteException, SQLException, FileNotFoundException
-  {
+          throws IOException, SQLException {
     if(usernameField.getValue()==null|| passwordField.getValue()==null)
     {
       errorLabel.setValue("Type in your username and password");

@@ -105,8 +105,7 @@ public class ProfileVM {
     }
 
     public Profile getProfile(String username)
-        throws FileNotFoundException, SQLException, RemoteException
-    {
+            throws IOException, SQLException {
         return  model.getProfile(username);
     }
     public void delete() throws SQLException, RemoteException

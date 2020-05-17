@@ -15,6 +15,7 @@ import java.util.Map;
 public class ProfilesData {
 
     private static ProfilesData instance;
+    Connection connection=null;
 
     private ProfilesData() throws SQLException
     {
@@ -30,10 +31,18 @@ public class ProfilesData {
     }
     private Connection getConnection() throws SQLException
     {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
+        try {
+           connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "Roksanka2601");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return connection;
     }
-    public Profile create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
+
+    public void create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
         throws SQLException, FileNotFoundException
     {
 
@@ -48,9 +57,10 @@ public class ProfilesData {
             Array array  = connection.createArrayOf("varchar",getSubsForDB(subscriptions));
             statement.setArray(5, array);
             statement.executeUpdate();
+
         }
 
-        return new Profile(username,password,picFile,description,subscriptions);
+        //return new Profile(username,password,picFile,description,subscriptions);
     }
 
     public Profile getProfile(String searchedUsername) throws SQLException
@@ -75,7 +85,7 @@ public class ProfilesData {
                 String[] subs = (String[])subscriptions.getArray();
                 ArrayList<Profile> subscribers = getSubs(subs);
 
-                result = new Profile(username,password,picFile,description,subscribers);
+                result = new Profile(username,password,imgBytes,picFile,description,subscribers);
 
             }
         }
@@ -83,6 +93,7 @@ public class ProfilesData {
         {
             e.printStackTrace();
         }
+
         return result;
     }
     public ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
@@ -107,17 +118,17 @@ public class ProfilesData {
                 String[] subs = (String[])subscriptions.getArray();
                 ArrayList<Profile> subscribers = getSubs(subs);
 
-                result.add(new Profile(username,password,picFile,description,subscribers ));
+                result.add(new Profile(username,password,imgBytes,picFile,description,subscribers ));
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
+
         return result;
     }
-    private File getPicFile(byte[] imgBytes, String username) throws IOException
-    {
+    private File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
         BufferedImage image = ImageIO.read(bais);
 
@@ -129,6 +140,7 @@ public class ProfilesData {
 
         if(image!=null)
         ImageIO.write(image,"jpg",picFile);
+
         return picFile;
     }
 
@@ -139,12 +151,12 @@ public class ProfilesData {
             Profile profile = getProfile(subs[i]);
             subscribers.add(profile);
         }
+
         return  subscribers;
     }
     //here I'm transforming ArrayList of Profiles into Array of usernames of subscribers
     // I will need it to put subscribers data into database
-    private String[] getSubsForDB(ArrayList<Profile> subs)
-    {
+    private String[] getSubsForDB(ArrayList<Profile> subs) throws SQLException {
         String[] usernames = new String[subs.size()];
         for (int i = 0; i <subs.size() ; i++) {
             usernames[i] = subs.get(i).getUsername();
@@ -152,7 +164,7 @@ public class ProfilesData {
 
         return  usernames;
     }
-    public Profile update(String oldUsername,String newUsername, String password, File picFile, String description, ArrayList<Profile> subscriptions)
+    public void update(String oldUsername,String newUsername, String password, File picFile, String description, ArrayList<Profile> subscriptions)
         throws SQLException, FileNotFoundException
     {
 
@@ -175,7 +187,8 @@ public class ProfilesData {
             }
 
             statement.executeUpdate();
-            return new Profile(newUsername,password,picFile,description,subscriptions);
+
+            //return new Profile(newUsername,password,picFile,description,subscriptions);
         }
     }
     public void delete(String username) throws SQLException
@@ -187,6 +200,7 @@ public class ProfilesData {
             statement.executeUpdate();
             new File(username+"pic.jpg").delete();
             RecipesData.getInstance().deleteRecipe(username);
+
         }
     }
 }

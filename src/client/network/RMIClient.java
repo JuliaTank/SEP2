@@ -7,10 +7,14 @@ import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
 import shared.transferObjects.Report;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -34,7 +38,7 @@ public class RMIClient implements Client, ClientCallBack {
     }
     @Override
     public void startClient() throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.getRegistry("localhost",1099);
+        Registry registry = LocateRegistry.getRegistry("192.168.87.160",1099);
         server=(RMIServer)registry.lookup("Server");
         server.registerClient(this);
     }
@@ -83,15 +87,20 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override public Profile getProfile(String username)
-        throws FileNotFoundException, SQLException, RemoteException
-    {
-        return server.getProfile(username);
+            throws IOException, SQLException {
+        Profile profile = server.getProfile(username);
+        profile.setPicFile(getPicFile(profile.getImgBytes(),profile.getUsername()));
+        return profile;
     }
 
     @Override public ArrayList<Profile> getProfiles(String username)
-        throws FileNotFoundException, SQLException, RemoteException
-    {
-        return server.getProfiles(username);
+            throws IOException, SQLException {
+        ArrayList<Profile> profiles = server.getProfiles(username);
+        for (int i = 0; i < profiles.size(); i++) {
+            Profile profile = profiles.get(i);
+         profiles.get(i).setPicFile(getPicFile(profile.getImgBytes(),profile.getUsername()));
+        }
+        return profiles;
     }
 
     @Override
@@ -169,6 +178,21 @@ public class RMIClient implements Client, ClientCallBack {
     return username;
   }
 
+    public File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
+        BufferedImage image = ImageIO.read(bais);
+
+        if(new File(username+"pic.jpg").createNewFile())
+        {
+            System.out.println("new file created");
+        }
+        File picFile =  new File(username+"pic.jpg");
+
+        if(image!=null)
+            ImageIO.write(image,"jpg",picFile);
+
+        return picFile;
+    }
 
 
 }
