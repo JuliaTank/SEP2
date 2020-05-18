@@ -57,7 +57,11 @@ public class LogInVM {
     else
     {
       vh.openMainPage();
+      errorLabel.setValue("");
     }
+
+    usernameField.setValue("");
+    passwordField.setValue("");
   }
 
   public void join()

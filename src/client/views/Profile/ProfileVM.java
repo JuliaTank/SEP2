@@ -62,7 +62,7 @@ public class ProfileVM {
     {
         return recipeDemoVMS;
     }
-    public ArrayList<Recipe> getRecipes(String username) throws SQLException, RemoteException
+    public ArrayList<Recipe> getRecipes(String username) throws SQLException, IOException
     {
         //System.out.println(model.getRecipesByUsername(username.getValue()).get(0).getTitle());
         return model.getRecipesByUsername(username);

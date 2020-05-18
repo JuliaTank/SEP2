@@ -106,31 +106,31 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
         return client.getRecipesByIngredient(ingredient);
     }
 
     @Override public Recipe getRecipeByTitle(String title)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
         return client.getRecipeByTitle(title);
     }
 
     @Override public ArrayList<Recipe> getRecipesByUsername(String username)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
         return client.getRecipesByUsername(username);
     }
 
     @Override public ArrayList<Recipe> getRecipesByTitle(String title)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
         return client.getRecipesByTitle(title);
     }
 
   @Override public ArrayList<Recipe> getAllRecipes()
-      throws SQLException, RemoteException
+          throws SQLException, IOException
   {
     return client.getAllRecipes();
   }

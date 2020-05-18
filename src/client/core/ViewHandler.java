@@ -58,6 +58,7 @@ public class ViewHandler {
         stage.getIcons().add(new Image("file:carrotIcon.png"));
         openLogIn();
     }
+
     public void openLogIn() throws NotBoundException, SQLException, IOException
     {
         FXMLLoader loader = new FXMLLoader();

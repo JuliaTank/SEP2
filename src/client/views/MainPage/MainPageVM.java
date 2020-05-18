@@ -73,13 +73,13 @@ public class MainPageVM {
     vh.openProfile(model.getLoggedProfile());
   }
 
-  public ArrayList<Recipe> getRecipes() throws SQLException, RemoteException
+  public ArrayList<Recipe> getRecipes() throws SQLException, IOException
   {
     return model.getAllRecipes();
   }
 
   public void search(String text)
-      throws SQLException, RemoteException
+          throws SQLException, IOException
   {
     ArrayList<Recipe> recipes  = model.getRecipesByTitle(text);
     ArrayList<Recipe> recipesByIngredients = model.getRecipesByIngredient(text);

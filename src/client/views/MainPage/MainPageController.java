@@ -101,7 +101,7 @@ public class MainPageController implements ViewController
   }
 
   @Override public void init(Profile profile)
-      throws SQLException, RemoteException
+          throws SQLException, IOException
   {
     errorLabel.textProperty().bindBidirectional(vm.getErrorLabel());
     Image image1 = new Image("file:look.png");

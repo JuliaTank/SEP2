@@ -44,7 +44,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="39.0" mnemonicParsing="false" onAction="#onLoginButton" text="Log in" />
+                        <Button defaultButton="true" layoutX="39.0" mnemonicParsing="false" onAction="#onLoginButton" text="Log in" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0">

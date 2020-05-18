@@ -63,13 +63,13 @@
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <children>
                   <Button mnemonicParsing="false" onAction="#onCancelButton" prefHeight="26.0" prefWidth="62.0" text="Cancel" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveButton" prefHeight="26.0" prefWidth="58.0" text="Edit" />
+                  <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#onSaveButton" prefHeight="26.0" prefWidth="58.0" text="Edit" />
                   <Label fx:id="errorLabel" prefHeight="30.0" prefWidth="311.0" textFill="#a31a14" />
                </children>
             </HBox>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <Button fx:id="signUpButton" layoutY="2.0" mnemonicParsing="false" onAction="#onSignUp2Button" text="Sign up" />
+                  <Button fx:id="signUpButton" defaultButton="true" layoutY="2.0" mnemonicParsing="false" onAction="#onSignUp2Button" text="Sign up" />
                </children>
             </Pane>
          </children>

@@ -18,6 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -159,7 +160,8 @@ public class RMIServerImpl implements RMIServer {
     Profile subscribedProfile = profilesData.getProfile(user);
         ArrayList<Profile>subs=subscribedProfile.getSubs();
         subs.add(profilesData.getProfile(subscriber.getUsername()));
-       profilesData.update(subscribedProfile.getUsername(),subscribedProfile.getUsername(),subscribedProfile.getPassword(),subscribedProfile.getPicFile(),subscribedProfile.getDescription(),subs);
+       profilesData.update(subscribedProfile.getUsername(),subscribedProfile.getUsername(),subscribedProfile.getPassword(),
+               subscribedProfile.getPicFile(),subscribedProfile.getDescription(),subs);
     }
 
     @Override
@@ -167,7 +169,8 @@ public class RMIServerImpl implements RMIServer {
       Profile unsubscribedProfile = profilesData.getProfile(user);
       ArrayList<Profile>subs=unsubscribedProfile.getSubs();
       subs.remove(profilesData.getProfile(unsubscriber.getUsername()));
-      profilesData.update(unsubscribedProfile.getUsername(),unsubscribedProfile.getUsername(),unsubscribedProfile.getPassword(),unsubscribedProfile.getPicFile(),unsubscribedProfile.getDescription(),subs);
+      profilesData.update(unsubscribedProfile.getUsername(),unsubscribedProfile.getUsername(),unsubscribedProfile.getPassword(),
+              unsubscribedProfile.getPicFile(),unsubscribedProfile.getDescription(),subs);
 
     }
 

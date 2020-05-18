@@ -10,14 +10,16 @@ public class Recipe implements Serializable {
     private Profile profile;
     private ArrayList<String>ingredients=new ArrayList<>();
     private File picFile;
+    private byte[] imgBytes;
 
-    public Recipe(String title, String description, Profile profile, ArrayList<String> ingredients, File picFile)
+    public Recipe(String title, String description, Profile profile, ArrayList<String> ingredients,byte[] imgBytes, File picFile)
     {
         this.title=title;
         this.description=description;
         this.profile=profile;
         this.ingredients=ingredients;
         this.picFile=picFile;
+        this.imgBytes =imgBytes;
     }
 
 
@@ -40,6 +42,16 @@ public class Recipe implements Serializable {
     public String getDescription()
     {
         return description;
+    }
+
+    public byte[] getImgBytes()
+    {
+        return imgBytes;
+    }
+
+    public void setPicFile(File picFile)
+    {
+        this.picFile = picFile;
     }
 
     public Profile getProfile()

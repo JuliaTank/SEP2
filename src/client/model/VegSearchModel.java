@@ -33,13 +33,13 @@ public interface VegSearchModel extends Subject {
     void delete() throws SQLException, RemoteException;
 
     ArrayList<Recipe> getRecipesByIngredient(String ingredient)
-        throws SQLException, RemoteException;
-    Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
+            throws SQLException, IOException;
+    Recipe getRecipeByTitle(String title) throws SQLException, IOException;
     ArrayList<Recipe> getRecipesByUsername(String username)
-        throws SQLException, RemoteException;
+            throws SQLException, IOException;
     ArrayList<Recipe> getRecipesByTitle(String title)
-        throws SQLException, RemoteException;
-    ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
+            throws SQLException, IOException;
+    ArrayList<Recipe> getAllRecipes() throws SQLException, IOException;
 
 
 }

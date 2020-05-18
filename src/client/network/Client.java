@@ -31,12 +31,13 @@ public interface Client extends Subject {
     void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
     boolean doIsubscribeIt(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
     void delete(String username) throws SQLException, RemoteException;
-    Recipe getRecipeByTitle(String title) throws SQLException, RemoteException;
+    Recipe getRecipeByTitle(String title) throws SQLException, IOException;
     ArrayList<Recipe> getRecipesByUsername(String username)
-        throws SQLException, RemoteException;
+            throws SQLException, IOException;
     ArrayList<Recipe> getRecipesByTitle(String title)
-        throws SQLException, RemoteException;
-    ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws RemoteException, SQLException;
-    ArrayList<Recipe> getAllRecipes() throws SQLException, RemoteException;
+            throws SQLException, IOException;
+    ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws IOException, SQLException;
+    ArrayList<Recipe> getAllRecipes() throws SQLException, IOException;
     File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException;
+   // File getPicFileForRecipe(byte[] imgBytes, String username) throws IOException, SQLException;
 }

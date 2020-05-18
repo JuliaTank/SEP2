@@ -126,36 +126,56 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
-        return server.getRecipesByIngredient(ingredient);
+        ArrayList<Recipe> recipes = server.getRecipesByIngredient(ingredient);
+        for (int i = 0; i <recipes.size() ; i++) {
+            Recipe recipe = recipes.get(i);
+            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        }
+        return recipes;
     }
 
     @Override public ArrayList<Recipe> getAllRecipes()
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
-        return server.getAllRecipes();
+        ArrayList<Recipe> recipes = server.getAllRecipes();
+        for (int i = 0; i <recipes.size() ; i++) {
+            Recipe recipe = recipes.get(i);
+            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        }
+        return recipes;
     }
 
     @Override public Recipe getRecipeByTitle(String title)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
-        return server.getRecipeByTitle(title);
+        Recipe recipe = server.getRecipeByTitle(title);
+        recipe.setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        return recipe;
     }
 
     @Override public ArrayList<Recipe> getRecipesByUsername(String username)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
-        System.out.println("client works "+server.getRecipesByUsername(username).toString());
-        System.out.println(server.getRecipesByUsername("Julia"));
-        return server.getRecipesByUsername(username);
+        ArrayList<Recipe> recipes =server.getRecipesByUsername(username);
+        for (int i = 0; i <recipes.size() ; i++) {
+            Recipe recipe = recipes.get(i);
+            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        }
+        return recipes;
     }
 
     @Override
     public ArrayList<Recipe> getRecipesByTitle(String title)
-        throws SQLException, RemoteException
+            throws SQLException, IOException
     {
-        return server.getRecipesByTitle(title);
+        ArrayList<Recipe> recipes =server.getRecipesByTitle(title);
+        for (int i = 0; i <recipes.size() ; i++) {
+            Recipe recipe = recipes.get(i);
+            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        }
+        return recipes;
     }
 
     @Override
@@ -178,15 +198,15 @@ public class RMIClient implements Client, ClientCallBack {
     return username;
   }
 
-    public File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException {
+    public File getPicFile(byte[] imgBytes, String name) throws IOException, SQLException {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
         BufferedImage image = ImageIO.read(bais);
 
-        if(new File(username+"pic.jpg").createNewFile())
+        if(new File(name+"pic.jpg").createNewFile())
         {
             System.out.println("new file created");
         }
-        File picFile =  new File(username+"pic.jpg");
+        File picFile =  new File(name+"pic.jpg");
 
         if(image!=null)
             ImageIO.write(image,"jpg",picFile);

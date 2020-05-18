@@ -23,6 +23,7 @@ public class SignInVM {
   private StringProperty usernameCreationField;
   private StringProperty descriptionArea;
   private StringProperty picApprovedLabel;
+  private Profile profile;
 
 
 
@@ -30,12 +31,21 @@ public class SignInVM {
 
   public SignInVM() throws IOException, NotBoundException, SQLException
   {
+
     errorLabel = new SimpleStringProperty();
     passwordRepeatField = new SimpleStringProperty();
     passwordCreationField = new SimpleStringProperty();
     usernameCreationField = new SimpleStringProperty();
     descriptionArea = new SimpleStringProperty();
     picApprovedLabel = new SimpleStringProperty();
+  }
+  public void cancel() throws IOException, SQLException, NotBoundException {
+    usernameCreationField.setValue("");
+    descriptionArea.setValue("");
+    passwordCreationField.setValue("");
+    passwordRepeatField.setValue("");
+    errorLabel.setValue("");
+    picApprovedLabel.setValue("");
   }
 
   public void signUp(File picFile)
@@ -44,11 +54,16 @@ public class SignInVM {
     if(model.signUp(usernameCreationField.getValue(),passwordCreationField.getValue(),picFile, getDescriptionArea().getValue()))
     {
       ViewHandler.getInstance().openLogIn();
+      errorLabel.setValue("");
     }
     else
     {
       errorLabel.setValue("Your profile couldn't be created, change username");
     }
+    usernameCreationField.setValue("");
+    descriptionArea.setValue("");
+    passwordCreationField.setValue("");
+    passwordRepeatField.setValue("");
   }
 
   public StringProperty getErrorLabel()

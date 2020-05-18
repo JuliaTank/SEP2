@@ -89,9 +89,10 @@ public class SignInController implements ViewController
       throws IOException, SQLException, NotBoundException
   {
     if(profile==null)
-    ViewHandler.getInstance().openLogIn();
+      ViewHandler.getInstance().openLogIn();
     else
       ViewHandler.getInstance().openProfile(profile);
+    vm.cancel();
   }
 
   @Override public void init(Profile profile)

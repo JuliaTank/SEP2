@@ -116,8 +116,7 @@ public class ProfileController implements ViewController
    }
   }
   @Override public void init(Profile profile)
-      throws FileNotFoundException, SQLException, RemoteException
-  {
+          throws IOException, SQLException {
     this.profile = profile;
     username.textProperty().bindBidirectional(vm.getUsername());
     vm.getRecipeDemoVMS().addListener(this::OnRecipeAdded);

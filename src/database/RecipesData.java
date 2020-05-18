@@ -33,7 +33,7 @@ public class RecipesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "Roksanka2601");
     }
-    public Recipe create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
+    public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
         FileInputStream fis  = new FileInputStream(picFile);
         try (Connection connection = getConnection())
         {
@@ -48,7 +48,7 @@ public class RecipesData {
             statement.executeUpdate();
 
         }
-        return new Recipe(title,description,profilesData.getProfile(username),ingredients,picFile);
+        //return new Recipe(title,description,profilesData.getProfile(username),ingredients,picFile);
     }
 
     public ArrayList<Recipe> getRecipesByIngredient(String searchedIngredient) throws SQLException
@@ -75,7 +75,7 @@ public class RecipesData {
                     ingredientsArray.add(ing[i]);
                 }
 
-                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile));
+                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,imgBytes,picFile));
             }
 
         } catch (IOException e) {
@@ -122,7 +122,7 @@ public class RecipesData {
 
                 ArrayList<String> ingredientsArray = new ArrayList<>();
 
-                result.add(new Recipe(title,description,profilesData.getProfile(username), getIng(ingredients), picFile)) ;
+                result.add(new Recipe(title,description,profilesData.getProfile(username), getIng(ingredients), imgBytes,picFile)) ;
             }
 
         }
@@ -157,7 +157,7 @@ public class RecipesData {
                ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 result.add(new Recipe(title, description, profilesData.getProfile(username),
-                    getIng(ingredients), picFile)) ;
+                    getIng(ingredients),imgBytes, picFile)) ;
             }
 
         }
@@ -200,7 +200,7 @@ public class RecipesData {
                 ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 result = new Recipe(title, description, profilesData.getProfile(username),
-                    getIng(ingredients), picFile);
+                    getIng(ingredients), imgBytes,picFile);
             }
 
         }
@@ -258,7 +258,7 @@ public class RecipesData {
                 for (int i = 0; i < ing.length; i++) {
                     ingredientsArray.add(ing[i]);
                 }
-                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,picFile));
+                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,imgBytes,picFile));
             }
 
         } catch (IOException e) {
@@ -266,7 +266,7 @@ public class RecipesData {
         }
         return result;
     }
-public Recipe update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file)
+public void update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file)
     throws FileNotFoundException, SQLException
 {
     FileInputStream fis = new FileInputStream(file);
@@ -282,7 +282,7 @@ public Recipe update(String title,String newTitle,String description, Profile pr
         statement.setString(6,title );
 
         statement.executeUpdate();
-        return new Recipe(newTitle, description,profile, ingredients,file);
+        //return new Recipe(newTitle, description,profile, ingredients,file);
     }
 }
 
