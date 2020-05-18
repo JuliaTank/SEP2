@@ -49,15 +49,10 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile) throws RemoteException {
-        try
-        {
-          return   server.addRecipe(title, description, username, ingredients, picfile);
-        }
-        catch (RemoteException | FileNotFoundException | SQLException e)
-        {
-            throw new RemoteException();
-        }
+    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
+        throws RemoteException, FileNotFoundException, SQLException
+    {
+        return server.addRecipe(title, description, username, ingredients, picfile);
     }
 
     @Override public boolean logIn(String username, String password)

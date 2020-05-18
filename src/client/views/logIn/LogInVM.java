@@ -58,14 +58,18 @@ public class LogInVM {
     {
       vh.openMainPage();
       errorLabel.setValue("");
+      usernameField.setValue("");
+      passwordField.setValue("");
     }
 
-    usernameField.setValue("");
-    passwordField.setValue("");
+
   }
 
   public void join()
   {
    vh.openSignIn(null);
+    errorLabel.setValue("");
+    usernameField.setValue("");
+    passwordField.setValue("");
   }
 }

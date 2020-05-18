@@ -9,6 +9,7 @@ import shared.transferObjects.Notification;
 
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -44,7 +45,7 @@ public class NewRecipeVM {
   }
 
   public void save(String title, String description, ArrayList<String> ingredients, File picfile)
-      throws RemoteException
+      throws RemoteException, FileNotFoundException, SQLException
   {
     if ( model.addRecipe(title,description,ingredients,picfile))
     {

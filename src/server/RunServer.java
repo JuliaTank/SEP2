@@ -12,7 +12,7 @@ public class RunServer {
         throws AlreadyBoundException, RemoteException, SQLException
     {
         RMIServerImpl ss = new RMIServerImpl(new Manager());
-        //ss.getRecipesByUsername("Julia");
+        //  ss.getRecipesByUsername("Julia");
         ss.startServer();
     }
 }

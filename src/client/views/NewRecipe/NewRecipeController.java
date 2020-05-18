@@ -66,7 +66,8 @@ public class NewRecipeController implements ViewController
     }
   }
 
-  public void onSaveButton(ActionEvent actionEvent) throws RemoteException
+  public void onSaveButton(ActionEvent actionEvent)
+      throws RemoteException, FileNotFoundException, SQLException
   {
     if(titleField.getText().length()<2 || descriptionArea.getText().length()<3)
     {
@@ -93,19 +94,17 @@ public class NewRecipeController implements ViewController
       throws FileNotFoundException, SQLException, RemoteException
   {
     errorLabel.textProperty().bindBidirectional(vm.getErrorLabel());
-
+    descriptionArea.setWrapText(true);
   }
 
   public void onAddButton(ActionEvent actionEvent)
   {
+    picFile = new File("carrotLogo.png");
     if(!ingredientField.getText().isEmpty())
     {
       ingredients.add(ingredientField.getText());
       ingredientsList.setItems(ingredients);
     }
-    else
-    {
-      System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    }
+    ingredientField.clear();
   }
 }

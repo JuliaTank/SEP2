@@ -49,6 +49,7 @@ public class MainPageController implements ViewController
   public MainPageController()
       throws IOException, NotBoundException, SQLException
   {
+
   }
 
   public void onSearchButton(ActionEvent actionEvent)

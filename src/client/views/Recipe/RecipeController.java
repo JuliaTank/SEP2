@@ -72,6 +72,7 @@ public class RecipeController
     if(!reportField.getText().equals(null))
     {
       vm.report(titleLabel.getText(), userLink.getText(), reportField.getText());
+      reportField.clear();
     }
     else
     {

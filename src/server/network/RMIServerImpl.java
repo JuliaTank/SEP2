@@ -134,19 +134,22 @@ public class RMIServerImpl implements RMIServer {
 
   private void sendNotification(Notification notification) throws RemoteException, SQLException
   {
+    manager.sendNotification(notification);
    Profile profile = profilesData.getProfile(notification.getUsername());
     ArrayList<String> subscribers = new ArrayList<>();
     ArrayList<Profile> subscribersProfiles = profile.getSubs();
+
     for (Profile subscribersProfile : subscribersProfiles)
     {
       subscribers.add(subscribersProfile.getUsername());
     }
     for (ClientCallBack client : clients)
     {
-      for (String s : subscribers)
+      for (String subscriber : subscribers)
       {
-        if (client.getUsername().equals(s))
+        if (client.getUsername().equals(subscriber))
         {
+          System.out.println("notification send to "+subscriber);
           client.receiveNotification(notification);
         }
       }

@@ -31,7 +31,7 @@ public class RecipesData {
     private Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
+                "JJuu11@@");
     }
     public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
         FileInputStream fis  = new FileInputStream(picFile);
@@ -75,7 +75,7 @@ public class RecipesData {
                     ingredientsArray.add(ing[i]);
                 }
 
-                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,imgBytes,picFile));
+                result.add(new Recipe(title,description,profilesData.getProfile(username),ingredientsArray,imgBytes ,picFile));
             }
 
         } catch (IOException e) {

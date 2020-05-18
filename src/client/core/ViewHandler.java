@@ -6,6 +6,7 @@ import client.views.ProfileDemo.ProfileDemoController;
 import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
 import client.views.ViewController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,8 +19,10 @@ import shared.transferObjects.Recipe;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -33,7 +36,7 @@ public class ViewHandler {
     private Scene profileScene;
     private Scene notificationScene;
     private Stage stage;
-    private Stage stageNotification = new Stage();
+    private Stage stageNotification;
 
     private Scene recipeScene;
     private Scene newRecipeScene;
@@ -110,14 +113,13 @@ public class ViewHandler {
     }
 
     public void openProfile(Profile profile) {
-
+        System.out.println("profiled opened again!");
             try {
                 Parent root = loadFXML("../views/Profile/profile.fxml",profile);
-
-
                 profileScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
+                System.out.println("catch in open profile");
             }
             stage.setTitle(profile.getUsername());
         stage.setScene(profileScene);
@@ -126,28 +128,37 @@ public class ViewHandler {
 
     public void openNotification(Notification notification) throws IOException, SQLException
     {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../views/Notification/notification.fxml"));
-        Parent root = loader.load();
+        Platform.runLater(() -> {
+            stageNotification = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../views/Notification/notification.fxml"));
+            Parent root = null;
+            try
+            {
+                root = loader.load();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
 
-        NotificationController ctrl = loader.getController();
-        ctrl.init(notification);
-        stage.setTitle("");
+            NotificationController ctrl = loader.getController();
+            try
+            {
+                ctrl.init(notification);
+            }
+            catch (FileNotFoundException | RemoteException | SQLException e)
+            {
+                e.printStackTrace();
+            }
+            stageNotification.setTitle("");
 
-        notificationScene =  new Scene(root);
-        stageNotification.setScene(notificationScene);
-        stageNotification.show();
+            notificationScene =  new Scene(root);
+            stageNotification.setScene(notificationScene);
+            stageNotification.show();
 
-    }
-    public void toDelete() throws IOException, SQLException
-    {
-        Popup popup = new Popup();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/ReportUser/reportUser.fxml"));
-        Parent root = loader.load();
+        });
 
-        ViewController ctrl  = loader.getController();
-        ctrl.init(null);
-        popup.getContent().add(root);
     }
     public void closeNotification()
     {

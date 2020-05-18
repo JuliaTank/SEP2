@@ -15,7 +15,6 @@ import java.util.Map;
 public class ProfilesData {
 
     private static ProfilesData instance;
-    Connection connection=null;
 
     private ProfilesData() throws SQLException
     {
@@ -31,17 +30,9 @@ public class ProfilesData {
     }
     private Connection getConnection() throws SQLException
     {
-        try {
-           connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
-                "Roksanka2601");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return connection;
+        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
+                "JJuu11@@");
     }
-
     public void create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
         throws SQLException, FileNotFoundException
     {
@@ -57,10 +48,9 @@ public class ProfilesData {
             Array array  = connection.createArrayOf("varchar",getSubsForDB(subscriptions));
             statement.setArray(5, array);
             statement.executeUpdate();
-
         }
 
-        //return new Profile(username,password,picFile,description,subscriptions);
+        //return new Profile(username,password,null,description,subscriptions);
     }
 
     public Profile getProfile(String searchedUsername) throws SQLException
@@ -93,7 +83,6 @@ public class ProfilesData {
         {
             e.printStackTrace();
         }
-
         return result;
     }
     public ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
@@ -125,10 +114,10 @@ public class ProfilesData {
         {
             e.printStackTrace();
         }
-
         return result;
     }
-    private File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException {
+    private File getPicFile(byte[] imgBytes, String username) throws IOException
+    {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
         BufferedImage image = ImageIO.read(bais);
 
@@ -140,7 +129,6 @@ public class ProfilesData {
 
         if(image!=null)
         ImageIO.write(image,"jpg",picFile);
-
         return picFile;
     }
 
@@ -151,12 +139,12 @@ public class ProfilesData {
             Profile profile = getProfile(subs[i]);
             subscribers.add(profile);
         }
-
         return  subscribers;
     }
     //here I'm transforming ArrayList of Profiles into Array of usernames of subscribers
     // I will need it to put subscribers data into database
-    private String[] getSubsForDB(ArrayList<Profile> subs) throws SQLException {
+    private String[] getSubsForDB(ArrayList<Profile> subs)
+    {
         String[] usernames = new String[subs.size()];
         for (int i = 0; i <subs.size() ; i++) {
             usernames[i] = subs.get(i).getUsername();
@@ -168,7 +156,11 @@ public class ProfilesData {
         throws SQLException, FileNotFoundException
     {
 
-        FileInputStream fis  = new FileInputStream(picFile);
+      System.out.println(picFile+"111111111111111111111111111111111111111");
+
+        FileInputStream fis
+            = new FileInputStream
+            (picFile);
         try (Connection connection = getConnection())
         {
             PreparedStatement statement= connection.prepareStatement("UPDATE \"VegSearch\".Profile SET username=?,password=?,picFile=?,description=?,subscriptions=? WHERE username=?");
@@ -187,8 +179,7 @@ public class ProfilesData {
             }
 
             statement.executeUpdate();
-
-            //return new Profile(newUsername,password,picFile,description,subscriptions);
+            //return new Profile(newUsername,password,null,description,subscriptions);
         }
     }
     public void delete(String username) throws SQLException
@@ -200,7 +191,6 @@ public class ProfilesData {
             statement.executeUpdate();
             new File(username+"pic.jpg").delete();
             RecipesData.getInstance().deleteRecipe(username);
-
         }
     }
 }

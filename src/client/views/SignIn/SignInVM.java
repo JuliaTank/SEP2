@@ -23,7 +23,7 @@ public class SignInVM {
   private StringProperty usernameCreationField;
   private StringProperty descriptionArea;
   private StringProperty picApprovedLabel;
-  private Profile profile;
+  private ViewHandler vh = ViewHandler.getInstance();
 
 
 
@@ -88,9 +88,14 @@ public class SignInVM {
 
   public boolean save(String oldUsername,String newUsername, String password,
       File picFile, String description, ArrayList<Profile> subs)
-      throws FileNotFoundException, SQLException, RemoteException
+      throws IOException, SQLException
   {
-    return model.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+    boolean temp =  model.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+    if(temp)
+    {
+     vh.openProfile(model.getProfile(newUsername));
+    }
+    return temp;
   }
   public StringProperty getUsernameCreationField()
   {

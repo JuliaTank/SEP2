@@ -18,7 +18,8 @@ public interface VegSearchModel extends Subject {
     void subscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
     void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
     boolean doIsubscribeIt(String user) throws RemoteException, FileNotFoundException, SQLException;
-    boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile) throws RemoteException;
+    boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile)
+        throws RemoteException, FileNotFoundException, SQLException;
     boolean logIn(String username, String password)
             throws IOException, SQLException;
     boolean signUp(String username, String password, File picFile,String description)

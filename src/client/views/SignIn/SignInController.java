@@ -63,7 +63,14 @@ public class SignInController implements ViewController
       }
       else
       {
-        picFile = new File("file:rabbit.jpg");
+        if(profile==null)
+        {
+          picFile = new File("file:rabbit.jpg");
+        }
+        else
+        {
+          picFile = profile.getPicFile();
+        }
       }
 
   }
@@ -71,6 +78,7 @@ public class SignInController implements ViewController
   public void onSignUp2Button(ActionEvent actionEvent)
       throws IOException, SQLException, NotBoundException
   {
+    picFile = new File("file:rabbit.jpg");
     if(usernameCreationField.getText().length()<3|| passwordCreationField.getText().length()<3)
     {
       errorLabel.setText("Username and password have to contain at least 3 signs ");
@@ -119,8 +127,10 @@ public class SignInController implements ViewController
   }
 
   public void onSaveButton(ActionEvent actionEvent)
-      throws FileNotFoundException, SQLException, RemoteException
+      throws IOException, SQLException
   {
+    picFile = profile.getPicFile();
+
     if(usernameCreationField.getText().length()<3|| passwordCreationField.getText().length()<3)
     {
       errorLabel.setText("Username and password have to contain at least 3 signs ");
