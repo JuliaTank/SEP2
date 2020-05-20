@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="76.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.RecipeDemo.RecipeDemoController">
+<AnchorPane prefHeight="76.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.RecipeDemo.RecipeDemoController">
    <children>
-      <HBox layoutY="-3.0" prefHeight="76.0" prefWidth="619.0">
+      <HBox layoutY="-3.0" prefHeight="76.0" prefWidth="512.0">
          <children>
             <Pane prefHeight="76.0" prefWidth="78.0">
                <children>

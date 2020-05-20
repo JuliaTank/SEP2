@@ -36,9 +36,9 @@ public class ProfilesData {
     public void create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
         throws SQLException, FileNotFoundException
     {
-
+        Connection connection = getConnection();
         FileInputStream fis  = new FileInputStream(picFile);
-        try (Connection connection = getConnection())
+        try (connection)
         {
             PreparedStatement statement= connection.prepareStatement("INSERT INTO \"VegSearch\".Profile(username,password,picFile,description,subscriptions) VALUES (?,?,?,?,?);");
             statement.setString(1,username);
@@ -49,15 +49,15 @@ public class ProfilesData {
             statement.setArray(5, array);
             statement.executeUpdate();
         }
-
-        //return new Profile(username,password,null,description,subscriptions);
+        connection.close();
     }
 
     public Profile getProfile(String searchedUsername) throws SQLException
     {
         Profile result = null;
+        Connection connection = getConnection();
 
-        try(Connection connection = getConnection())
+        try(connection)
         {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Profile WHERE username LIKE ?");
             statement.setString(1, searchedUsername);
@@ -83,13 +83,15 @@ public class ProfilesData {
         {
             e.printStackTrace();
         }
+        connection.close();
         return result;
     }
     public ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
     {
         ArrayList<Profile> result = new ArrayList<>();
+        Connection connection = getConnection();
 
-        try(Connection connection = getConnection())
+        try(connection)
         {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"VegSearch\".Profile WHERE username LIKE ?");
             statement.setString(1, "%"+searchedUsername+"%");
@@ -114,6 +116,7 @@ public class ProfilesData {
         {
             e.printStackTrace();
         }
+        connection.close();
         return result;
     }
     private File getPicFile(byte[] imgBytes, String username) throws IOException
@@ -155,13 +158,9 @@ public class ProfilesData {
     public void update(String oldUsername,String newUsername, String password, File picFile, String description, ArrayList<Profile> subscriptions)
         throws SQLException, FileNotFoundException
     {
-
-      System.out.println(picFile+"111111111111111111111111111111111111111");
-
-        FileInputStream fis
-            = new FileInputStream
-            (picFile);
-        try (Connection connection = getConnection())
+        Connection connection = getConnection();
+        FileInputStream fis = new FileInputStream(picFile);
+        try (connection)
         {
             PreparedStatement statement= connection.prepareStatement("UPDATE \"VegSearch\".Profile SET username=?,password=?,picFile=?,description=?,subscriptions=? WHERE username=?");
             statement.setString(1,newUsername);
@@ -181,10 +180,12 @@ public class ProfilesData {
             statement.executeUpdate();
             //return new Profile(newUsername,password,null,description,subscriptions);
         }
+        connection.close();
     }
     public void delete(String username) throws SQLException
     {
-        try (Connection connection = getConnection())
+        Connection connection = getConnection();
+        try (connection)
         {
             PreparedStatement statement= connection.prepareStatement("DELETE FROM \"VegSearch\".Profile WHERE username =? ");
             statement.setString(1,username);
@@ -192,6 +193,7 @@ public class ProfilesData {
             new File(username+"pic.jpg").delete();
             RecipesData.getInstance().deleteRecipe(username);
         }
+        connection.close();
     }
 }
 
