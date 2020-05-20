@@ -77,7 +77,7 @@ public class RMIServerImpl implements RMIServer {
         recipesData.create(title, description, username, ingredients, picfile);
         Notification notification  = new Notification(username,"New recipe",title);
         sendNotification(notification);
-        manager.addRecipe(notification);
+       // manager.addRecipe(notification);
         return true;
       }
       else
@@ -85,9 +85,19 @@ public class RMIServerImpl implements RMIServer {
     }
 
     @Override
-    public void report(String title, String username, String message)  {
-      Notification notification = new Notification(username,"New report :"+message,title);
-      manager.sendReport(notification);
+    public void report(String title, String username, String message)
+        throws RemoteException, SQLException
+    {
+      Notification notification = new Notification(username,"New report: "+message,title);
+      manager.sendNotification(notification);
+      for (int i = 0; i < clients.size(); i++)
+      {
+        if (clients.get(i).getUsername().equals("Administrator"))
+        {
+          clients.get(i).receiveNotification(notification);
+          break;
+        }
+      }
     }
 
 

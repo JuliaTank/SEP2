@@ -44,7 +44,9 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void sendReport(String title, String username, String message) throws RemoteException {
+    public void sendReport(String title, String username, String message)
+        throws RemoteException, SQLException
+    {
         server.report(title, username, message);
     }
 

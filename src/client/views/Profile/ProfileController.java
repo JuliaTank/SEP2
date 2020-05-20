@@ -124,7 +124,6 @@ public class ProfileController implements ViewController
     for (Recipe recipe :vm.getRecipes(profile.getUsername()) )
     {
       vm.addRecipeDisplay(recipe);
-      System.out.println("recipe added: "+ recipe.getTitle());
     }
 
     username.setText(profile.getUsername());
@@ -148,5 +147,7 @@ public class ProfileController implements ViewController
       editButton.setVisible(false);
       newRecipeButton.setVisible(false);
     }
+    if(vm.getLoggedProfile().getUsername().equals("Administrator"))
+    deleteButton.setVisible(true);
   }
 }

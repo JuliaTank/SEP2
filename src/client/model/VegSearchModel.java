@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface VegSearchModel extends Subject {
-    void report(String title, String username, String message) throws RemoteException;
+    void report(String title, String message)
+        throws RemoteException, SQLException;
     void saveUsername(String username);
     void subscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
     void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException;

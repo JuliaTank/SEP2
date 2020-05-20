@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 public interface Client extends Subject {
     void startClient() throws RemoteException, NotBoundException;
-    void sendReport(String title, String username, String message) throws RemoteException;
+    void sendReport(String title, String username, String message)
+        throws RemoteException, SQLException;
     boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
         throws RemoteException, FileNotFoundException, SQLException;
     boolean logIn(String username, String password)

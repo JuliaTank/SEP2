@@ -7,13 +7,9 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
-import shared.transferObjects.Notification;
-import shared.transferObjects.Report;
+import shared.transferObjects.Profile;
 
-import javax.print.DocFlavor;
 import java.beans.PropertyChangeEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -45,19 +41,19 @@ public  RecipeVM() throws IOException, NotBoundException, SQLException
 
   private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
   {
-    try{
+    /*try{
       vh.openNotification((Notification)propertyChangeEvent.getNewValue());
     }
     catch (IOException|SQLException e)
     {
       e.printStackTrace();
-    }
+    }*/
   }
 
-  public void report(String title, String username, String message)
-    throws RemoteException
-{
-  model.report(title,username,message);
+  public void report(String title, String message)
+      throws RemoteException, SQLException
+  {
+  model.report(title,message);
 }
   public ListProperty<String> ingredientsProperty()
   {
@@ -100,5 +96,9 @@ public  RecipeVM() throws IOException, NotBoundException, SQLException
   public void onProfile()
   {
     vh.openProfile(model.getLoggedProfile());
+  }
+
+  public Profile getLoggedProfile(){
+    return model.getLoggedProfile();
   }
 }

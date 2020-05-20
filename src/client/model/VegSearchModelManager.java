@@ -38,7 +38,9 @@ public class VegSearchModelManager implements VegSearchModel {
   }
 
   @Override
-    public void report(String title, String username, String message) throws RemoteException {
+    public void report(String title, String message)
+      throws RemoteException, SQLException
+  {
         client.sendReport(title,username,message);
     }
 

@@ -29,13 +29,13 @@ public class NewRecipeVM {
 
   private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
   {
-    try{
-      vh.openNotification((Notification)propertyChangeEvent.getNewValue());
+   /* try{
+     vh.openNotification((Notification)propertyChangeEvent.getNewValue());
     }
     catch (IOException|SQLException e)
     {
       e.printStackTrace();
-    }
+    }*/
 
   }
 

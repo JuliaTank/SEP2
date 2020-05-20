@@ -44,6 +44,10 @@ public class RecipeController
   @FXML
   public ListView commentsList;
   @FXML
+  public Button deleteButton;
+  @FXML
+  public Button editButton;
+  @FXML
   private TextArea descriptionArea;
 
   private RecipeVM vm= ViewModelFactory.getInstance().getRecipeVM();
@@ -67,11 +71,12 @@ public class RecipeController
 
   }
 
-  public void onReportButton(ActionEvent actionEvent) throws RemoteException
+  public void onReportButton(ActionEvent actionEvent)
+      throws RemoteException, SQLException
   {
-    if(!reportField.getText().equals(null))
+    if(reportField.getText() != null)
     {
-      vm.report(titleLabel.getText(), userLink.getText(), reportField.getText());
+      vm.report(titleLabel.getText(), reportField.getText());
       reportField.clear();
     }
     else
@@ -97,6 +102,12 @@ public class RecipeController
       ol.add(recipe.getIngredients().get(i));
     }
 
+    if(!(vm.getLoggedProfile().getUsername().equals(userLink.getText()) || vm.getLoggedProfile().getUsername().equals("Administrator")))
+    {
+      deleteButton.setVisible(false);
+      editButton.setVisible(false);
+    }
+
     ingredientList.setItems(ol);
      descriptionArea.setText(recipe.getDescription());
     Image image = new Image(recipe.getProfile().getPicFile().toURI().toString());
@@ -115,5 +126,13 @@ public class RecipeController
   public void onMainPage(ActionEvent actionEvent)
   {
    vm.onMainPage();
+  }
+
+  public void onDeleteButton(ActionEvent actionEvent)
+  {
+
+  }
+  public void onEditButton(ActionEvent actionEvent)
+  {
   }
 }

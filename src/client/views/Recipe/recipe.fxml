@@ -19,20 +19,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="634.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.Recipe.RecipeController">
+<AnchorPane prefHeight="691.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.Recipe.RecipeController">
     <children>
-        <GridPane prefHeight="634.0" prefWidth="566.0">
+        <GridPane layoutX="25.0" layoutY="3.0" prefHeight="685.0" prefWidth="566.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="53.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="10.0" prefWidth="461.6" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="0.0" prefWidth="0.0" />
             </columnConstraints>
             <rowConstraints>
-            <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="15.799999618530272" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="104.60000038146973" minHeight="10.0" prefHeight="24.79999237060548" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="414.5999954223633" minHeight="0.0" prefHeight="311.2" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="25.39996337890625" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="235.8000366210938" minHeight="10.0" prefHeight="235.8000366210938" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="92.39999771118164" minHeight="10.0" prefHeight="63.40000915527344" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="107.00000076293945" minHeight="10.0" prefHeight="51.20000915527345" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="414.5999954223633" minHeight="0.0" prefHeight="325.59999084472656" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="183.0" minHeight="0.0" prefHeight="25.60002441406249" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="235.8000366210938" minHeight="10.0" prefHeight="217.59998779296876" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <VBox prefHeight="295.0" prefWidth="390.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -51,15 +51,17 @@
                     <children>
                         <ImageView fx:id="userPic" fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                         </ImageView>
-                        <Hyperlink fx:id="userLink" onAction="#onUserLink" prefHeight="46.0" prefWidth="218.0" text="user">
+                        <Hyperlink fx:id="userLink" onAction="#onUserLink" prefHeight="52.0" prefWidth="147.0" text="user">
                             <font>
                                 <Font name="Verdana" size="14.0" />
                             </font>
                         </Hyperlink>
-                  <Pane prefHeight="51.0" prefWidth="211.0">
+                  <Pane prefHeight="52.0" prefWidth="329.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#onMyProfile" prefHeight="29.0" prefWidth="77.0" text="My Profile" />
-                        <Button layoutX="120.0" layoutY="11.0" mnemonicParsing="false" onAction="#onMainPage" prefHeight="29.0" prefWidth="77.0" text="Main page" />
+                        <Button layoutX="223.0" mnemonicParsing="false" onAction="#onMainPage" prefHeight="25.0" prefWidth="77.0" text="Main page" />
+                        <Button fx:id="deleteButton" layoutX="150.0" mnemonicParsing="false" onAction="#onDeleteButton" prefHeight="25.0" prefWidth="62.0" text="Delete" />
+                        <Button fx:id="editButton" layoutX="106.0" mnemonicParsing="false" onAction="#onEditButton" text="Edit" />
+                        <Button layoutX="21.0" mnemonicParsing="false" onAction="#onMyProfile" prefHeight="26.0" prefWidth="77.0" text="My Profile" />
                      </children>
                   </Pane>
                     </children>
@@ -81,15 +83,15 @@
                         <Button mnemonicParsing="false" onAction="#onReportButton" prefHeight="25.0" prefWidth="56.0" text="Report" />
                     </children>
                 </HBox>
-                <VBox prefHeight="37.0" prefWidth="458.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <VBox prefHeight="234.0" prefWidth="468.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <children>
                   <Label fx:id="errorLabel" prefHeight="18.0" prefWidth="462.0" textFill="#c52121" />
                         <Label prefHeight="16.0" prefWidth="62.0" text="Comments" />
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1022.0" prefWidth="449.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="450.0">
                            <children>
-                                    <ListView fx:id="commentsList" prefHeight="200.0" prefWidth="448.0" />
+                                    <ListView fx:id="commentsList" layoutY="12.0" prefHeight="188.0" prefWidth="448.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -98,7 +100,7 @@
                 </VBox>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="titleLabel" layoutX="197.0" layoutY="3.0" prefHeight="30.0" prefWidth="106.0" text="title">
+                  <Label fx:id="titleLabel" layoutX="-2.0" layoutY="6.0" prefHeight="46.0" prefWidth="237.0" text="title">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>

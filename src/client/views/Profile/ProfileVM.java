@@ -43,13 +43,13 @@ public class ProfileVM {
 
     private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
     {
-        try{
+        /*try{
             vh.openNotification((Notification)propertyChangeEvent.getNewValue());
         }
         catch (IOException|SQLException e)
         {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void addRecipeDisplay(Recipe recipe)
