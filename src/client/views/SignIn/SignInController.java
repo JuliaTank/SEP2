@@ -78,6 +78,7 @@ public class SignInController implements ViewController
   public void onSignUp2Button(ActionEvent actionEvent)
       throws IOException, SQLException, NotBoundException
   {
+    if(picFile==null)
     picFile = new File("rabbit.jpg");
     if(usernameCreationField.getText().isEmpty() || passwordCreationField.getText().isEmpty())
     {
@@ -133,6 +134,7 @@ public class SignInController implements ViewController
   public void onSaveButton(ActionEvent actionEvent)
       throws IOException, SQLException
   {
+    if(picFile==null)
     picFile = profile.getPicFile();
 
     if(usernameCreationField.getText().isEmpty() || passwordCreationField.getText().isEmpty())
