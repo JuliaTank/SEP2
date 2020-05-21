@@ -66,10 +66,10 @@ public class VegSearchModelManager implements VegSearchModel {
   }
 
   @Override
-    public boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile)
-      throws RemoteException, FileNotFoundException, SQLException
+    public boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile,byte[] bytes)
+      throws IOException, SQLException
   {
-       return client.addRecipe(title,description,loggedProfile.getUsername(),ingredients,picfile);
+       return client.addRecipe(title,description,loggedProfile.getUsername(),ingredients,picfile,bytes);
     }
 
     @Override public boolean logIn(String username, String password)

@@ -12,6 +12,7 @@ import shared.transferObjects.Profile;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -40,6 +41,7 @@ public class NewRecipeController implements ViewController
   @FXML
   private CheckBox glutenCheck;
   private File picFile;
+  private  byte[] bytes;
   ObservableList<String> ingredients =  FXCollections.observableArrayList();
 
   private NewRecipeVM vm = ViewModelFactory.getInstance().getNewRecipeVM();
@@ -49,7 +51,7 @@ public class NewRecipeController implements ViewController
   {
   }
 
-  public void onChooseFileButton(ActionEvent actionEvent)
+  public void onChooseFileButton(ActionEvent actionEvent) throws IOException
   {
     JFileChooser fc =  new JFileChooser();
     fc.setDialogTitle("Choose your profile picture");
@@ -58,6 +60,8 @@ public class NewRecipeController implements ViewController
 
     if(fc.getSelectedFile()!=null)
     {
+      FileInputStream fis = new FileInputStream(fc.getSelectedFile());
+      bytes = fis.readAllBytes();
       picFile = fc.getSelectedFile();
     }
     else
@@ -67,7 +71,7 @@ public class NewRecipeController implements ViewController
   }
 
   public void onSaveButton(ActionEvent actionEvent)
-      throws RemoteException, FileNotFoundException, SQLException
+      throws IOException, SQLException
   {
     if(titleField.getText().length()<2 || descriptionArea.getText().length()<3)
     {
@@ -80,7 +84,7 @@ public class NewRecipeController implements ViewController
       {
         ingredients.add((String)ingredientsList.getItems().get(i));
       }
-      vm.save(titleField.getText(),descriptionArea.getText(),ingredients,picFile);
+      vm.save(titleField.getText(),descriptionArea.getText(),ingredients,picFile,bytes);
       vm.cancel();
     }
   }

@@ -44,10 +44,10 @@ public class NewRecipeVM {
     return errorLabel;
   }
 
-  public void save(String title, String description, ArrayList<String> ingredients, File picfile)
-      throws RemoteException, FileNotFoundException, SQLException
+  public void save(String title, String description, ArrayList<String> ingredients, File picfile,byte[] bytes)
+      throws IOException, SQLException
   {
-    if ( model.addRecipe(title,description,ingredients,picfile))
+    if ( model.addRecipe(title,description,ingredients,picfile,bytes))
     {
       errorLabel.setValue("Title already exists :( , please choose different one");
     }

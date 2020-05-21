@@ -33,7 +33,13 @@ public class RecipesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
-    public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile) throws SQLException, FileNotFoundException {
+    public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile,byte[] bytes)
+        throws SQLException, IOException
+    {
+        if(bytes!=null)
+        {
+            picFile = getPicFile(bytes,title);
+        }
         FileInputStream fis  = new FileInputStream(picFile);
         try (Connection connection = getConnection())
         {

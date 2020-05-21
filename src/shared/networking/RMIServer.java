@@ -19,8 +19,8 @@ public interface RMIServer extends Remote {
     boolean logIn(String username, String password)
         throws RemoteException, SQLException;
     //void logOut() throws RemoteException;
-    boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
-        throws RemoteException, FileNotFoundException, SQLException;
+    boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
+        throws IOException, SQLException;
     void report(String title, String username, String message)
         throws RemoteException, SQLException;
     boolean signUp(String username, String password,File picFile,byte[] bytes, String description)

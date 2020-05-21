@@ -70,12 +70,12 @@ public class RMIServerImpl implements RMIServer {
 
 
     @Override
-    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile)
-        throws FileNotFoundException, SQLException, RemoteException
+    public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
+        throws IOException, SQLException
     {
       if (recipesData.getRecipeByTitle(title)==null)
       {
-        recipesData.create(title, description, username, ingredients, picfile);
+        recipesData.create(title, description, username, ingredients, picfile,bytes);
         Notification notification  = new Notification(username,"New recipe",title);
         sendNotification(notification);
        // manager.addRecipe(notification);
