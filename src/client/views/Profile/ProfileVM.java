@@ -82,13 +82,11 @@ public class ProfileVM {
         return username;
     }
 
-    public void subscribe()
-        throws RemoteException, FileNotFoundException, SQLException
+    public void subscribe() throws IOException, SQLException
     {
         model.subscribe(username.getValue());
     }
-    public void unsubscribe()
-        throws RemoteException, FileNotFoundException, SQLException
+    public void unsubscribe() throws IOException, SQLException
     {
         model.unsubscribe(username.getValue());
 

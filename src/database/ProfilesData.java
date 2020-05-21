@@ -33,9 +33,12 @@ public class ProfilesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
-    public void create(String username, String password, File picFile, String description, ArrayList<Profile>subscriptions)
-        throws SQLException, FileNotFoundException
+    public void create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
+        throws SQLException, IOException
     {
+        if(bytes!=null)
+        picFile = getPicFile(bytes,username);
+
         Connection connection = getConnection();
         FileInputStream fis  = new FileInputStream(picFile);
         try (connection)
@@ -155,9 +158,12 @@ public class ProfilesData {
 
         return  usernames;
     }
-    public void update(String oldUsername,String newUsername, String password, File picFile, String description, ArrayList<Profile> subscriptions)
-        throws SQLException, FileNotFoundException
+    public void update(String oldUsername,String newUsername, String password, File picFile,byte[] bytes, String description, ArrayList<Profile> subscriptions)
+        throws SQLException, IOException
     {
+            if(bytes!=null)
+            picFile = getPicFile(bytes,newUsername);
+
         Connection connection = getConnection();
         FileInputStream fis = new FileInputStream(picFile);
         try (connection)
@@ -178,7 +184,6 @@ public class ProfilesData {
             }
 
             statement.executeUpdate();
-            //return new Profile(newUsername,password,null,description,subscriptions);
         }
         connection.close();
     }

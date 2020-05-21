@@ -50,12 +50,12 @@ public class VegSearchModelManager implements VegSearchModel {
     }
 
     @Override
-    public void subscribe(String user) throws FileNotFoundException, RemoteException, SQLException {
+    public void subscribe(String user) throws IOException, SQLException {
         client.subscribe(user,loggedProfile);
     }
 
     @Override
-    public void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException {
+    public void unsubscribe(String user) throws IOException, SQLException {
         client.unsubscribe(user,loggedProfile);
     }
 
@@ -143,18 +143,17 @@ public class VegSearchModelManager implements VegSearchModel {
         loggedProfile = profile;
     }
     @Override public boolean signUp(String username, String password,
-        File picFile, String description)
-        throws FileNotFoundException, SQLException, RemoteException
+        File picFile,byte[] bytes,String description)
+        throws IOException, SQLException
     {
-       return client.signUp(username, password, picFile,description);
+       return client.signUp(username, password, picFile,bytes,description);
     }
 
   @Override public boolean editProfile(String oldUsername, String newUsername,
-      String password, File picFile, String description,
-      ArrayList<Profile> subs)
-      throws FileNotFoundException, SQLException, RemoteException
+      String password, File picFile,byte[] bytes, String description,
+      ArrayList<Profile> subs) throws IOException, SQLException
   {
-    return client.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+    return client.editProfile(oldUsername, newUsername, password, picFile,bytes, description, subs);
   }
 
   @Override

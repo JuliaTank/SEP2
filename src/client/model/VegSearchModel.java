@@ -16,18 +16,18 @@ public interface VegSearchModel extends Subject {
     void report(String title, String message)
         throws RemoteException, SQLException;
     void saveUsername(String username);
-    void subscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
-    void unsubscribe(String user) throws RemoteException, FileNotFoundException, SQLException;
+    void subscribe(String user) throws IOException, SQLException;
+    void unsubscribe(String user) throws IOException, SQLException;
     boolean doIsubscribeIt(String user) throws RemoteException, FileNotFoundException, SQLException;
     boolean addRecipe(String title, String description, ArrayList<String> ingredients, File picfile)
         throws RemoteException, FileNotFoundException, SQLException;
     boolean logIn(String username, String password)
             throws IOException, SQLException;
-    boolean signUp(String username, String password, File picFile,String description)
-        throws FileNotFoundException, SQLException, RemoteException;
+    boolean signUp(String username, String password, File picFile,byte[] bytes,String description)
+        throws IOException, SQLException;
     boolean editProfile(String oldUsername,String newUsername, String password,
-        File picFile, String description,ArrayList<Profile> subs)
-        throws FileNotFoundException, SQLException, RemoteException;
+        File picFile,byte[] bytes, String description,ArrayList<Profile> subs)
+        throws IOException, SQLException;
     Profile getLoggedProfile();
     Profile getProfile(String username) throws IOException, SQLException;
     ArrayList<Profile> getProfiles(String username) throws IOException, SQLException;
