@@ -103,7 +103,8 @@ public class ProfileController implements ViewController
     }
 
   }
-  public void onSubscribeButton(ActionEvent actionEvent) throws RemoteException, FileNotFoundException, SQLException {
+  public void onSubscribeButton(ActionEvent actionEvent)
+      throws IOException, SQLException {
    if(subscribeButton.getText().equals("Subscribe"))
    {
      vm.subscribe();

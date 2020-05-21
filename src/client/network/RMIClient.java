@@ -69,18 +69,17 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override public boolean signUp(String username, String password,
-        File picFile, String description)
-        throws FileNotFoundException, SQLException, RemoteException
+        File picFile,byte[] bytes, String description)
+        throws IOException, SQLException
     {
-        return server.signUp(username,password,picFile,description);
+        return server.signUp(username,password,picFile,bytes,description);
     }
 
     @Override public boolean editProfile(String oldUsername, String newUsername,
-        String password, File picFile, String description,
-        ArrayList<Profile> subs)
-        throws FileNotFoundException, SQLException, RemoteException
+        String password, File picFile,byte[] bytes, String description,
+        ArrayList<Profile> subs) throws IOException, SQLException
     {
-        return server.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+        return server.editProfile(oldUsername, newUsername, password, picFile,bytes, description, subs);
     }
 
     @Override public Profile getProfile(String username)
@@ -101,12 +100,14 @@ public class RMIClient implements Client, ClientCallBack {
     }
 
     @Override
-    public void subscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException {
+    public void subscribe(String user, Profile subscriber)
+        throws IOException, SQLException {
         server.subscribe(user,subscriber);
     }
 
     @Override
-    public void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException {
+    public void unsubscribe(String user, Profile subscriber)
+        throws IOException, SQLException {
         server.unsubscribe(user,subscriber);
     }
 

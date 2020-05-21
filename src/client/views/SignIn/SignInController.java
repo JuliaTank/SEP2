@@ -42,6 +42,7 @@ public class SignInController implements ViewController
   private SignInVM vm = ViewModelFactory.getInstance().getSignInVM();
 
   private File picFile;
+  private byte[] bytes;
 
   private Profile profile;
 
@@ -58,7 +59,10 @@ public class SignInController implements ViewController
 
       if(fc.getSelectedFile()!=null)
       {
-        picFile = fc.getSelectedFile();
+        FileInputStream fis = new FileInputStream(fc.getSelectedFile());
+        bytes = fis.readAllBytes();
+
+        picFile =fc.getSelectedFile() ;
         picApprovedLabel.setText("Your pic was added :)");
       }
       else
@@ -95,7 +99,7 @@ public class SignInController implements ViewController
       passwordRepeatField.clear();
     }
     else
-    vm.signUp(picFile);
+    vm.signUp(picFile,bytes);
   }
 
   public void onCancelButton(ActionEvent actionEvent)
@@ -151,7 +155,7 @@ public class SignInController implements ViewController
       passwordCreationField.clear();
       passwordRepeatField.clear();
     }
-    else if(!vm.save(profile.getUsername(),usernameCreationField.getText(),passwordCreationField.getText(),picFile,descriptionArea.getText(),profile.getSubs()))
+    else if(!vm.save(profile.getUsername(),usernameCreationField.getText(),passwordCreationField.getText(),picFile,bytes,descriptionArea.getText(),profile.getSubs()))
     {
       errorLabel.setText("Username already exists!");
     }

@@ -13,6 +13,7 @@ import shared.transferObjects.Report;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -102,14 +103,14 @@ public class RMIServerImpl implements RMIServer {
 
 
     @Override public boolean signUp(String username, String password,
-        File picFile, String description)
-        throws SQLException, FileNotFoundException
+        File picFile,byte[] bytes, String description)
+        throws SQLException, IOException
     {
         if(ProfilesData.getInstance().getProfile(username)!=null)
         {
             return  false;
         }
-        ProfilesData.getInstance().create(username,password,picFile,description,new ArrayList<>());
+        ProfilesData.getInstance().create(username,password,picFile,bytes,description,new ArrayList<>());
        if(ProfilesData.getInstance().getProfile(username).getUsername().equals(username))
        {
            return  true;
@@ -118,14 +119,14 @@ public class RMIServerImpl implements RMIServer {
     }
 
   @Override public boolean editProfile(String oldUsername,String newUsername, String password,
-      File picFile, String description,ArrayList<Profile> subs)
-      throws SQLException, FileNotFoundException, RemoteException
+      File picFile,byte[] bytes, String description,ArrayList<Profile> subs)
+      throws SQLException, IOException
   {
     //here i'm checking if username which user wants as new one doesn't belong to any other user already
     if(!oldUsername.equals(newUsername) && profilesData.getProfile(newUsername)!=null)
       return  false;
    else {
-      profilesData.update(oldUsername,newUsername,password,picFile,description,subs);
+      profilesData.update(oldUsername,newUsername,password,picFile,bytes,description,subs);
       return true;
    }
   }
@@ -168,22 +169,25 @@ public class RMIServerImpl implements RMIServer {
 
 
   @Override
-    public void subscribe(String user, Profile subscriber) throws SQLException, FileNotFoundException {
+    public void subscribe(String user, Profile subscriber)
+      throws SQLException, IOException
+  {
 
     Profile subscribedProfile = profilesData.getProfile(user);
         ArrayList<Profile>subs=subscribedProfile.getSubs();
         subs.add(profilesData.getProfile(subscriber.getUsername()));
        profilesData.update(subscribedProfile.getUsername(),subscribedProfile.getUsername(),subscribedProfile.getPassword(),
-               subscribedProfile.getPicFile(),subscribedProfile.getDescription(),subs);
+               subscribedProfile.getPicFile(),null,subscribedProfile.getDescription(),subs);
     }
 
     @Override
-    public void unsubscribe(String user, Profile unsubscriber) throws FileNotFoundException, SQLException {
+    public void unsubscribe(String user, Profile unsubscriber)
+        throws IOException, SQLException {
       Profile unsubscribedProfile = profilesData.getProfile(user);
       ArrayList<Profile>subs=unsubscribedProfile.getSubs();
       subs.remove(profilesData.getProfile(unsubscriber.getUsername()));
       profilesData.update(unsubscribedProfile.getUsername(),unsubscribedProfile.getUsername(),unsubscribedProfile.getPassword(),
-              unsubscribedProfile.getPicFile(),unsubscribedProfile.getDescription(),subs);
+              unsubscribedProfile.getPicFile(),null,unsubscribedProfile.getDescription(),subs);
 
     }
 

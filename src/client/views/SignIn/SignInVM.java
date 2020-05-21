@@ -48,10 +48,10 @@ public class SignInVM {
     picApprovedLabel.setValue("");
   }
 
-  public void signUp(File picFile)
+  public void signUp(File picFile,byte[] bytes)
       throws IOException, SQLException, NotBoundException
   {
-    if(model.signUp(usernameCreationField.getValue(),passwordCreationField.getValue(),picFile, getDescriptionArea().getValue()))
+    if(model.signUp(usernameCreationField.getValue(),passwordCreationField.getValue(),picFile,bytes, getDescriptionArea().getValue()))
     {
       ViewHandler.getInstance().openLogIn();
       errorLabel.setValue("");
@@ -87,10 +87,10 @@ public class SignInVM {
   }
 
   public boolean save(String oldUsername,String newUsername, String password,
-      File picFile, String description, ArrayList<Profile> subs)
+      File picFile,byte[] bytes, String description, ArrayList<Profile> subs)
       throws IOException, SQLException
   {
-    boolean temp =  model.editProfile(oldUsername, newUsername, password, picFile, description, subs);
+    boolean temp =  model.editProfile(oldUsername, newUsername, password, picFile, bytes,description, subs);
     if(temp)
     {
      vh.openProfile(model.getProfile(newUsername));

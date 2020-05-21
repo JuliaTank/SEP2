@@ -7,6 +7,7 @@ import shared.transferObjects.Report;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -22,9 +23,11 @@ public interface RMIServer extends Remote {
         throws RemoteException, FileNotFoundException, SQLException;
     void report(String title, String username, String message)
         throws RemoteException, SQLException;
-    boolean signUp(String username, String password,File picFile, String description) throws SQLException, FileNotFoundException, RemoteException;
+    boolean signUp(String username, String password,File picFile,byte[] bytes, String description)
+        throws SQLException, IOException;
     boolean editProfile(String oldUsername,String newUsername, String password,
-        File picFile, String description,ArrayList<Profile> subs) throws SQLException, FileNotFoundException, RemoteException;
+        File picFile,byte[] bytes, String description,ArrayList<Profile> subs)
+        throws SQLException, IOException;
     Profile getProfile(String username)throws SQLException, FileNotFoundException, RemoteException;
     ArrayList<Profile> getProfiles(String username)throws SQLException, FileNotFoundException, RemoteException;
     void delete(String username) throws SQLException,RemoteException;
@@ -34,8 +37,10 @@ public interface RMIServer extends Remote {
     ArrayList<Recipe> getRecipesByUsername(String username) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByTitle(String title) throws SQLException,RemoteException;
     ArrayList<Recipe> getAllRecipes() throws SQLException,RemoteException;
-    void subscribe(String user, Profile subscriber) throws RemoteException, SQLException, FileNotFoundException;
-    void unsubscribe(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
+    void subscribe(String user, Profile subscriber)
+        throws IOException, SQLException;
+    void unsubscribe(String user, Profile subscriber)
+        throws IOException, SQLException;
     boolean doIsubscribeIt(String user, Profile subscriber) throws RemoteException, FileNotFoundException, SQLException;
 
 
