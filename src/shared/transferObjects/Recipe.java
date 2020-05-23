@@ -8,7 +8,7 @@ public class Recipe implements Serializable {
     private String title;
     private String description;
     private Profile profile;
-    private ArrayList<String>ingredients=new ArrayList<>();
+    private ArrayList<String>ingredients;
     private File picFile;
     private byte[] imgBytes;
 

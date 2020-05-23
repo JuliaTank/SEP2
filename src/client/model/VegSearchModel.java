@@ -2,7 +2,6 @@ package client.model;
 
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
 import shared.util.Subject;
 
 import java.io.File;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 public interface VegSearchModel extends Subject {
     void report(String title, String message)
         throws RemoteException, SQLException;
-    void saveUsername(String username);
     void subscribe(String user) throws IOException, SQLException;
     void unsubscribe(String user) throws IOException, SQLException;
     boolean doIsubscribeIt(String user) throws RemoteException, FileNotFoundException, SQLException;
@@ -31,7 +29,6 @@ public interface VegSearchModel extends Subject {
     Profile getLoggedProfile();
     Profile getProfile(String username) throws IOException, SQLException;
     ArrayList<Profile> getProfiles(String username) throws IOException, SQLException;
-    void setRecipes(ArrayList<Recipe> recipes);
     void delete() throws SQLException, RemoteException;
 
     ArrayList<Recipe> getRecipesByIngredient(String ingredient)
@@ -42,6 +39,4 @@ public interface VegSearchModel extends Subject {
     ArrayList<Recipe> getRecipesByTitle(String title)
             throws SQLException, IOException;
     ArrayList<Recipe> getAllRecipes() throws SQLException, IOException;
-
-
 }

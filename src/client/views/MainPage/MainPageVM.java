@@ -3,24 +3,17 @@ package client.views.MainPage;
 import client.core.ModelFactory;
 import client.core.ViewHandler;
 import client.model.VegSearchModel;
-import client.views.Notification.NotificationController;
 import client.views.RecipeDemo.RecipeDemoVM;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.stage.Popup;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
 import java.beans.PropertyChangeEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -49,7 +42,6 @@ public class MainPageVM {
     {
       e.printStackTrace();
     }
-
   }
 
   public void addRecipeDisplay(Recipe recipe)
@@ -93,13 +85,14 @@ public class MainPageVM {
       RecipeDemoVM rd = new RecipeDemoVM(recipe);
       recipeDemoVMS.add(rd);
     }
-
   }
+  //searching profiles and recipes is handled separately and later displayed as 'RecipeDemo's and 'ProfileDemo's in VBox on the Main Page
   public ArrayList<Profile> getProfilesForSearch(String text)
           throws IOException, SQLException {
     ArrayList<Profile> profiles = model.getProfiles(text);
     return  profiles;
   }
+
   public StringProperty getErrorLabel()
   {
     return errorLabel;

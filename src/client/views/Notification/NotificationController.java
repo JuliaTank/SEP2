@@ -1,15 +1,10 @@
 package client.views.Notification;
 
 import client.core.ViewModelFactory;
-import client.views.ViewController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import shared.transferObjects.Notification;
-import shared.transferObjects.Profile;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;

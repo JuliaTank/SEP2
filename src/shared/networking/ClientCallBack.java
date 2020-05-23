@@ -1,9 +1,6 @@
 package shared.networking;
 
 import shared.transferObjects.Notification;
-import shared.transferObjects.Profile;
-import shared.transferObjects.Report;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

@@ -1,11 +1,8 @@
 package client.network;
 
-import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
 import shared.util.Subject;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,5 +40,4 @@ public interface Client extends Subject {
     ArrayList<Recipe> getRecipesByIngredient(String ingredient) throws IOException, SQLException;
     ArrayList<Recipe> getAllRecipes() throws SQLException, IOException;
     File getPicFile(byte[] imgBytes, String username) throws IOException, SQLException;
-   // File getPicFileForRecipe(byte[] imgBytes, String username) throws IOException, SQLException;
 }

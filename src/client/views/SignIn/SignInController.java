@@ -9,13 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import shared.transferObjects.Profile;
-
 import javax.swing.*;
 import java.io.*;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 
+//This view is used for signing in and editing profile functionality
 public class SignInController implements ViewController
 {
   @FXML
@@ -78,7 +77,7 @@ public class SignInController implements ViewController
       }
 
   }
-
+   //..............................................................TEST..................................(error labels!, exceptions)
   public void onSignUp2Button(ActionEvent actionEvent)
       throws IOException, SQLException, NotBoundException
   {
@@ -117,6 +116,7 @@ public class SignInController implements ViewController
     this.profile = profile;
     errorLabel.textProperty().bindBidirectional(vm.getErrorLabel());
     passwordCreationField.textProperty().bindBidirectional(vm.getPasswordCreationField());
+    passwordRepeatField.textProperty().bindBidirectional(vm.getPasswordRepeatField());
     usernameCreationField.textProperty().bindBidirectional(vm.getUsernameCreationField());
     descriptionArea.textProperty().bindBidirectional(vm.getDescriptionArea());
     if(profile==null)
@@ -134,7 +134,7 @@ public class SignInController implements ViewController
       joinUsLabel.setText("Edit your profile");
     }
   }
-
+//.................................................................TEST..........................................................
   public void onSaveButton(ActionEvent actionEvent)
       throws IOException, SQLException
   {
@@ -159,6 +159,5 @@ public class SignInController implements ViewController
     {
       errorLabel.setText("Username already exists!");
     }
-
   }
 }

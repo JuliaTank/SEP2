@@ -3,7 +3,6 @@ package client.views.ProfileDemo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.transferObjects.Profile;
-import shared.transferObjects.Recipe;
 
 public class ProfileDemoVM
 {

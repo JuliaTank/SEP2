@@ -2,7 +2,6 @@ package client.views.Profile;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
-import client.views.Recipe.RecipeController;
 import client.views.RecipeDemo.RecipeDemoController;
 import client.views.RecipeDemo.RecipeDemoVM;
 import client.views.ViewController;
@@ -17,15 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
-import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class ProfileController implements ViewController
@@ -132,6 +125,7 @@ public class ProfileController implements ViewController
     Image image = new Image(profile.getPicFile().toURI().toString());
     imgView.setImage(image);
     subsLabel.setText(" "+profile.getSubs().size());
+    descriptionArea.setWrapText(true);
     descriptionArea.setText(profile.getDescription());
     if(vm.doIsubscribeIt())
     {

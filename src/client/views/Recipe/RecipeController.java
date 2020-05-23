@@ -109,6 +109,7 @@ public class RecipeController
     }
 
     ingredientList.setItems(ol);
+    descriptionArea.setWrapText(true);
      descriptionArea.setText(recipe.getDescription());
     Image image = new Image(recipe.getProfile().getPicFile().toURI().toString());
     Image image2 = new Image("file:heart.png");

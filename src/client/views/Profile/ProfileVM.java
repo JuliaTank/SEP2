@@ -9,10 +9,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
 import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,22 +36,9 @@ public class ProfileVM {
         this.subsLabel=new SimpleStringProperty();
         this.username = new SimpleStringProperty();
         recipeDemoVMS = FXCollections.observableArrayList();
-        model.addListener("NewNotification",this::onNewNotification);
-    }
-
-    private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
-    {
-        /*try{
-            vh.openNotification((Notification)propertyChangeEvent.getNewValue());
-        }
-        catch (IOException|SQLException e)
-        {
-            e.printStackTrace();
-        }*/
     }
 
     public void addRecipeDisplay(Recipe recipe)
-
     {
         RecipeDemoVM rd = new RecipeDemoVM(recipe);
         recipeDemoVMS.add(rd);
@@ -64,7 +49,6 @@ public class ProfileVM {
     }
     public ArrayList<Recipe> getRecipes(String username) throws SQLException, IOException
     {
-        //System.out.println(model.getRecipesByUsername(username.getValue()).get(0).getTitle());
         return model.getRecipesByUsername(username);
     }
 
@@ -76,7 +60,6 @@ public class ProfileVM {
     public StringProperty getSubsLabel() {
         return subsLabel;
     }
-
     public StringProperty getUsername()
     {
         return username;
@@ -89,14 +72,15 @@ public class ProfileVM {
     public void unsubscribe() throws IOException, SQLException
     {
         model.unsubscribe(username.getValue());
-
     }
+
+    //This method returns boolean saying if entering profile user already subscribe that profile so the button '(Un)subscribe' is set to proper value
     public boolean doIsubscribeIt()
         throws RemoteException, FileNotFoundException, SQLException
     {
       return model.doIsubscribeIt(username.getValue());
-
     }
+
     public Profile getLoggedProfile()
     {
        return model.getLoggedProfile();

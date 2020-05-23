@@ -3,7 +3,6 @@ package client.model;
 import client.network.Client;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -19,9 +18,7 @@ import java.util.ArrayList;
 public class VegSearchModelManager implements VegSearchModel {
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Client client;
-    private String username;
     private Profile loggedProfile;
-    private Recipe recipe;
 
     public VegSearchModelManager(Client client)
         throws IOException, NotBoundException, SQLException
@@ -41,12 +38,7 @@ public class VegSearchModelManager implements VegSearchModel {
     public void report(String title, String message)
       throws RemoteException, SQLException
   {
-        client.sendReport(title,username,message);
-    }
-
-    @Override
-    public void saveUsername(String username) {
-        this.username=username;
+        client.sendReport(title,loggedProfile.getUsername(),message);
     }
 
     @Override
@@ -87,7 +79,6 @@ public class VegSearchModelManager implements VegSearchModel {
         return loggedProfile;
     }
 
-
     @Override
     public Profile getProfile(String username)
             throws IOException, SQLException {
@@ -98,11 +89,6 @@ public class VegSearchModelManager implements VegSearchModel {
           throws IOException, SQLException {
     return client.getProfiles(username);
   }
-
-  @Override
-    public void setRecipes(ArrayList<Recipe> recipes) {
-
-    }
 
     @Override public void delete() throws SQLException, RemoteException
     {

@@ -1,10 +1,7 @@
 package shared.networking;
 
-import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,10 +12,8 @@ import java.util.ArrayList;
 
 public interface RMIServer extends Remote {
     void registerClient(ClientCallBack client) throws RemoteException;
-   // void unregisterClient(ClientCallBack client) throws RemoteException;
     boolean logIn(String username, String password)
         throws RemoteException, SQLException;
-    //void logOut() throws RemoteException;
     boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
         throws IOException, SQLException;
     void report(String title, String username, String message)

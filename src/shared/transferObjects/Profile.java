@@ -22,10 +22,7 @@ public class Profile implements Serializable {
         this.subs=(ArrayList<Profile>)subs;
         this.imgBytes =  imgBytes;
     }
-    public void applyNotify(String recipeName, String author)
-    {
-        System.out.println("Author "+author +"recipe name "+recipeName);
-    }
+
     public String getUsername() {
         return username;
     }

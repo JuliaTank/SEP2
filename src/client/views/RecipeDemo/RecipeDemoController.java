@@ -44,8 +44,4 @@ public class RecipeDemoController
     vh.openRecipeView(recipe);
   }
 
-  public Hyperlink getRecipeLink()
-  {
-    return recipeLink;
-  }
 }

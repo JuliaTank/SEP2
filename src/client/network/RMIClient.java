@@ -5,7 +5,6 @@ import shared.networking.RMIServer;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,14 +21,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RMIClient implements Client, ClientCallBack {
     private PropertyChangeSupport support= new PropertyChangeSupport(this);
     private RMIServer server;
-    private Profile profile;
-    private Notification notification;
-    private Report report;
     private String username;
 
     public RMIClient() throws RemoteException
@@ -92,9 +87,10 @@ public class RMIClient implements Client, ClientCallBack {
     @Override public ArrayList<Profile> getProfiles(String username)
             throws IOException, SQLException {
         ArrayList<Profile> profiles = server.getProfiles(username);
-        for (int i = 0; i < profiles.size(); i++) {
-            Profile profile = profiles.get(i);
-         profiles.get(i).setPicFile(getPicFile(profile.getImgBytes(),profile.getUsername()));
+        for (Profile profile : profiles)
+        {
+            profile.setPicFile(
+                getPicFile(profile.getImgBytes(), profile.getUsername()));
         }
         return profiles;
     }
@@ -127,9 +123,10 @@ public class RMIClient implements Client, ClientCallBack {
             throws SQLException, IOException
     {
         ArrayList<Recipe> recipes = server.getRecipesByIngredient(ingredient);
-        for (int i = 0; i <recipes.size() ; i++) {
-            Recipe recipe = recipes.get(i);
-            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        for (Recipe recipe : recipes)
+        {
+            recipe.setPicFile(
+                getPicFile(recipe.getImgBytes(), recipe.getTitle()));
         }
         return recipes;
     }
@@ -138,9 +135,10 @@ public class RMIClient implements Client, ClientCallBack {
             throws SQLException, IOException
     {
         ArrayList<Recipe> recipes = server.getAllRecipes();
-        for (int i = 0; i <recipes.size() ; i++) {
-            Recipe recipe = recipes.get(i);
-            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        for (Recipe recipe : recipes)
+        {
+            recipe.setPicFile(
+                getPicFile(recipe.getImgBytes(), recipe.getTitle()));
         }
         return recipes;
     }
@@ -157,9 +155,10 @@ public class RMIClient implements Client, ClientCallBack {
             throws SQLException, IOException
     {
         ArrayList<Recipe> recipes =server.getRecipesByUsername(username);
-        for (int i = 0; i <recipes.size() ; i++) {
-            Recipe recipe = recipes.get(i);
-            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        for (Recipe recipe : recipes)
+        {
+            recipe.setPicFile(
+                getPicFile(recipe.getImgBytes(), recipe.getTitle()));
         }
         return recipes;
     }
@@ -169,9 +168,10 @@ public class RMIClient implements Client, ClientCallBack {
             throws SQLException, IOException
     {
         ArrayList<Recipe> recipes =server.getRecipesByTitle(title);
-        for (int i = 0; i <recipes.size() ; i++) {
-            Recipe recipe = recipes.get(i);
-            recipes.get(i).setPicFile(getPicFile(recipe.getImgBytes(),recipe.getTitle()));
+        for (Recipe recipe : recipes)
+        {
+            recipe.setPicFile(
+                getPicFile(recipe.getImgBytes(), recipe.getTitle()));
         }
         return recipes;
     }

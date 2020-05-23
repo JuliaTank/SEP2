@@ -2,13 +2,11 @@ package database;
 
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RecipesData {
 
@@ -33,6 +31,7 @@ public class RecipesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
+    //....................................................................TEST ALL METHODS EXCEPT OBVIOUS ONES................
     public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile,byte[] bytes)
         throws SQLException, IOException
     {
@@ -54,7 +53,6 @@ public class RecipesData {
             statement.executeUpdate();
 
         }
-        //return new Recipe(title,description,profilesData.getProfile(username),ingredients,picFile);
     }
 
     public ArrayList<Recipe> getRecipesByIngredient(String searchedIngredient) throws SQLException
@@ -123,14 +121,8 @@ public class RecipesData {
                 File picFile = getPicFile(imgBytes, title);
 
                 Array ingredients = resultSet.getArray("ingredients");
-
-                String[] ing = (String[]) ingredients.getArray();
-
-                ArrayList<String> ingredientsArray = new ArrayList<>();
-
                 result.add(new Recipe(title,description,profilesData.getProfile(username), getIng(ingredients), imgBytes,picFile)) ;
             }
-
         }
         catch (IOException e)
         {
@@ -157,15 +149,11 @@ public class RecipesData {
                 byte[] imgBytes = resultSet.getBytes(4);
                 //using private method from below
                 File picFile = getPicFile(imgBytes, title);
-
                 Array ingredients = resultSet.getArray("ingredients");
-                String[] ing = (String[]) ingredients.getArray();
-               ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 result.add(new Recipe(title, description, profilesData.getProfile(username),
                     getIng(ingredients),imgBytes, picFile)) ;
             }
-
         }
         catch (IOException e)
         {
@@ -187,23 +175,12 @@ public class RecipesData {
             while (resultSet.next())
             {
                 String title = resultSet.getString("title");
-                System.out.println(title);
                 String description = resultSet.getString("description");
-                System.out.println(description);
                 String username = resultSet.getString("username");
-                System.out.println(username);
                 byte[] imgBytes = resultSet.getBytes(4);
                 //using private method from below
                 File picFile = getPicFile(imgBytes, title);
-
                 Array ingredients = resultSet.getArray("ingredients");
-                System.out.println(ingredients);
-
-                String[] ing = (String[]) ingredients.getArray();
-                System.out.println(ingredients.getArray());
-
-                System.out.println(Arrays.toString(ing));
-                ArrayList<String> ingredientsArray = new ArrayList<>();
 
                 result = new Recipe(title, description, profilesData.getProfile(username),
                     getIng(ingredients), imgBytes,picFile);
@@ -286,9 +263,8 @@ public void update(String title,String newTitle,String description, Profile prof
         statement.setArray(4, array);
         statement.setBinaryStream(5,fis,(int)file.length());
         statement.setString(6,title );
-
         statement.executeUpdate();
-        //return new Recipe(newTitle, description,profile, ingredients,file);
+
     }
 }
 

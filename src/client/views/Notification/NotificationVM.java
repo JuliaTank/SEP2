@@ -3,11 +3,8 @@ package client.views.Notification;
 import client.core.ModelFactory;
 import client.core.ViewHandler;
 import client.model.VegSearchModel;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import shared.transferObjects.Recipe;
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;

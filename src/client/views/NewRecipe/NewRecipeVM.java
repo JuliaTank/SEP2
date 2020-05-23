@@ -24,19 +24,6 @@ public class NewRecipeVM {
   public NewRecipeVM() throws IOException, NotBoundException, SQLException
   {
     errorLabel = new SimpleStringProperty();
-    model.addListener("NewNotification",this::onNewNotification);
-  }
-
-  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
-  {
-   /* try{
-     vh.openNotification((Notification)propertyChangeEvent.getNewValue());
-    }
-    catch (IOException|SQLException e)
-    {
-      e.printStackTrace();
-    }*/
-
   }
 
   public StringProperty getErrorLabel()

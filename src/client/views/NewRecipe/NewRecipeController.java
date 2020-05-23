@@ -2,7 +2,6 @@ package client.views.NewRecipe;
 
 import client.core.ViewModelFactory;
 import client.views.ViewController;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,7 +41,7 @@ public class NewRecipeController implements ViewController
   private CheckBox glutenCheck;
   private File picFile;
   private  byte[] bytes;
-  ObservableList<String> ingredients =  FXCollections.observableArrayList();
+  private ObservableList<String> ingredients =  FXCollections.observableArrayList();
 
   private NewRecipeVM vm = ViewModelFactory.getInstance().getNewRecipeVM();
 

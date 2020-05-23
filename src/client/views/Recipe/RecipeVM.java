@@ -8,8 +8,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.transferObjects.Profile;
-
-import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -36,19 +34,8 @@ public  RecipeVM() throws IOException, NotBoundException, SQLException
   commentField =  new SimpleStringProperty();
   reportField = new SimpleStringProperty();
   comments =new SimpleListProperty<>();
-  model.addListener("NewNotification",this::onNewNotification);
-}
 
-  private void onNewNotification(PropertyChangeEvent propertyChangeEvent)
-  {
-    /*try{
-      vh.openNotification((Notification)propertyChangeEvent.getNewValue());
-    }
-    catch (IOException|SQLException e)
-    {
-      e.printStackTrace();
-    }*/
-  }
+}
 
   public void report(String title, String message)
       throws RemoteException, SQLException

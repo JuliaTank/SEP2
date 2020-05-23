@@ -8,7 +8,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import shared.transferObjects.Profile;
-import shared.transferObjects.Recipe;
 
 import java.io.IOException;
 
@@ -44,11 +43,5 @@ public class ProfileDemoController
   {
     vh.openProfile(profile);
   }
-
-  public Hyperlink getProfileLink()
-  {
-    return profileLink;
-  }
-
 
 }

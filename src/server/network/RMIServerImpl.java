@@ -1,6 +1,6 @@
 package server.network;
 
-import client.network.Client;
+
 import database.ProfilesData;
 import database.RecipesData;
 import server.model.Manager;
@@ -9,8 +9,6 @@ import shared.networking.RMIServer;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-import shared.transferObjects.Report;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +17,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,7 +24,6 @@ public class RMIServerImpl implements RMIServer {
 
     private Manager manager;
     private ArrayList<ClientCallBack> clients;
-    private int numberOfClients=0;
     private ProfilesData profilesData;
     private RecipesData recipesData;
 
@@ -39,6 +35,7 @@ public class RMIServerImpl implements RMIServer {
         profilesData = ProfilesData.getInstance();
         recipesData = RecipesData.getInstance();
     }
+
     public void startServer() throws RemoteException, AlreadyBoundException {
         UnicastRemoteObject.exportObject(this,0);
         Registry registry= LocateRegistry.createRegistry(1099);
@@ -51,12 +48,7 @@ public class RMIServerImpl implements RMIServer {
         System.out.println("Client was added");
     }
 
-   /* @Override
-    public void unregisterClient(ClientCallBack client)  {
-        this.clients.remove(client);
-        System.out.println("Client was removed");
-    }*/
-
+  //............................................................TEST...........................................................
     @Override
     public boolean logIn(String username, String password)
         throws SQLException
@@ -65,10 +57,7 @@ public class RMIServerImpl implements RMIServer {
 
         return profile!= null && profile.getPassword().equals(password);
     }
-
-
-
-
+  //............................................................TEST...........................................................
     @Override
     public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
         throws IOException, SQLException
@@ -78,13 +67,12 @@ public class RMIServerImpl implements RMIServer {
         recipesData.create(title, description, username, ingredients, picfile,bytes);
         Notification notification  = new Notification(username,"New recipe",title);
         sendNotification(notification);
-       // manager.addRecipe(notification);
         return true;
       }
       else
       return false;
     }
-
+  //............................................................TEST...........................................................
     @Override
     public void report(String title, String username, String message)
         throws RemoteException, SQLException
@@ -101,7 +89,7 @@ public class RMIServerImpl implements RMIServer {
       }
     }
 
-
+  //............................................................TEST...........................................................
     @Override public boolean signUp(String username, String password,
         File picFile,byte[] bytes, String description)
         throws SQLException, IOException
@@ -117,7 +105,7 @@ public class RMIServerImpl implements RMIServer {
        }
        else return false;
     }
-
+  //............................................................TEST...........................................................
   @Override public boolean editProfile(String oldUsername,String newUsername, String password,
       File picFile,byte[] bytes, String description,ArrayList<Profile> subs)
       throws SQLException, IOException
@@ -130,19 +118,19 @@ public class RMIServerImpl implements RMIServer {
       return true;
    }
   }
-
+  //............................................................TEST...........................................................
   @Override public Profile getProfile(String username)
         throws SQLException
     {
         return profilesData.getProfile(username);
     }
-
+  //............................................................TEST...........................................................
   @Override public ArrayList<Profile> getProfiles(String username)
       throws SQLException, FileNotFoundException, RemoteException
   {
     return profilesData.getProfiles(username);
   }
-
+  //............................................................TEST...........................................................
   private void sendNotification(Notification notification) throws RemoteException, SQLException
   {
     manager.sendNotification(notification);
@@ -167,7 +155,7 @@ public class RMIServerImpl implements RMIServer {
     }
   }
 
-
+  //............................................................TEST...........................................................
   @Override
     public void subscribe(String user, Profile subscriber)
       throws SQLException, IOException
@@ -179,7 +167,7 @@ public class RMIServerImpl implements RMIServer {
        profilesData.update(subscribedProfile.getUsername(),subscribedProfile.getUsername(),subscribedProfile.getPassword(),
                subscribedProfile.getPicFile(),null,subscribedProfile.getDescription(),subs);
     }
-
+  //............................................................TEST...........................................................
     @Override
     public void unsubscribe(String user, Profile unsubscriber)
         throws IOException, SQLException {
@@ -190,57 +178,54 @@ public class RMIServerImpl implements RMIServer {
               unsubscribedProfile.getPicFile(),null,unsubscribedProfile.getDescription(),subs);
 
     }
-
+//............................................................TEST...........................................................
   @Override public boolean doIsubscribeIt(String user, Profile subscriber)
       throws RemoteException, FileNotFoundException, SQLException
   {
     Profile profile = profilesData.getProfile(user);
     ArrayList<Profile>subs=profile.getSubs();
-    System.out.println(subs.size()+" "+subs.toString());
-    boolean bbb = false;
-    for (int i = 0; i < subs.size(); i++)
+
+    boolean doI = false;
+    for (Profile sub : subs)
     {
-        if(subs==null)
-            break;
-      if (subs.get(i).equals(subscriber))
+      if (sub.equals(subscriber))
       {
-        bbb = true;
+        doI = true;
+        break;
       }
     }
-    System.out.println("server does "+subscriber.getUsername()+" subscribe "+user+"? :"+bbb);
-    return bbb;
+    System.out.println("server: does "+subscriber.getUsername()+" subscribe "+user+"? :"+doI);
+    return doI;
   }
-
+  //............................................................TEST...........................................................
   @Override public void delete(String username) throws SQLException
     {
         profilesData.delete(username);
     }
-
+  //............................................................TEST...........................................................
     @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
         throws SQLException
     {
         return recipesData.getRecipesByIngredient(ingredient);
     }
-
+  //............................................................TEST...........................................................
     @Override public Recipe getRecipeByTitle(String title) throws SQLException
     {
         return recipesData.getRecipeByTitle(title);
     }
-
+  //............................................................TEST...........................................................
     @Override public ArrayList<Recipe> getRecipesByUsername(String username)
         throws SQLException
     {
-      System.out.println("server works "+ recipesData.getRecipesByAuthor("Julia"));
-     // System.out.println("server works "+ recipesData.getRecipesByAuthor(username).toString());
         return recipesData.getRecipesByAuthor(username);
     }
-
+  //............................................................TEST...........................................................
     @Override public ArrayList<Recipe> getRecipesByTitle(String title)
         throws SQLException
     {
         return recipesData.getRecipesByTitle(title);
     }
-
+  //............................................................TEST...........................................................
   @Override public ArrayList<Recipe> getAllRecipes() throws SQLException
   {
     return recipesData.getAllRecipes();

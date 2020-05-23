@@ -2,7 +2,6 @@ package client.core;
 
 import client.model.VegSearchModel;
 import client.model.VegSearchModelManager;
-import client.network.RMIClient;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;

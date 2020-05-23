@@ -1,10 +1,7 @@
 package client.views.MainPage;
 
-import client.core.ModelFactory;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
-import client.model.VegSearchModel;
-import client.views.Profile.ProfileVM;
 import client.views.ProfileDemo.ProfileDemoController;
 import client.views.ProfileDemo.ProfileDemoVM;
 import client.views.RecipeDemo.RecipeDemoController;
@@ -17,15 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -43,15 +36,13 @@ public class MainPageController implements ViewController
 
   private MainPageVM vm= ViewModelFactory.getInstance().getMainPageVM();
   private ViewHandler vh = ViewHandler.getInstance();
- // private VegSearchModel model = ModelFactory.getInstance().getModel();
-
 
   public MainPageController()
       throws IOException, NotBoundException, SQLException
   {
 
   }
-
+//...........................................................................TEST........................................................
   public void onSearchButton(ActionEvent actionEvent)
       throws NotBoundException, SQLException, IOException
   {

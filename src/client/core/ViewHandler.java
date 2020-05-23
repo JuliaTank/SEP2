@@ -1,6 +1,5 @@
 package client.core;
 
-import client.views.MainPage.MainPageController;
 import client.views.Notification.NotificationController;
 import client.views.ProfileDemo.ProfileDemoController;
 import client.views.Recipe.RecipeController;
@@ -11,28 +10,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import shared.transferObjects.Notification;
 import shared.transferObjects.Profile;
 import shared.transferObjects.Recipe;
-
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Queue;
 
 public class ViewHandler {
 
     private Scene logInScene;
     private Scene signInScene;
     private Scene mainPageScene;
-    private Scene inboxScene;
     private Scene profileScene;
     private Scene notificationScene;
     private Stage stage;
@@ -40,7 +32,6 @@ public class ViewHandler {
 
     private Scene recipeScene;
     private Scene newRecipeScene;
-    private ViewModelFactory vmf;
     private static ViewHandler instance;
 
     private ViewHandler()
@@ -75,12 +66,7 @@ public class ViewHandler {
         logInScene =  new Scene(root);
         stage.setScene(logInScene);
         stage.show();
-            /*Parent root = loadFXML("../views/logIn/logIn.fxml",null);
-            logInScene = new Scene(root);
 
-        stage.setTitle("Log in");
-        stage.setScene(logInScene);
-        stage.show();*/
     }
 
     public void openSignIn(Profile profile) {
@@ -113,13 +99,11 @@ public class ViewHandler {
     }
 
     public void openProfile(Profile profile) {
-        System.out.println("profiled opened again!");
             try {
                 Parent root = loadFXML("../views/Profile/profile.fxml",profile);
                 profileScene = new Scene(root);
             } catch (IOException | NotBoundException | SQLException e) {
                 e.printStackTrace();
-                System.out.println("catch in open profile");
             }
             stage.setTitle(profile.getUsername());
         stage.setScene(profileScene);
@@ -165,6 +149,8 @@ public class ViewHandler {
         stageNotification.close();
     }
 
+   /* this method takes profile as argument, so that when particular views are opened they have information about profile
+    connected to this view(especially the Profile view), when view does't have to know about profile this argument is passed as null*/
     private Parent loadFXML(String path,Profile profile)
         throws IOException, NotBoundException, SQLException
     {
@@ -172,7 +158,6 @@ public class ViewHandler {
         loader.setLocation(getClass().getResource(path));
         Parent root = loader.load();
 
-        //
         ViewController ctrl = loader.getController();
         ctrl.init(profile);
         return root;

@@ -33,6 +33,7 @@ public class ProfilesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
+    //...................................ALL METHODS HERE NEED TESTING!!!!!!!!!!!!!!
     public void create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
         throws SQLException, IOException
     {
@@ -79,7 +80,6 @@ public class ProfilesData {
                 ArrayList<Profile> subscribers = getSubs(subs);
 
                 result = new Profile(username,password,imgBytes,picFile,description,subscribers);
-
             }
         }
         catch (IOException e)
