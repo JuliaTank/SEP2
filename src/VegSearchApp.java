@@ -9,4 +9,5 @@ public class VegSearchApp extends Application {
         ViewHandler vh = ViewHandler.getInstance();
         vh.start();
     }
+
 }
