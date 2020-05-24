@@ -1,5 +1,4 @@
 package client.views.MainPage;
-
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.views.ProfileDemo.ProfileDemoController;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 public class MainPageController implements ViewController
 {
   @FXML
@@ -32,19 +30,15 @@ public class MainPageController implements ViewController
   private Button searchButton;
   @FXML
   private TextField searchField;
-
-
   private MainPageVM vm= ViewModelFactory.getInstance().getMainPageVM();
   private ViewHandler vh = ViewHandler.getInstance();
-
   public MainPageController()
-      throws IOException, NotBoundException, SQLException
+          throws IOException, NotBoundException, SQLException
   {
-
   }
-//...........................................................................TEST........................................................
+  //...........................................................................TEST........................................................
   public void onSearchButton(ActionEvent actionEvent)
-      throws NotBoundException, SQLException, IOException
+          throws NotBoundException, SQLException, IOException
   {
     if(searchField.getText().isEmpty())
     {
@@ -60,23 +54,18 @@ public class MainPageController implements ViewController
         ProfileDemoVM vm = new ProfileDemoVM(profile);
         ProfileDemoController ctrl = vh.getProfileDisplayPanel(vm.getProfile());
         vm.getProfileLink().bind(ctrl.profileLink.textProperty());
-
         Parent root = ctrl.getRoot();
         recipeContainer.getChildren().add(root);
       }
     }
   }
-
   private  void OnRecipeAdded(ListChangeListener.Change<? extends RecipeDemoVM> change)
   {
     if(change.next())
     {
       RecipeDemoVM vm = change.getAddedSubList().get(0);
-
       RecipeDemoController recipeController = vh.getRecipeDisplayPanel(vm.getRecipe());
-
       vm.getRecipeLink().bind(recipeController.recipeLink.textProperty());
-
       Parent recipeDisplayPanel  =  recipeController.getRoot();
       recipeContainer.getChildren().add(recipeDisplayPanel);
     }
@@ -85,13 +74,11 @@ public class MainPageController implements ViewController
   {
     vm.viewMyProfile();
   }
-
   public void onLogoutButton(ActionEvent actionEvent)
-      throws NotBoundException, SQLException, IOException
+          throws NotBoundException, SQLException, IOException
   {
     vm.logOut();
   }
-
   @Override public void init(Profile profile)
           throws SQLException, IOException
   {
@@ -99,11 +86,9 @@ public class MainPageController implements ViewController
     Image image1 = new Image("file:look.png");
     searchButton.setEffect(new ImageInput(image1));
     vm.getRecipeDemoVMS().addListener(this::OnRecipeAdded);
-
     for (Recipe recipe :vm.getRecipes() )
     {
       vm.addRecipeDisplay(recipe);
     }
-
   }
 }

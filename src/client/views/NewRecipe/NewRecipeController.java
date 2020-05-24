@@ -1,5 +1,4 @@
 package client.views.NewRecipe;
-
 import client.core.ViewModelFactory;
 import client.views.ViewController;
 import javafx.collections.FXCollections;
@@ -8,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import shared.transferObjects.Profile;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +16,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 public class NewRecipeController implements ViewController
 {
   @FXML
@@ -42,21 +39,17 @@ public class NewRecipeController implements ViewController
   private File picFile;
   private  byte[] bytes;
   private ObservableList<String> ingredients =  FXCollections.observableArrayList();
-
   private NewRecipeVM vm = ViewModelFactory.getInstance().getNewRecipeVM();
-
   public NewRecipeController()
-      throws NotBoundException, SQLException, IOException
+          throws NotBoundException, SQLException, IOException
   {
   }
-
   public void onChooseFileButton(ActionEvent actionEvent) throws IOException
   {
     JFileChooser fc =  new JFileChooser();
     fc.setDialogTitle("Choose your profile picture");
     fc.showDialog(null,"Select");
     fc.setVisible(true);
-
     if(fc.getSelectedFile()!=null)
     {
       FileInputStream fis = new FileInputStream(fc.getSelectedFile());
@@ -68,9 +61,8 @@ public class NewRecipeController implements ViewController
       picFile = new File("file:carrotLogo.png");
     }
   }
-
   public void onSaveButton(ActionEvent actionEvent)
-      throws IOException, SQLException
+          throws IOException, SQLException
   {
     if(titleField.getText().length()<2 || descriptionArea.getText().length()<3)
     {
@@ -87,19 +79,16 @@ public class NewRecipeController implements ViewController
       vm.cancel();
     }
   }
-
   public void onCancelButton(ActionEvent actionEvent)
   {
     vm.cancel();
   }
-
   @Override public void init(Profile profile)
-      throws FileNotFoundException, SQLException, RemoteException
+          throws FileNotFoundException, SQLException, RemoteException
   {
     errorLabel.textProperty().bindBidirectional(vm.getErrorLabel());
     descriptionArea.setWrapText(true);
   }
-
   public void onAddButton(ActionEvent actionEvent)
   {
     picFile = new File("carrotLogo.png");

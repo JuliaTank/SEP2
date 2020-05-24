@@ -14,7 +14,7 @@ public class LogInVM {
   private StringProperty usernameField;
   private StringProperty passwordField;
   private StringProperty errorLabel;
-  private  VegSearchModel model;
+  private VegSearchModel model;
   private ViewHandler vh = ViewHandler.getInstance();
 
   public LogInVM() throws IOException, NotBoundException, SQLException

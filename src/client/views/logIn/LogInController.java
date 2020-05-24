@@ -32,7 +32,7 @@ public class LogInController implements ViewController
   public LogInController() throws IOException, NotBoundException, SQLException
   {
   }
-//................................................................TEST.........................................
+  //................................................................TEST.........................................
   public void onLoginButton(ActionEvent actionEvent)
           throws IOException, SQLException {
     vm.logIn();
