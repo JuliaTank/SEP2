@@ -249,7 +249,7 @@ public class RecipesData {
         }
         return result;
     }
-public void update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file)
+public void update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file,byte[] bytes)
     throws FileNotFoundException, SQLException
 {
     FileInputStream fis = new FileInputStream(file);

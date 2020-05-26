@@ -25,9 +25,9 @@ class ProfilesDataTest {
     //create-zero
     @Test
     void createZero() throws IOException, SQLException {
-        //  boolean created=profilesData.create(null,null,null,null,null,null);
-        // assertEquals(false,created);
-        assertThrows(NullPointerException.class, () -> profilesData.create(null, null, null, null, null, null));
+         boolean created=profilesData.create(null,null,null,null,null,null);
+         assertEquals(false,created);
+       // assertThrows(NullPointerException.class, () -> profilesData.create(null, null, null, null, null, null));
     }
 
     //create-one
