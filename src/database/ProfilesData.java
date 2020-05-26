@@ -16,7 +16,7 @@ public class ProfilesData {
 
     private static ProfilesData instance;
 
-    private ProfilesData() throws SQLException
+    public ProfilesData() throws SQLException
     {
         DriverManager.registerDriver(new org.postgresql.Driver());
     }
@@ -34,7 +34,7 @@ public class ProfilesData {
                 "JJuu11@@");
     }
     //...................................ALL METHODS HERE NEED TESTING!!!!!!!!!!!!!!
-    public void create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
+    public boolean create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
         throws SQLException, IOException
     {
         if(bytes!=null)
@@ -54,6 +54,7 @@ public class ProfilesData {
             statement.executeUpdate();
         }
         connection.close();
+        return true;
     }
 
     public Profile getProfile(String searchedUsername) throws SQLException
