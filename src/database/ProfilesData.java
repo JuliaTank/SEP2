@@ -33,13 +33,16 @@ public class ProfilesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
-    //...................................ALL METHODS HERE NEED TESTING!!!!!!!!!!!!!!
-    public boolean create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
+
+    public synchronized boolean create(String username, String password, File picFile ,byte[] bytes, String description, ArrayList<Profile>subscriptions)
         throws SQLException, IOException
     {
         if(bytes!=null)
         picFile = getPicFile(bytes,username);
-
+        if (picFile==null)
+        {
+            return  false;
+        }
         Connection connection = getConnection();
         FileInputStream fis  = new FileInputStream(picFile);
         try (connection)
@@ -57,7 +60,7 @@ public class ProfilesData {
         return true;
     }
 
-    public Profile getProfile(String searchedUsername) throws SQLException
+    public synchronized Profile getProfile(String searchedUsername) throws SQLException
     {
         Profile result = null;
         Connection connection = getConnection();
@@ -90,7 +93,7 @@ public class ProfilesData {
         connection.close();
         return result;
     }
-    public ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
+    public synchronized ArrayList<Profile> getProfiles(String searchedUsername) throws SQLException
     {
         ArrayList<Profile> result = new ArrayList<>();
         Connection connection = getConnection();
@@ -123,7 +126,7 @@ public class ProfilesData {
         connection.close();
         return result;
     }
-    private File getPicFile(byte[] imgBytes, String username) throws IOException
+    private synchronized File getPicFile(byte[] imgBytes, String username) throws IOException
     {
         ByteArrayInputStream bais = new ByteArrayInputStream(imgBytes);
         BufferedImage image = ImageIO.read(bais);
@@ -140,7 +143,7 @@ public class ProfilesData {
     }
 
     //here I'm transforming array of subscribers usernames(read from database) into ArrayList of Profiles
-    private ArrayList<Profile> getSubs(String[] subs) throws SQLException {
+    private  ArrayList<Profile> getSubs(String[] subs) throws SQLException {
         ArrayList<Profile> subscribers = new ArrayList<>();
         for (int i = 0; i < subs.length ;i++) {
             Profile profile = getProfile(subs[i]);
@@ -159,12 +162,14 @@ public class ProfilesData {
 
         return  usernames;
     }
-    public void update(String oldUsername,String newUsername, String password, File picFile,byte[] bytes, String description, ArrayList<Profile> subscriptions)
+    public synchronized boolean update(String oldUsername,String newUsername, String password, File picFile,byte[] bytes, String description, ArrayList<Profile> subscriptions)
         throws SQLException, IOException
     {
             if(bytes!=null)
             picFile = getPicFile(bytes,newUsername);
-
+            if(picFile==null){
+                return false;
+            }
         Connection connection = getConnection();
         FileInputStream fis = new FileInputStream(picFile);
         try (connection)
@@ -187,8 +192,9 @@ public class ProfilesData {
             statement.executeUpdate();
         }
         connection.close();
+        return true;
     }
-    public void delete(String username) throws SQLException
+    public synchronized boolean delete(String username) throws SQLException
     {
         Connection connection = getConnection();
         try (connection)
@@ -200,6 +206,7 @@ public class ProfilesData {
             RecipesData.getInstance().deleteRecipe(username);
         }
         connection.close();
+        return true;
     }
 }
 

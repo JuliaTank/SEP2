@@ -42,7 +42,7 @@ public class SignInVM {
     picApprovedLabel.setValue("");
   }
 
-  public void signUp(File picFile,byte[] bytes)
+  public boolean signUp(File picFile,byte[] bytes)
       throws IOException, SQLException, NotBoundException
   {
     if(model.signUp(usernameCreationField.getValue(),passwordCreationField.getValue(),picFile,bytes, getDescriptionArea().getValue()))
@@ -58,6 +58,7 @@ public class SignInVM {
     descriptionArea.setValue("");
     passwordCreationField.setValue("");
     passwordRepeatField.setValue("");
+    return true;
   }
 
   public StringProperty getErrorLabel()

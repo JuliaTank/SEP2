@@ -145,9 +145,9 @@ public class SignInController implements ViewController
     {
       errorLabel.setText("Type in the username and password");
     }
-    else if(usernameCreationField.getText().length()<3|| passwordCreationField.getText().length()<3)
+    else if(usernameCreationField.getText().length()<3|| passwordCreationField.getText().length()<3|| usernameCreationField.getText().length()>20 ||passwordCreationField.getText().length()>20)
     {
-      errorLabel.setText("Username and password have to contain at least 3 signs ");
+      errorLabel.setText("Username and password have to contain at least 3 signs and no more than 20");
     }
     else if(!passwordCreationField.getText().equals(passwordRepeatField.getText()) )
     {

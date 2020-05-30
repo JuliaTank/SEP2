@@ -31,13 +31,17 @@ public class RecipesData {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres",
                 "JJuu11@@");
     }
-    //....................................................................TEST ALL METHODS EXCEPT OBVIOUS ONES................
-    public void create(String title, String description, String username, ArrayList<String> ingredients, File picFile,byte[] bytes)
+
+    public boolean create(String title, String description, String username, ArrayList<String> ingredients, File picFile,byte[] bytes)
         throws SQLException, IOException
     {
         if(bytes!=null)
         {
             picFile = getPicFile(bytes,title);
+        }
+        if (picFile == null || getRecipeByTitle(title)!=null)
+        {
+            return  false;
         }
         FileInputStream fis  = new FileInputStream(picFile);
         try (Connection connection = getConnection())
@@ -49,10 +53,9 @@ public class RecipesData {
             Array array  = connection.createArrayOf("varchar",ingredients.toArray());
             statement.setArray(4, array);
             statement.setBinaryStream(5,fis,(int)picFile.length());
-
             statement.executeUpdate();
-
         }
+        return true;
     }
 
     public ArrayList<Recipe> getRecipesByIngredient(String searchedIngredient) throws SQLException
@@ -194,7 +197,7 @@ public class RecipesData {
 
         return result;
     }
-    public void deleteRecipe(String username) throws SQLException
+    public boolean deleteRecipe(String username) throws SQLException
     {
         try (Connection connection = getConnection())
         {
@@ -202,6 +205,7 @@ public class RecipesData {
             statement.setString(1,username);
             statement.executeUpdate();
         }
+        return true;
     }
 
     private ArrayList<String> getIng(Array array) throws SQLException
@@ -249,7 +253,7 @@ public class RecipesData {
         }
         return result;
     }
-public void update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file,byte[] bytes)
+public boolean update(String title,String newTitle,String description, Profile profile,ArrayList<String> ingredients,File file,byte[] bytes)
     throws FileNotFoundException, SQLException
 {
     FileInputStream fis = new FileInputStream(file);
@@ -266,6 +270,7 @@ public void update(String title,String newTitle,String description, Profile prof
         statement.executeUpdate();
 
     }
+    return true;
 }
 
 }

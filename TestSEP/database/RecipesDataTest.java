@@ -2,107 +2,59 @@ package database;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RecipesDataTest {
-    RecipesData recipesData;
+    RecipesData recipesData = RecipesData.getInstance();
+
+    RecipesDataTest() throws SQLException
+    {
+    }
 
     //create-zero
     @Test
     void createZero() throws IOException, SQLException {
-        recipesData.create(null,null,null,null,null,null);
-        assertEquals(null,recipesData.getRecipeByTitle(null));
-        assertEquals(null,recipesData.getRecipesByIngredient(null));
-        assertEquals(null,recipesData.getRecipesByAuthor(null));
-    }
-
-    //create-one
-    @Test
-    void createOne() throws SQLException, IOException {
-        recipesData.create("Apple pie","bake cake","Roksana",null,null,null);
-        assertEquals("Apple pie",recipesData.getRecipeByTitle("Apple pie"));
-        assertEquals(null,recipesData.getRecipesByIngredient(null));
-        assertEquals("Roksana",recipesData.getRecipesByAuthor("Roksana"));
-    }
-
-    //create-many
-    @Test
-    void createMany() throws SQLException, IOException {
-        recipesData.create("Cherry pie","bake cake","Roksana",null,null,null);
-        recipesData.create("lasagne","bake lasagne","Julia",null,null,null);
-
-        assertEquals("Cherry pie",recipesData.getRecipeByTitle("Cherry pie"));
-        assertEquals(null,recipesData.getRecipesByIngredient(null));
-        assertEquals("Roksana",recipesData.getRecipesByAuthor("Roksana"));
-
-        assertEquals("lasagne",recipesData.getRecipeByTitle("lasagne"));
-        assertEquals("Julia",recipesData.getRecipesByAuthor("Julia"));
+        boolean isCreated = recipesData.create(null,null,null,null,null,null);
+        assertEquals(false,isCreated);
     }
 
     //create-boundary
     @Test
     void createBoundary()
     {
-        //??????????
+        //already tested in server(server calls method from here and prevents throwing exceptions)
     }
 
     //create-exception
     @Test
     void createException()
     {
-        //recipe title already exists:(
-        assertThrows(IllegalArgumentException.class, ()->recipesData.create("Fries","frytki","Julia",null,null,null));
-
+        assertThrows(org.postgresql.util.PSQLException.class, ()->recipesData.create("Friessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss","frytki","Julia",new ArrayList<>(),new File("carrotLogo.png"),null));
     }
     @Test
-    void getRecipesByIngredient() {
-        //already tested in create
-    }
-
-    @Test
-    void getAllRecipes() {
+    void getRecipesByIngredient() throws SQLException
+    {
+        assertEquals(1, recipesData.getRecipesByIngredient("potatoes").size());
     }
 
     @Test
-    void getRecipesByTitle() {
-        //already tested in create
+    void getRecipesByTitle() throws SQLException
+    {
+        assertEquals(1,recipesData.getRecipesByTitle("Fries").size());
     }
 
     //get recipe by title-zero
     @Test
-    void getRecipeByTitleZero() throws SQLException, RemoteException {
-        assertEquals(null,recipesData.getRecipeByTitle(null));
-    }
-    //get recipe by title-one
-    @Test
-    void getRecipeByTitleOne() throws SQLException, RemoteException {
-        assertEquals("Fries",recipesData.getRecipeByTitle("Fries"));
+    void getRecipeByTitle() throws SQLException, RemoteException {
+        assertEquals("Fries",recipesData.getRecipeByTitle("Fries").getTitle());
     }
 
-    //get recipe by title-many
-    @Test
-    void getRecipeByTitleMany() throws SQLException, RemoteException {
-        assertEquals("Fries",recipesData.getRecipeByTitle("Fries"));
-        assertEquals("",recipesData.getRecipesByTitle(""));
-    }
-    //get recipe by title- boundary
-    @Test
-    void getRecipeByTitleBoundary()
-    {
-        //??????????/
-    }
-
-    //get recipe by title - exception
-    @Test
-    void getRecipeByTitleException()
-    {
-        //this recipe title does not exist:(
-        assertThrows(IllegalArgumentException.class,()->recipesData.getRecipesByTitle("toasts"));
-    }
 
     @Test
     void deleteRecipe() {
@@ -110,8 +62,9 @@ class RecipesDataTest {
     }
 
     @Test
-    void getRecipesByAuthor() {
-        //already tested in create
+    void getRecipesByAuthor() throws SQLException
+    {
+        assertEquals(0, recipesData.getRecipesByAuthor("Imbirowy").size());
     }
 
     @Test

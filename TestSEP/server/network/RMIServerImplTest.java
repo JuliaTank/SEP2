@@ -3,7 +3,9 @@ package server.network;
 import org.junit.jupiter.api.Test;
 import server.model.Manager;
 import shared.networking.RMIServer;
+import shared.transferObjects.Profile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -13,226 +15,286 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class RMIServerImplTest {
+class RMIServerImplTest
+{
     RMIServer server = new RMIServerImpl(new Manager());
 
-    RMIServerImplTest() throws SQLException {
+    RMIServerImplTest() throws SQLException
+    {
     }
 
     //Log in-zero
-    @Test
-    void logInZero() throws RemoteException, SQLException, FileNotFoundException {
+    @Test void logInZero()
+        throws RemoteException, SQLException, FileNotFoundException
+    {
         boolean isLogged = server.logIn(null, null);
         assertEquals(false, isLogged);
     }
 
     //log in-one
-    @Test
-    void logInOne() throws RemoteException, SQLException, FileNotFoundException {
-       // boolean isLogged = server.logIn("Roksana", "kotkot");
+    @Test void logInOne()
+        throws RemoteException, SQLException, FileNotFoundException
+    {
         boolean isLogged = server.logIn("roksana", "kotkot");
+        // boolean isLogged = server.logIn("roksana", "kotkot");
         assertEquals(true, isLogged);
 
     }
 
     //log in-many
-    @Test
-    void logInMany() throws RemoteException, SQLException, FileNotFoundException {
-        boolean isLoggedRoksana = server.logIn("Roksana", "kotkot");
-        boolean isLoggedJulia = server.logIn("Julia", "Kot");
+    @Test void logInMany()
+        throws RemoteException, SQLException, FileNotFoundException
+    {
+        boolean isLoggedRoksana = server.logIn("roksana", "kotkot");
+        boolean isLoggedJulia = server.logIn("Julia", "kot");
         assertEquals(true, isLoggedJulia);
         assertEquals(true, isLoggedRoksana);
     }
 
     //log in-boundary
-    @Test
-    void logInBoundary() {
-        //sprawdzenie przeladowania serwera for example
-        //it is not necessary in this method
+    @Test void logInBoundary()
+    {
+        //no need to test it
     }
 
-    //log in- exceptions
+    //log in-exceptions
     @Test
-    void logInExceptions() {
-        //this username is not exist:(
-        assertThrows(IllegalArgumentException.class, () -> server.logIn("toms", "kotyyy"));
+    void logInExceptions()
+    {
+       // not need to test it
     }
 
     //add recipe-zero
     @Test
-    void addRecipeZero() throws IOException, SQLException {
-        server.addRecipe(null, null, null, null, null, null);
-        assertEquals(null, server.getRecipesByTitle(null));
-        assertEquals(null, server.getRecipesByIngredient(null));
-        assertEquals(null, server.getRecipesByUsername(null));
+    void addRecipeZero() throws IOException, SQLException
+    {
+        boolean isAdded = server.addRecipe(null, null, null, null, null, null);
+        assertEquals(false, isAdded);
+
     }
 
     //add recipe-one
-    @Test
-    void addRecipeOne() throws IOException, SQLException {
+    @Test void addRecipeOne() throws IOException, SQLException
+    {
         ArrayList<String> ingredients = new ArrayList<>();
-        server.addRecipe("kotlety", "usmaz kotlety", "kotki", ingredients, null, null);
-        assertEquals("kotlety", server.getRecipesByTitle("kotlety"));
-        assertEquals(ingredients.get(0), server.getRecipesByIngredient(ingredients.get(0)));
-        assertEquals("kotki", server.getRecipesByUsername("kotki"));
+        boolean isAdded = server.addRecipe("kotlety", "usmaz kotlety", "Julia", ingredients, new File("carrotLogo.png"), null);
+
+        assertEquals(true, isAdded);
     }
 
     //add recipe-many
-    @Test
-    void addRecipeMany() throws IOException, SQLException {
-        ArrayList<String> ingredients1 = new ArrayList<>();
-        ArrayList<String> ingredients2 = new ArrayList<>();
-        server.addRecipe("kotlety", "usmaz kotlety", "kotki", ingredients1, null, null);
-        server.addRecipe("pierogi", "ugotuj pierogi", "pieski", ingredients2, null, null);
-
-        assertEquals("kotlety", server.getRecipesByTitle("kotlety"));
-        assertEquals(ingredients1.get(0), server.getRecipesByIngredient(ingredients1.get(0)));
-        assertEquals("kotki", server.getRecipesByUsername("kotki"));
-
-        assertEquals("pierogi", server.getRecipesByTitle("pierogi"));
-        assertEquals(ingredients2.get(0), server.getRecipesByIngredient(ingredients2.get(0)));
-        assertEquals("pieski", server.getRecipesByUsername("pieski"));
+    @Test void addRecipeMany() throws IOException, SQLException
+    {
+        //noo need
     }
 
     //add recipe-boundary
-    @Test
-    void addRecipeBoundary() {
-        //it's not necessary here, i think
+    @Test void addRecipeBoundary()
+    {
+        //it's not necessary here, i think but im not sure!!
     }
 
     //add recipe-exception
-    @Test
-    void addRecipeException() {
-        //recipe title already exists:(
-        assertThrows(IllegalArgumentException.class, () -> server.addRecipe("Fries", "frytki", "Julia", null, null, null));
+    @Test void addRecipeException()
+    {
+        //Recipe 'Fries' already exists
+        assertThrows(IllegalStateException.class, () -> server.addRecipe("Fries", "frytki", "blablabla", null, null, null));
     }
 
     //report-zero
     @Test
-    void reportZero() throws RemoteException, SQLException {
-        server.report(null, null, null);
-        // assertEquals(null, server.);
+    void reportZero() throws RemoteException, SQLException
+    {
+        boolean isReported = server.report(null, "Julia", null);
+        assertEquals(false, isReported);
+    }
+
+    //report - one
+    @Test void reportOne() throws RemoteException, SQLException
+    {
+        boolean isReported = server.report("Fries", "Julia", "report");
+        assertEquals(true, isReported);
+    }
+
+    //report - many
+    @Test void reportMany() throws RemoteException, SQLException
+    {
+        boolean isReported1 = server.report("Fries", "Julia", "report");
+        boolean isReported2 = server.report("RecipeThatDoesNotExist", "Julia", "report");
+
+        assertEquals(true, isReported1);
+        assertEquals(false, isReported2);
+    }
+
+    //report - boundary
+    @Test void reportBoundary() throws RemoteException, SQLException
+    {
+        assertEquals(false,server.report("Fries","Julia","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    }
+
+    //report - exception
+    @Test void reportException()
+    {
+        //username does not exist
+        assertThrows(IllegalStateException.class,
+            () -> server.report("kotki", "kotyyyyyy", "lubie koty"));
     }
 
     //sign up-zero
-    @Test
-    void signUpZero() throws IOException, SQLException {
-        server.signUp(null, null, null, null, null);
-        assertEquals(null, server.getProfile(null));
+    @Test void signUpZero() throws IOException, SQLException
+    {
+        boolean isSignedUp = server.signUp(null, null, null, null, null);
+        assertEquals(false, isSignedUp);
     }
 
     //sign up-one
-    @Test
-    void signUpOne() throws IOException, SQLException {
-        server.signUp("Marek", "Imbir", null, null, "lubie imbir");
-        assertEquals("Marek", server.getProfile("Marek"));
+    @Test void signUpOne() throws IOException, SQLException
+    {
+        boolean isSignedUp = server
+            .signUp("Imbirowy", "Imbir", new File("rabbit.jpg"), null, "lubie imbir");
+        assertEquals(true, isSignedUp);
     }
 
     //sign up-many
-    @Test
-    void signUpMany() throws IOException, SQLException {
-        server.signUp("Jan", "janjan", null, null, "lubie weganskie jedzenie");
-        server.signUp("Gustaw", "pingwin", null, null, "nie lubie roksany i julii");
-
-        assertEquals("Jan", server.getProfile("Jan"));
-        assertEquals("Gustaw", server.getProfile("Gustaw"));
+    @Test void signUpMany() throws IOException, SQLException
+    {
+       //no need
     }
 
     //sign up-boundary
-    @Test
-    void signUpBoundary() {
-        //not necessary?????????????
+    @Test void signUpBoundary() throws IOException, SQLException
+    {
+        boolean isSignedUp = server.signUp("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaa",null,null,"ooo");
+        assertEquals(false, isSignedUp);
     }
 
     //sign up-exception
-    @Test
-    void signUpException() {
-        //username already exists:(
-        assertThrows(IllegalArgumentException.class, () -> server.signUp("Julia", "kotyyy", null, null, null));
+    @Test void signUpException()
+    {
+        //no need
     }
 
     //edit profile-zero
-    @Test
-    void editProfileZero() {
-        //  server.editProfile(null,null,null,null,null,null,null);
-        //  assertEquals(null,server.);
+    @Test void editProfileZero() throws IOException, SQLException
+    {
+        boolean isEdited = server
+            .editProfile(
+                "",
+                "",
+                null,
+                null,
+                null,
+                null,
+                null);
+        assertEquals(false, isEdited);
+    }
+
+    //edit profile - one
+    @Test void editProfileOne() throws IOException, SQLException
+    {
+        boolean isEdited = server.editProfile("Julia", "Julia", "kot", new File("Juliapic.jpg"), null, "HellooOOooOoOoooOOoooOOOOoooooOo", new ArrayList<>());
+        assertEquals(true, isEdited);
+    }
+
+    //edit profile - many
+    @Test void editProfileMany() throws IOException, SQLException
+    {
+        //no need
+    }
+
+    //edit profile - boundary
+    @Test void editProfileBoundary() throws IOException, SQLException
+    {
+        boolean isEdited = server.editProfile("Julia","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","mmm",null,null,"ooo",new ArrayList<>());
+        assertEquals(false, isEdited);
+    }
+
+    //edit profile - exception
+    @Test void editProfileException()
+    {
+        assertThrows(IllegalArgumentException.class, () -> server.editProfile("UsernameThatDoeasntExist", "julia123", "kotyy", null, null, null, null));
+    }
+
+    @Test void getProfile()
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        String test =  server.getProfile("Julia").getUsername();
+        assertEquals("Julia",test);
+    }
+
+    @Test void getProfiles()
+        throws FileNotFoundException, SQLException, RemoteException
+    {
+        String test =  server.getProfile("Julia").getPassword();
+        assertEquals("kot",test);
     }
 
     @Test
-    void getProfile() {
-        //already tested in sign up, i think
+    void doIsubscribeItZero()
+        throws FileNotFoundException, RemoteException, SQLException
+    {
+        boolean isSubscribed = server.doIsubscribeIt(null, null);
+        assertEquals(false, isSubscribed);
     }
 
+    //doisubscribeit - one
     @Test
-    void getProfiles() {
+    void doIsubscribeItOne()
+        throws FileNotFoundException, RemoteException, SQLException
+    {
+        boolean isSubscribed = server.doIsubscribeIt("roksana",server.getProfile("Julia"));
+        assertEquals(true,isSubscribed);
     }
 
+    //delete - zero
     @Test
-    void subscribe() {
-
+    void deleteZero() throws SQLException, RemoteException
+    {
+        boolean isDeleted = server.delete(null);
+        assertEquals(false, isDeleted);
     }
 
+    //delete - one
     @Test
-    void unsubscribe() {
+    void deleteOne() throws SQLException, RemoteException
+    {
+        boolean isDeleted = server.delete("Julia");
+        assertEquals(true,isDeleted);
     }
 
+    //delete- many
     @Test
-    void doIsubscribeIt() {
+    void deleteMany() throws SQLException, RemoteException
+    {
+        boolean isDeleted = server.delete("janusz");
+        boolean isDeleted2 = server.delete("Toms2");
+        assertEquals(true,isDeleted);
+        assertEquals(true,isDeleted2);
     }
 
+    //delete - exception
     @Test
-    void delete() {
+    void deleteException()
+    {
+        //username does not exist
+        assertThrows(IllegalArgumentException.class,()->server.delete("kotek"));
     }
-
-    @Test
-    void getRecipesByIngredient() {
-        //already tested in add Recipe, i think
-    }
-
     //get recipe by title-zero
     @Test
     void getRecipeByTitleZero() throws SQLException, RemoteException {
+
         assertEquals(null, server.getRecipeByTitle(null));
     }
 
     //get recipe by title-one
     @Test
     void getRecipeByTitleOne() throws SQLException, RemoteException {
-        assertEquals("Fries", server.getRecipeByTitle("Fries"));
+        assertEquals("Fries", server.getRecipeByTitle("Fries").getTitle());
     }
-
-    //get recipe by title-many
-    @Test
-    void getRecipeByTitleMany() throws SQLException, RemoteException {
-        assertEquals("Fries", server.getRecipeByTitle("Fries"));
-        assertEquals("", server.getRecipesByTitle(""));
-    }
-
-    //get recipe by title- boundary
-    @Test
-    void getRecipeByTitleBoundary() {
-        //??????????/
-    }
-
-    //get recipe by title - exception
-    @Test
-    void getRecipeByTitleException() {
-        //this recipe title does not exist:(
-        assertThrows(IllegalArgumentException.class, () -> server.getRecipesByTitle("toasts"));
-    }
-
+    //get recipes by username- exception
     @Test
     void getRecipesByUsername() {
-        //already tested in add Recipe, i think
-    }
-
-    @Test
-    void getRecipesByTitle() {
-        //already tested in add Recipe, i think
-    }
-
-    @Test
-    void getAllRecipes() {
-
+        //there is no user "kotek" in the database
+        assertThrows(IllegalArgumentException.class, ()->server.getRecipesByUsername("kotek"));
     }
 }

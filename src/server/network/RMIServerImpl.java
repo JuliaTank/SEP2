@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
+import java.rmi.activation.ActivationGroup_Stub;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -36,7 +37,13 @@ public class RMIServerImpl implements RMIServer {
         recipesData = RecipesData.getInstance();
     }
 
-    public void startServer() throws RemoteException, AlreadyBoundException {
+    public void startServer()
+        throws IOException, AlreadyBoundException, SQLException
+    {
+      if(profilesData.getProfile("Administrator")==null)
+      {
+        profilesData.create("Administrator","admin",new File("rabbit.jpg"),null,"I'm Administrator of VegSearch",new ArrayList<>());
+      }
         UnicastRemoteObject.exportObject(this,0);
         Registry registry= LocateRegistry.createRegistry(1099);
         registry.bind("Server",this);
@@ -54,7 +61,6 @@ public class RMIServerImpl implements RMIServer {
         throws SQLException
     {
       Profile profile  = profilesData.getProfile(username);
-
         return profile!= null && profile.getPassword().equals(password);
     }
   //............................................................TEST...........................................................
@@ -62,8 +68,14 @@ public class RMIServerImpl implements RMIServer {
     public boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
         throws IOException, SQLException
     {
+      if(profilesData.getProfile(username)==null)
+      {
+        throw new IllegalStateException("username does not exist");
+      }
       if (recipesData.getRecipeByTitle(title)==null)
       {
+        if(title==null || description==null || username==null || ingredients==null || picfile==null)
+          return  false;
         recipesData.create(title, description, username, ingredients, picfile,bytes);
         Notification notification  = new Notification(username,"New recipe",title);
         sendNotification(notification);
@@ -74,9 +86,17 @@ public class RMIServerImpl implements RMIServer {
     }
   //............................................................TEST...........................................................
     @Override
-    public void report(String title, String username, String message)
+    public boolean report(String title, String username, String message)
         throws RemoteException, SQLException
     {
+      if(profilesData.getProfile(username)==null)
+      {
+        throw new IllegalStateException("username doesn't exist");
+      }
+      if(title==null || username==null || message.length()>70 || recipesData.getRecipeByTitle(title)==null)
+      {
+        return  false;
+      }
       Notification notification = new Notification(username,"New report: "+message,title);
       manager.sendNotification(notification);
       for (int i = 0; i < clients.size(); i++)
@@ -87,6 +107,7 @@ public class RMIServerImpl implements RMIServer {
           break;
         }
       }
+      return true;
     }
 
   //............................................................TEST...........................................................
@@ -94,28 +115,41 @@ public class RMIServerImpl implements RMIServer {
         File picFile,byte[] bytes, String description)
         throws SQLException, IOException
     {
-        if(ProfilesData.getInstance().getProfile(username)!=null)
+      if(username.length()>20)
+      {
+        return false;
+      }
+        if(ProfilesData.getInstance().getProfile(username)==null)
         {
-            return  false;
+          ProfilesData.getInstance()
+              .create(username, password, picFile, bytes, description, new ArrayList<>());
+          if (ProfilesData.getInstance().getProfile(username).getUsername().equals(username))
+          {
+            return true;
+          }
         }
-        ProfilesData.getInstance().create(username,password,picFile,bytes,description,new ArrayList<>());
-       if(ProfilesData.getInstance().getProfile(username).getUsername().equals(username))
-       {
-           return  true;
-       }
-       else return false;
+      return false;
     }
   //............................................................TEST...........................................................
   @Override public boolean editProfile(String oldUsername,String newUsername, String password,
       File picFile,byte[] bytes, String description,ArrayList<Profile> subs)
       throws SQLException, IOException
   {
+    if(newUsername.length()>20)
+    {
+      return false;
+    }
+    if(profilesData.getProfile(oldUsername)==null)
+    {
+      throw new IllegalArgumentException("username does not exist");
+    }
     //here i'm checking if username which user wants as new one doesn't belong to any other user already
-    if(!oldUsername.equals(newUsername) && profilesData.getProfile(newUsername)!=null)
-      return  false;
+    if (!oldUsername.equals(newUsername) && profilesData.getProfile(newUsername) != null)
+    {
+    return false;
+    }
    else {
-      profilesData.update(oldUsername,newUsername,password,picFile,bytes,description,subs);
-      return true;
+      return profilesData.update(oldUsername,newUsername,password,picFile,bytes,description,subs);
    }
   }
   //............................................................TEST...........................................................
@@ -136,23 +170,27 @@ public class RMIServerImpl implements RMIServer {
     manager.sendNotification(notification);
    Profile profile = profilesData.getProfile(notification.getUsername());
     ArrayList<String> subscribers = new ArrayList<>();
-    ArrayList<Profile> subscribersProfiles = profile.getSubs();
+    if (profile != null)
+    {
+      ArrayList<Profile> subscribersProfiles = profile.getSubs();
 
-    for (Profile subscribersProfile : subscribersProfiles)
-    {
-      subscribers.add(subscribersProfile.getUsername());
-    }
-    for (ClientCallBack client : clients)
-    {
-      for (String subscriber : subscribers)
+      for (Profile subscribersProfile : subscribersProfiles)
       {
-        if (client.getUsername().equals(subscriber))
+        subscribers.add(subscribersProfile.getUsername());
+      }
+      for (ClientCallBack client : clients)
+      {
+        for (String subscriber : subscribers)
         {
-          System.out.println("notification send to "+subscriber);
-          client.receiveNotification(notification);
+          if (client.getUsername().equals(subscriber))
+          {
+            System.out.println("notification send to "+subscriber);
+            client.receiveNotification(notification);
+          }
         }
       }
     }
+
   }
 
   //............................................................TEST...........................................................
@@ -183,6 +221,10 @@ public class RMIServerImpl implements RMIServer {
       throws RemoteException, FileNotFoundException, SQLException
   {
     Profile profile = profilesData.getProfile(user);
+    if(profile==null)
+    {
+      return false;
+    }
     ArrayList<Profile>subs=profile.getSubs();
 
     boolean doI = false;
@@ -198,9 +240,18 @@ public class RMIServerImpl implements RMIServer {
     return doI;
   }
   //............................................................TEST...........................................................
-  @Override public void delete(String username) throws SQLException
+  @Override public boolean delete(String username) throws SQLException
     {
+      if(username==null)
+      {
+        return false;
+      }
+      else if(profilesData.getProfile(username) ==null)
+      {
+        throw  new IllegalArgumentException("username does not exist");
+      }
         profilesData.delete(username);
+        return true;
     }
   //............................................................TEST...........................................................
     @Override public ArrayList<Recipe> getRecipesByIngredient(String ingredient)
@@ -217,6 +268,10 @@ public class RMIServerImpl implements RMIServer {
     @Override public ArrayList<Recipe> getRecipesByUsername(String username)
         throws SQLException
     {
+      if(username==null|| profilesData.getProfile(username)==null)
+      {
+        throw new IllegalArgumentException("user does not exist");
+      }
         return recipesData.getRecipesByAuthor(username);
     }
   //............................................................TEST...........................................................

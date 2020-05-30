@@ -16,7 +16,7 @@ public interface RMIServer extends Remote {
         throws RemoteException, SQLException;
     boolean addRecipe(String title, String description,String username, ArrayList<String> ingredients, File picfile,byte[] bytes)
         throws IOException, SQLException;
-    void report(String title, String username, String message)
+    boolean report(String title, String username, String message)
         throws RemoteException, SQLException;
     boolean signUp(String username, String password,File picFile,byte[] bytes, String description)
         throws SQLException, IOException;
@@ -25,7 +25,7 @@ public interface RMIServer extends Remote {
         throws SQLException, IOException;
     Profile getProfile(String username)throws SQLException, FileNotFoundException, RemoteException;
     ArrayList<Profile> getProfiles(String username)throws SQLException, FileNotFoundException, RemoteException;
-    void delete(String username) throws SQLException,RemoteException;
+    boolean delete(String username) throws SQLException,RemoteException;
     ArrayList<Recipe> getRecipesByIngredient(String ingredient)
         throws SQLException,RemoteException;
     Recipe getRecipeByTitle(String title) throws SQLException,RemoteException;
